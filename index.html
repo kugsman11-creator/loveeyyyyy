@@ -1,760 +1,1973 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for you, babyyy ❤️</title>
 
-  <title>For You ❤️</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+html {
+    scroll-behavior: smooth;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 50% 15%, #6b243f 0%, #321625 30%, #160f16 65%, #09090c 100%);
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      overflow: hidden;
-    }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #09090f;
+    color: white;
+    overflow-x: hidden;
+}
 
-    .hearts {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
-    }
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
 
-    .floating-heart {
-      position: absolute;
-      bottom: -60px;
-      color: #ff6f9d;
-      font-size: 25px;
-      opacity: 0.7;
-      animation: floatUp linear infinite;
-      filter: drop-shadow(0 0 8px rgba(255, 91, 141, 0.6));
-    }
+.hidden {
+    display: none !important;
+}
 
-    .floating-heart:nth-child(1) {
-      left: 8%;
-      animation-duration: 8s;
-    }
 
-    .floating-heart:nth-child(2) {
-      left: 22%;
-      animation-duration: 11s;
-      animation-delay: 3s;
-      font-size: 32px;
-    }
+/* ================= LANDING ================= */
 
-    .floating-heart:nth-child(3) {
-      left: 38%;
-      animation-duration: 9s;
-      animation-delay: 1s;
-      font-size: 20px;
-    }
+#landing {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
 
-    .floating-heart:nth-child(4) {
-      left: 55%;
-      animation-duration: 12s;
-      animation-delay: 4s;
-      font-size: 28px;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    .floating-heart:nth-child(5) {
-      left: 72%;
-      animation-duration: 8s;
-      animation-delay: 2s;
-      font-size: 24px;
-    }
+    background:
+        radial-gradient(circle at center, #32111d 0%, #09090f 65%);
 
-    .floating-heart:nth-child(6) {
-      left: 88%;
-      animation-duration: 10s;
-      animation-delay: 5s;
-      font-size: 34px;
-    }
+    text-align: center;
+    padding: 25px;
 
-    .floating-heart:nth-child(7) {
-      left: 48%;
-      animation-duration: 13s;
-      animation-delay: 7s;
-      font-size: 18px;
-    }
+    transition: opacity .8s ease;
+}
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(0.8) rotate(0deg);
-        opacity: 0;
-      }
+.landing-heart {
+    font-size: 90px;
 
-      15% {
-        opacity: 0.7;
-      }
+    animation:
+        heartbeat 1.3s infinite;
 
-      50% {
-        transform: translateY(-50vh) scale(1) rotate(12deg);
-      }
+    filter:
+        drop-shadow(0 0 25px rgba(255, 50, 90, .7));
+}
 
-      100% {
-        transform: translateY(-115vh) scale(1.2) rotate(-12deg);
-        opacity: 0;
-      }
-    }
+#landing h1 {
+    margin-top: 20px;
+    font-size: clamp(28px, 8vw, 48px);
+}
 
-    .container {
-      position: relative;
-      z-index: 2;
-      width: 90%;
-      max-width: 380px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: auto;
-      animation: fadeIn 1.2s ease;
-    }
+#landing p {
+    margin-top: 10px;
+    color: #aaa;
+}
 
-    .heart {
-      font-size: 75px;
-      margin-bottom: 18px;
-      animation: heartbeat 1.8s infinite;
-      filter:
-        drop-shadow(0 0 10px rgba(255, 70, 120, 0.8))
-        drop-shadow(0 0 30px rgba(255, 70, 120, 0.5));
-    }
+.open-btn {
+    margin-top: 30px;
 
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
+    padding: 15px 32px;
 
-    .container p {
-      color: #e0cbd3;
-      line-height: 1.7;
-      font-size: 15px;
-    }
+    border: none;
+    border-radius: 30px;
 
-    button {
-      border: none;
-      background: linear-gradient(135deg, #ff6b9a, #e63770);
-      color: white;
-      padding: 15px 28px;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: bold;
-      margin-top: 15px;
-      box-shadow:
-        0 8px 25px rgba(255, 79, 129, 0.35),
-        0 0 15px rgba(255, 79, 129, 0.15);
-      transition: transform 0.2s ease;
-    }
+    background: #ff315c;
+    color: white;
 
-    button:active {
-      transform: scale(0.94);
-    }
+    font-size: 16px;
+    font-weight: 600;
 
-    #heartIntro {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 20;
-      background:
-        radial-gradient(circle, #4d1b30 0%, #180d16 65%, #09090c 100%);
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
+    box-shadow:
+        0 0 25px rgba(255,49,92,.35);
 
-    #heartIntro.show {
-      display: flex;
-      opacity: 1;
-    }
+    transition: .3s;
+}
 
-    .intro-heart {
-      font-size: 115px;
-      animation: introHeart 1.5s ease-in-out infinite;
-      filter:
-        drop-shadow(0 0 15px rgba(255, 60, 120, 0.9))
-        drop-shadow(0 0 45px rgba(255, 60, 120, 0.7));
-    }
+.open-btn:active {
+    transform: scale(.92);
+}
 
-    .intro-text {
-      margin-top: 20px;
-      color: #f4dce5;
-      font-size: 15px;
-      letter-spacing: 1px;
-      animation: textFade 1.5s ease-in-out infinite;
-    }
 
-    @keyframes introHeart {
-      0% {
-        transform: scale(0.75);
-        opacity: 0.7;
-      }
+/* ================= PASABOG ================= */
 
-      50% {
-        transform: scale(1.15);
-        opacity: 1;
-      }
+#blast {
+    position: fixed;
+    inset: 0;
 
-      100% {
-        transform: scale(0.75);
-        opacity: 0.7;
-      }
-    }
+    z-index: 200;
 
-    @keyframes textFade {
-      0%, 100% {
-        opacity: 0.4;
-      }
+    pointer-events: none;
 
-      50% {
-        opacity: 1;
-      }
-    }
+    display: none;
 
-    #letter {
-      display: none;
-      opacity: 0;
-      transform: scale(0.92);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at top, #64223b 0%, #281522 35%, #0d0b10 80%);
-      align-items: flex-start;
-      justify-content: center;
-      padding: 30px 20px;
-      overflow-y: auto;
-      z-index: 10;
-    }
+    align-items: center;
+    justify-content: center;
 
-    .letter-box {
-      position: relative;
-      width: 100%;
-      max-width: 390px;
-      padding: 28px 22px 40px;
-      border-radius: 28px;
-      background: rgba(31, 24, 34, 0.96);
-      border: 1px solid rgba(255, 130, 165, 0.15);
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.55),
-        0 0 35px rgba(255, 70, 120, 0.08);
-      text-align: center;
-      margin-bottom: 20px;
-    }
+    background: white;
 
-    .big-heart {
-      font-size: 58px;
-      margin-bottom: 5px;
-      animation: heartbeat 1.8s infinite;
-      filter: drop-shadow(0 0 15px rgba(255, 70, 120, 0.7));
-    }
+    animation: flash .7s forwards;
+}
 
-    .letter-box h2 {
-      margin-top: 8px;
-      font-size: 24px;
-    }
+.blast-text {
+    font-size: clamp(35px, 10vw, 75px);
+    font-weight: 800;
+    color: #ff315c;
 
-    .letter-box p {
-      color: #d8ccd2;
-      line-height: 1.8;
-      font-size: 15px;
-    }
+    animation: blastText .8s ease forwards;
+}
 
-    .music-box {
-      margin-top: 25px;
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(255, 91, 141, 0.08);
-      border: 1px solid rgba(255, 130, 165, 0.12);
-    }
 
-    .music-title {
-      font-size: 14px;
-      color: #e2d4da;
-      margin-bottom: 12px;
-    }
+/* ================= MAIN ================= */
 
-    .music-button {
-      margin: 0;
-      padding: 12px 22px;
-    }
+#main {
+    min-height: 100vh;
 
-    .gallery {
-      margin-top: 28px;
-      display: flex;
-      gap: 14px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 10px;
-      scrollbar-width: none;
-    }
+    padding-bottom: 100px;
 
-    .gallery::-webkit-scrollbar {
-      display: none;
-    }
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #35121f 0%,
+            #09090f 45%
+        );
+}
 
-    .photo-card {
-      width: 86%;
-      flex: 0 0 86%;
-      scroll-snap-align: center;
-    }
+.hero {
+    min-height: 85vh;
 
-    .photo-card img {
-      width: 100%;
-      height: 330px;
-      object-fit: cover;
-      border-radius: 22px;
-      display: block;
-      box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.45),
-        0 0 20px rgba(255, 80, 130, 0.08);
-    }
+    display: flex;
+    flex-direction: column;
 
-    .caption {
-      margin-top: 13px;
-      color: #ddd4d9;
-      font-size: 15px;
-      line-height: 1.6;
-    }
+    align-items: center;
+    justify-content: center;
 
-    .secret {
-      margin-top: 32px;
-      padding-top: 25px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
+    text-align: center;
 
-    .lock-icon {
-      font-size: 45px;
-      margin-bottom: 8px;
-    }
+    padding: 30px;
+}
 
-    .secret-title {
-      color: white;
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
+.hero-heart {
+    font-size: 80px;
 
-    .secret-subtitle {
-      color: #a99da4;
-      font-size: 13px;
-    }
+    animation:
+        heartbeat 1.5s infinite;
 
-    .code-input {
-      width: 82%;
-      padding: 14px;
-      margin-top: 16px;
-      border: 1px solid rgba(255, 130, 165, 0.12);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.07);
-      color: white;
-      text-align: center;
-      font-size: 16px;
-      outline: none;
-    }
+    filter:
+        drop-shadow(0 0 30px rgba(255,49,92,.6));
+}
 
-    .code-input:focus {
-      border-color: #ff6b9a;
-      box-shadow: 0 0 15px rgba(255, 91, 141, 0.15);
-    }
+.hero h1 {
+    margin-top: 20px;
 
-    .unlock-button {
-      margin-top: 12px;
-    }
+    font-size: clamp(34px, 9vw, 58px);
+}
 
-    .error {
-      display: none;
-      color: #ff7b9d;
-      font-size: 13px;
-      margin-top: 10px;
-    }
+.hero p {
+    margin-top: 15px;
 
-    .secret-message {
-      display: none;
-      margin-top: 20px;
-      padding: 22px;
-      border-radius: 22px;
-      background: rgba(255, 91, 141, 0.09);
-      border: 1px solid rgba(255, 91, 141, 0.15);
-      animation: reveal 0.6s ease;
-    }
+    max-width: 550px;
 
-    .secret-message p {
-      margin: 0;
-      color: #ddd;
-      line-height: 1.8;
-    }
+    color: #bbb;
 
-    .unlocked {
-      font-size: 38px;
-      margin-bottom: 10px;
-    }
+    line-height: 1.7;
+}
 
-    @keyframes heartbeat {
-      0%, 100% {
+
+/* ================= SECTIONS ================= */
+
+section {
+    width: min(900px, 92%);
+
+    margin: 70px auto;
+
+    text-align: center;
+}
+
+.section-title {
+    font-size: clamp(27px, 7vw, 38px);
+
+    margin-bottom: 15px;
+}
+
+.card {
+    padding: 28px;
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.25);
+
+    line-height: 1.8;
+}
+
+
+/* ================= LITTLE MESSAGES ================= */
+
+.message-box {
+    min-height: 120px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+
+    color: #eee;
+
+    padding: 25px;
+}
+
+.message-btn {
+    margin-top: 20px;
+
+    padding: 12px 22px;
+
+    border: 1px solid #ff315c;
+    border-radius: 25px;
+
+    background: transparent;
+    color: #ff6684;
+}
+
+
+/* ================= OPEN WHEN ================= */
+
+.open-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(140px, 1fr));
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+.open-when-btn {
+    min-height: 90px;
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    color: white;
+
+    padding: 15px;
+
+    transition: .3s;
+}
+
+.open-when-btn:active {
+    transform: scale(.94);
+}
+
+
+/* ================= LETTER ================= */
+
+#letter {
+    align-items: flex-start;
+
+    padding: 30px 20px;
+
+    overflow-y: auto;
+
+    text-align: left;
+}
+
+.letter-text {
+    white-space: pre-line;
+
+    color: #ddd;
+
+    line-height: 2;
+
+    font-size: 16px;
+}
+
+
+/* ================= MEMORIES ================= */
+
+.memories-section {
+    text-align: center;
+}
+
+.memories-subtitle {
+    color: #999;
+
+    line-height: 1.7;
+
+    margin-bottom: 25px;
+}
+
+.memories-open-btn {
+    padding: 15px 28px;
+
+    border: none;
+    border-radius: 30px;
+
+    background: #ff315c;
+
+    color: white;
+
+    font-size: 15px;
+
+    box-shadow:
+        0 0 25px rgba(255,49,92,.35);
+
+    transition: .3s;
+}
+
+.memories-open-btn:active {
+    transform: scale(.93);
+}
+
+
+/* ================= MEMORY OVERLAY ================= */
+
+#memoriesOverlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 150;
+
+    display: none;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    overflow-y: auto;
+
+    padding: 35px 15px;
+
+    background:
+        rgba(0,0,0,.94);
+
+    backdrop-filter: blur(10px);
+}
+
+.memories-container {
+    width: min(900px, 100%);
+
+    text-align: center;
+
+    animation:
+        memoriesAppear .5s ease;
+}
+
+.memories-container h2 {
+    font-size: clamp(27px, 7vw, 38px);
+}
+
+.memories-container > p {
+    color: #999;
+
+    margin-top: 8px;
+}
+
+
+/* ================= CLOSE ================= */
+
+.memories-close {
+    position: fixed;
+
+    top: 18px;
+    right: 18px;
+
+    z-index: 5;
+
+    width: 44px;
+    height: 44px;
+
+    border: none;
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.1);
+
+    color: white;
+
+    font-size: 20px;
+}
+
+
+/* ================= COLLAGE ================= */
+
+.photo-collage {
+    position: relative;
+
+    width: min(760px, 96vw);
+
+    height: 650px;
+
+    margin: 35px auto 0;
+}
+
+.collage-photo {
+    position: absolute;
+
+    padding: 7px;
+
+    background: white;
+
+    border-radius: 5px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.65);
+
+    opacity: 0;
+
+    animation:
+        photoPop .75s ease forwards;
+}
+
+.collage-photo img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 2px;
+}
+
+
+/* PHOTO 1 */
+
+.photo-1 {
+    width: 270px;
+    height: 340px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(-2deg);
+
+    z-index: 7;
+
+    animation-delay: .1s;
+}
+
+
+/* PHOTO 2 */
+
+.photo-2 {
+    width: 205px;
+    height: 260px;
+
+    left: 5%;
+    top: 4%;
+
+    transform:
+        rotate(-10deg);
+
+    z-index: 4;
+
+    animation-delay: .25s;
+}
+
+
+/* PHOTO 3 */
+
+.photo-3 {
+    width: 205px;
+    height: 260px;
+
+    right: 5%;
+    top: 4%;
+
+    transform:
+        rotate(9deg);
+
+    z-index: 4;
+
+    animation-delay: .4s;
+}
+
+
+/* PHOTO 4 */
+
+.photo-4 {
+    width: 205px;
+    height: 260px;
+
+    left: 2%;
+    bottom: 5%;
+
+    transform:
+        rotate(8deg);
+
+    z-index: 3;
+
+    animation-delay: .55s;
+}
+
+
+/* PHOTO 5 */
+
+.photo-5 {
+    width: 205px;
+    height: 260px;
+
+    right: 2%;
+    bottom: 5%;
+
+    transform:
+        rotate(-8deg);
+
+    z-index: 3;
+
+    animation-delay: .7s;
+}
+
+
+/* PHOTO 6 */
+
+.photo-6 {
+    width: 175px;
+    height: 225px;
+
+    left: 25%;
+    top: 3%;
+
+    transform:
+        rotate(5deg);
+
+    z-index: 5;
+
+    animation-delay: .85s;
+}
+
+
+/* PHOTO 7 */
+
+.photo-7 {
+    width: 175px;
+    height: 225px;
+
+    right: 25%;
+    bottom: 2%;
+
+    transform:
+        rotate(-5deg);
+
+    z-index: 5;
+
+    animation-delay: 1s;
+}
+
+
+/* ================= GIFT ================= */
+
+.gift {
+    font-size: 75px;
+
+    cursor: pointer;
+
+    animation:
+        giftFloat 2s ease-in-out infinite;
+
+    margin: 20px;
+}
+
+
+/* ================= HOLD HEART ================= */
+
+.hold-heart {
+    font-size: 75px;
+
+    margin: 20px;
+
+    user-select: none;
+
+    cursor: pointer;
+
+    transition: transform .2s;
+}
+
+.hold-heart:active {
+    transform: scale(1.25);
+}
+
+
+/* ================= NIGHT ================= */
+
+.night-btn {
+    padding: 15px 25px;
+
+    border: 1px solid #555;
+
+    border-radius: 25px;
+
+    background: #111;
+
+    color: white;
+}
+
+
+/* ================= SECRET ================= */
+
+.secret-input {
+    width: min(300px, 90%);
+
+    padding: 14px 18px;
+
+    border: 1px solid #444;
+
+    border-radius: 25px;
+
+    background: #111;
+
+    color: white;
+
+    outline: none;
+
+    text-align: center;
+}
+
+.secret-btn {
+    margin-top: 12px;
+
+    padding: 13px 25px;
+
+    border: none;
+
+    border-radius: 25px;
+
+    background: #ff315c;
+
+    color: white;
+}
+
+.secret-result {
+    margin-top: 20px;
+
+    color: #ff6684;
+
+    min-height: 25px;
+}
+
+
+/* ================= MUSIC ================= */
+
+.music-btn {
+    position: fixed;
+
+    right: 18px;
+    bottom: 18px;
+
+    z-index: 80;
+
+    width: 50px;
+    height: 50px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #ff315c;
+
+    color: white;
+
+    box-shadow:
+        0 0 20px rgba(255,49,92,.4);
+}
+
+
+/* ================= FLOATING HEARTS ================= */
+
+.float-heart {
+    position: fixed;
+
+    bottom: -30px;
+
+    pointer-events: none;
+
+    z-index: 20;
+
+    animation:
+        floatUp 5s linear forwards;
+}
+
+
+/* ================= NOTIFICATION ================= */
+
+.notification {
+    position: fixed;
+
+    left: 50%;
+    bottom: 25px;
+
+    transform:
+        translateX(-50%)
+        translateY(100px);
+
+    z-index: 300;
+
+    width: min(90%, 400px);
+
+    padding: 15px 20px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(30,30,38,.96);
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    text-align: center;
+
+    opacity: 0;
+
+    transition: .4s;
+}
+
+.notification.show {
+    transform:
+        translateX(-50%)
+        translateY(0);
+
+    opacity: 1;
+}
+
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes heartbeat {
+    0%, 100% {
         transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.1);
-      }
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
+    50% {
+        transform: scale(1.12);
+    }
+}
 
-      to {
+@keyframes flash {
+    0% {
         opacity: 1;
-        transform: translateY(0);
-      }
     }
 
-    @keyframes reveal {
-      from {
+    100% {
         opacity: 0;
-        transform: translateY(15px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
-  </style>
+}
+
+@keyframes blastText {
+    0% {
+        transform: scale(.3);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes memoriesAppear {
+    from {
+        opacity: 0;
+        transform: scale(.9) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes photoPop {
+    0% {
+        opacity: 0;
+
+        transform:
+            scale(.35)
+            rotate(0deg);
+    }
+
+    65% {
+        opacity: 1;
+
+        transform:
+            scale(1.08)
+            rotate(0deg);
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes giftFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes floatUp {
+    0% {
+        transform:
+            translateY(0)
+            scale(.7);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translateY(-110vh)
+            rotate(30deg)
+            scale(1.2);
+
+        opacity: 0;
+    }
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px) {
+
+    .photo-collage {
+        width: 96vw;
+        height: 560px;
+    }
+
+    .photo-1 {
+        width: 185px;
+        height: 245px;
+
+        left: 50%;
+        top: 50%;
+    }
+
+    .photo-2,
+    .photo-3,
+    .photo-4,
+    .photo-5 {
+        width: 125px;
+        height: 165px;
+    }
+
+    .photo-6,
+    .photo-7 {
+        width: 115px;
+        height: 150px;
+    }
+
+    .photo-2 {
+        left: 1%;
+        top: 3%;
+    }
+
+    .photo-3 {
+        right: 1%;
+        top: 3%;
+    }
+
+    .photo-4 {
+        left: 1%;
+        bottom: 3%;
+    }
+
+    .photo-5 {
+        right: 1%;
+        bottom: 3%;
+    }
+
+    .photo-6 {
+        left: 23%;
+        top: 1%;
+    }
+
+    .photo-7 {
+        right: 23%;
+        bottom: 1%;
+    }
+
+    .hero {
+        min-height: 75vh;
+    }
+}
+</style>
 </head>
+
 
 <body>
 
-  <div class="hearts">
-    <div class="floating-heart">❤️</div>
-    <div class="floating-heart">♡</div>
-    <div class="floating-heart">❤️</div>
-    <div class="floating-heart">♡</div>
-    <div class="floating-heart">❤️</div>
-    <div class="floating-heart">♡</div>
-    <div class="floating-heart">❤️</div>
-  </div>
 
-  <div class="container">
+<!-- ================= MUSIC ================= -->
 
-    <div class="heart">
-      ❤️
+<audio id="music" loop>
+    <source
+        src="music/Adie - Paraluman (Lyrics).mp3"
+        type="audio/mpeg">
+</audio>
+
+
+<!-- ================= LANDING ================= -->
+
+<div id="landing">
+
+    <div class="landing-heart">
+        ❤️
     </div>
 
-    <h1>
-      hey babyyy
-    </h1>
+    <h1>for you, babyyy</h1>
 
     <p>
-      I made something special for you.
+        i made something just for you.
     </p>
 
-    <button onclick="openLetter()">
-      open this 💌
+    <button
+        class="open-btn"
+        onclick="startExperience()">
+
+        open it ❤️
+
     </button>
 
-  </div>
+</div>
 
-  <div id="heartIntro">
 
-    <div class="intro-heart">
-      ❤️
+<!-- ================= PASABOG ================= -->
+
+<div id="blast">
+
+    <div class="blast-text">
+        I LOVE YOU ❤️
     </div>
 
-    <div class="intro-text">
-      this is for you, babyyy...
-    </div>
+</div>
 
-  </div>
 
-  <div id="letter">
+<!-- ================= MAIN ================= -->
 
-    <div class="letter-box">
+<main id="main" class="hidden">
 
-      <div class="big-heart">
-        ❤️
-      </div>
 
-      <h2>
-        For My Babyyy ❤️
-      </h2>
+    <!-- HERO -->
 
-      <p>
-        I know this is just a simple website,
-        but I made this because I wanted to
-        give you something that is made
-        especially for you.
-      </p>
+    <div class="hero">
 
-      <p>
-        Thank you for being part of my life,
-        for staying, and for all the little
-        things that you do.
-      </p>
-
-      <p>
-        I may not always say it perfectly,
-        but I hope you know how much
-        you mean to me.
-      </p>
-
-      <p>
-        I love you, babyyy. ❤️
-      </p>
-
-      <div class="music-box">
-
-        <div class="music-title">
-          a little song for you 🎵
+        <div class="hero-heart">
+            ❤️
         </div>
 
-        <audio id="music" loop>
-          <source src="Adie - Paraluman (Lyrics).mp3" type="audio/mpeg">
-        </audio>
+        <h1>
+            hi, babyyy.
+        </h1>
 
-        <button class="music-button" onclick="toggleMusic()">
-          ▶ Play Music
+        <p>
+            if you're reading this,
+            just know that every little thing
+            here was made with you in mind.
+        </p>
+
+    </div>
+
+
+    <!-- LITTLE MESSAGE -->
+
+    <section>
+
+        <h2 class="section-title">
+            💭 little message
+        </h2>
+
+        <div class="card">
+
+            <div
+                id="randomMessage"
+                class="message-box">
+
+                you make ordinary days
+                feel a little more special.
+
+            </div>
+
+            <button
+                class="message-btn"
+                onclick="newMessage()">
+
+                another message
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- OPEN WHEN -->
+
+    <section>
+
+        <h2 class="section-title">
+            💌 open when...
+        </h2>
+
+        <div class="open-grid">
+
+            <button
+                class="open-when-btn"
+                onclick="showMessage('sad')">
+
+                😔<br>
+                you're sad
+
+            </button>
+
+            <button
+                class="open-when-btn"
+                onclick="showMessage('miss')">
+
+                🥺<br>
+                you miss me
+
+            </button>
+
+            <button
+                class="open-when-btn"
+                onclick="showMessage('tired')">
+
+                😴<br>
+                you're tired
+
+            </button>
+
+            <button
+                class="open-when-btn"
+                onclick="showMessage('happy')">
+
+                🥰<br>
+                you're happy
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- LETTER -->
+
+    <section>
+
+        <h2 class="section-title">
+            💌 a letter for you
+        </h2>
+
+        <div
+            id="letter"
+            class="card">
+
+            <div
+                id="letterText"
+                class="letter-text">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MEMORIES -->
+
+    <section class="memories-section">
+
+        <h2 class="section-title">
+            📸 our memories
+        </h2>
+
+        <p class="memories-subtitle">
+            some moments i want to keep forever.
+        </p>
+
+        <button
+            class="memories-open-btn"
+            onclick="openMemories()">
+
+            open our memories ❤️
+
         </button>
 
-      </div>
+    </section>
 
-      <div class="gallery">
 
-        <div class="photo-card">
-          <img src="att.97vp2zl5u6zg5e1ga2nZvjJr63US-mqfEx8krTg7Dy4.jpeg">
-          <div class="caption">
-            you’re so beautiful, babyyy ❤️
-          </div>
-        </div>
+    <!-- GIFT -->
 
-        <div class="photo-card">
-          <img src="att.9oDOCCrwe-68ysLHTxM8x0OFCqNx0unnl6IPjXeGick.webp.jpeg">
-          <div class="caption">
-            my favorite girl, always.
-          </div>
-        </div>
+    <section>
 
-        <div class="photo-card">
-          <img src="att.dxVrpz5CFicrFlhsH4_HBTjqow0Wnvzpxzh6wFa8jng.jpeg">
-          <div class="caption">
-            i could look at you all day.
-          </div>
-        </div>
+        <h2 class="section-title">
+            🎁 there's something here...
+        </h2>
 
-        <div class="photo-card">
-          <img src="att.Jr0-cisZdHMb-42ePl7aLX1ohblw6zZwoSdxxarrToc.jpeg">
-          <div class="caption">
-            even from far away, you still make me smile.
-          </div>
-        </div>
+        <div
+            class="gift"
+            onclick="giftSurprise()">
 
-        <div class="photo-card">
-          <img src="att.JtDwQAQHdf_SdmXunn3nftLqXULfan0x-lwsBEnxoqs.jpeg">
-          <div class="caption">
-            you have no idea how beautiful you are to me.
-          </div>
-        </div>
-
-        <div class="photo-card">
-          <img src="att.KQBr38IqOa6wXPvkkgj2vBCIfTQhjlWdr7_miZkNv7A.jpeg">
-          <div class="caption">
-            i may be far from you, but my heart is always close.
-          </div>
-        </div>
-
-        <div class="photo-card">
-          <img src="att.mrOSrZs_omicGNRYyw2eOrluHgrZ4JTsEQzY9iCnnhQ.jpeg">
-          <div class="caption">
-            and yes, i’ll never get tired of admiring you. ❤️
-          </div>
-        </div>
-
-      </div>
-
-      <div class="secret">
-
-        <div class="lock-icon">
-          🔒
-        </div>
-
-        <div class="secret-title">
-          something is waiting for you...
-        </div>
-
-        <div class="secret-subtitle">
-          only you can unlock this 💗
-        </div>
-
-        <input
-          id="secretCode"
-          class="code-input"
-          type="password"
-          inputmode="numeric"
-          placeholder="enter the secret code"
-        >
-
-        <br>
-
-        <button class="unlock-button" onclick="unlockSecret()">
-          Unlock 💗
-        </button>
-
-        <div id="errorMessage" class="error">
-          not quite... try again ❤️
-        </div>
-
-        <div id="secretMessage" class="secret-message">
-
-          <div class="unlocked">
-            🔓❤️
-          </div>
-
-          <p>
-            September 4, 2026.
-
-            <br><br>
-
-            The day I finally asked you if I could
-            court you. Maybe it was just one date,
-            but for me, it became the beginning of
-            something really special.
-
-            <br><br>
-
-            Even though we're far from each other,
-            I hope you always remember that I'm
-            choosing you, caring for you, and
-            doing my best to make you feel loved.
-
-            <br><br>
-
-            Thank you for giving me a chance,
-            babyyy. ❤️
-
-            <br><br>
-
-            I can't wait for the day when this
-            distance is no longer between us.
-          </p>
+            🎁
 
         </div>
 
-      </div>
+        <p>
+            tap the gift.
+        </p>
 
-      <button onclick="closeLetter()">
-        Close 💗
-      </button>
+    </section>
+
+
+    <!-- HOLD HEART -->
+
+    <section>
+
+        <h2 class="section-title">
+            ❤️ hold my heart
+        </h2>
+
+        <div
+            class="hold-heart"
+            ontouchstart="startHold()"
+            ontouchend="endHold()"
+            onmousedown="startHold()"
+            onmouseup="endHold()"
+            onmouseleave="endHold()">
+
+            ❤️
+
+        </div>
+
+        <p id="holdText">
+            hold it for 3 seconds.
+        </p>
+
+    </section>
+
+
+    <!-- DAY COUNTER -->
+
+    <section>
+
+        <h2 class="section-title">
+            📅 us
+        </h2>
+
+        <div class="card">
+
+            <p>
+                since September 4, 2026
+            </p>
+
+            <h2
+                id="dayCounter"
+                style="margin-top:15px;">
+            </h2>
+
+        </div>
+
+    </section>
+
+
+    <!-- NIGHT MOMENT -->
+
+    <section>
+
+        <h2 class="section-title">
+            🌙 night moment
+        </h2>
+
+        <div class="card">
+
+            <p>
+                sometimes i just want
+                a quiet moment with you.
+            </p>
+
+            <button
+                class="night-btn"
+                onclick="nightMoment()"
+                style="margin-top:20px;">
+
+                stay here with me 🌙
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- SECRET -->
+
+    <section>
+
+        <h2 class="section-title">
+            🔐 one secret
+        </h2>
+
+        <div class="card">
+
+            <p>
+                there is a secret waiting for you.
+            </p>
+
+            <input
+                id="secretInput"
+                class="secret-input"
+                type="password"
+                placeholder="enter the code"
+                style="margin-top:20px;">
+
+            <br>
+
+            <button
+                class="secret-btn"
+                onclick="unlockSecret()">
+
+                unlock ❤️
+
+            </button>
+
+            <div
+                id="secretResult"
+                class="secret-result">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINAL -->
+
+    <section>
+
+        <h2 class="section-title">
+            one last thing...
+        </h2>
+
+        <div class="card">
+
+            <p>
+                thank you for being part of my life.
+            </p>
+
+            <button
+                class="open-btn"
+                onclick="finalSurprise()">
+
+                tap me ❤️
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- ================= MEMORIES OVERLAY ================= -->
+
+<div
+    id="memoriesOverlay"
+    onclick="closeMemories(event)">
+
+    <button
+        class="memories-close"
+        onclick="closeMemories()">
+
+        ✕
+
+    </button>
+
+    <div class="memories-container">
+
+        <h2>
+            our little memories ❤️
+        </h2>
+
+        <p>
+            every picture holds a moment.
+        </p>
+
+
+        <div class="photo-collage">
+
+
+            <div class="collage-photo photo-1">
+
+                <img
+                    src="att.97vp2zl5u6zg5e1ga2nZvjJr63US-mqfEx8krTg7Dy4.jpeg">
+
+            </div>
+
+
+            <div class="collage-photo photo-2">
+
+                <img
+                    src="att.9oDOCCrwe-68ysLHTxM8x0OFCqNx0unnl6IPjXeGick.webp.jpeg">
+
+            </div>
+
+
+            <div class="collage-photo photo-3">
+
+                <img
+                    src="att.dxVrpz5CFicrFlhsH4_HBTjqow0Wnvzpxzh6wFa8jng.jpeg">
+
+            </div>
+
+
+            <div class="collage-photo photo-4">
+
+                <img
+                    src="att.Jr0-cisZdHMb-42ePl7aLX1ohblw6zZwoSdxxarrToc.jpeg">
+
+            </div>
+
+
+            <div class="collage-photo photo-5">
+
+                <img
+                    src="att.JtDwQAQHdf_SdmXunn3nftLqXULfan0x-lwsBEnxoqs.jpeg">
+
+            </div>
+
+
+            <div class="collage-photo photo-6">
+
+                <img
+                    src="att.KQBr38IqOa6wXPvkkgj2vBCIfTQhjlWdr7_miZkNv7A.jpeg">
+
+            </div>
+
+
+            <div class="collage-photo photo-7">
+
+                <img
+                    src="att.mrOSrZs_omicGNRYyw2eOrluHgrZ4JTsEQzY9iCnnhQ.jpeg">
+
+            </div>
+
+
+        </div>
 
     </div>
 
-  </div>
+</div>
 
-  <script>
 
-    function openLetter() {
+<!-- ================= MUSIC BUTTON ================= -->
 
-      const intro = document.getElementById("heartIntro");
+<button
+    id="musicBtn"
+    class="music-btn"
+    onclick="toggleMusic()">
 
-      intro.style.display = "flex";
+    🎵
 
-      setTimeout(function() {
-        intro.classList.add("show");
-      }, 10);
+</button>
 
-      setTimeout(function() {
 
-        intro.classList.remove("show");
+<!-- ================= NOTIFICATION ================= -->
 
-        setTimeout(function() {
+<div
+    id="notification"
+    class="notification">
+</div>
 
-          intro.style.display = "none";
 
-          const letter = document.getElementById("letter");
+<script>
 
-          letter.style.display = "flex";
+/* ================= MUSIC ================= */
 
-          setTimeout(function() {
-            letter.style.opacity = "1";
-            letter.style.transform = "scale(1)";
-          }, 10);
+const music =
+    document.getElementById("music");
 
-        }, 400);
+let musicPlaying = false;
 
-      }, 1800);
 
-    }
+function playMusic() {
 
-    function closeLetter() {
+    music.play()
+        .then(() => {
 
-      const letter = document.getElementById("letter");
-      const music = document.getElementById("music");
+            musicPlaying = true;
 
-      music.pause();
+            document.getElementById(
+                "musicBtn"
+            ).textContent = "⏸️";
 
-      letter.style.opacity = "0";
-      letter.style.transform = "scale(0.92)";
+        })
+        .catch(() => {
 
-      setTimeout(function() {
-        letter.style.display = "none";
-      }, 400);
+            musicPlaying = false;
 
-    }
+        });
 
-    function toggleMusic() {
+}
 
-      const music = document.getElementById("music");
-      const button = document.querySelector(".music-button");
 
-      if (music.paused) {
+function toggleMusic() {
 
-        music.play();
-        button.textContent = "⏸ Pause Music";
+    if (music.paused) {
 
-      } else {
+        playMusic();
+
+    } else {
 
         music.pause();
-        button.textContent = "▶ Play Music";
 
-      }
+        musicPlaying = false;
+
+        document.getElementById(
+            "musicBtn"
+        ).textContent = "🎵";
+    }
+
+}
+
+
+/* ================= START ================= */
+
+function startExperience() {
+
+    const landing =
+        document.getElementById("landing");
+
+    landing.style.opacity = "0";
+
+    setTimeout(() => {
+
+        landing.classList.add("hidden");
+
+        const blast =
+            document.getElementById("blast");
+
+        blast.style.display = "flex";
+
+        createMiniExplosion();
+
+        playMusic();
+
+        setTimeout(() => {
+
+            blast.style.display = "none";
+
+            document.getElementById(
+                "main"
+            ).classList.remove("hidden");
+
+            window.scrollTo(0, 0);
+
+            startFloatingHearts();
+
+            typeLetter();
+
+        }, 750);
+
+    }, 600);
+
+}
+
+
+/* ================= FLOATING HEARTS ================= */
+
+function startFloatingHearts() {
+
+    setInterval(() => {
+
+        const heart =
+            document.createElement("div");
+
+        heart.className =
+            "float-heart";
+
+        heart.textContent =
+            ["❤️","💗","💕","💖"][Math.floor(
+                Math.random() * 4
+            )];
+
+        heart.style.left =
+            Math.random() * 100 + "vw";
+
+        heart.style.fontSize =
+            (14 + Math.random() * 18) + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, 5000);
+
+    }, 700);
+
+}
+
+
+/* ================= MINI EXPLOSION ================= */
+
+function createMiniExplosion() {
+
+    for (let i = 0; i < 35; i++) {
+
+        const item =
+            document.createElement("div");
+
+        item.textContent =
+            ["❤️","💗","💖","✨"][Math.floor(
+                Math.random() * 4
+            )];
+
+        item.style.position = "fixed";
+
+        item.style.left = "50%";
+        item.style.top = "50%";
+
+        item.style.zIndex = "250";
+
+        item.style.fontSize =
+            (15 + Math.random() * 25) + "px";
+
+        item.style.pointerEvents = "none";
+
+        const angle =
+            Math.random() * Math.PI * 2;
+
+        const distance =
+            120 + Math.random() * 350;
+
+        const x =
+            Math.cos(angle) * distance;
+
+        const y =
+            Math.sin(angle) * distance;
+
+        item.animate(
+            [
+                {
+                    transform:
+                        "translate(-50%,-50%) scale(.2)",
+                    opacity: 1
+                },
+                {
+                    transform:
+                        `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.2)`,
+                    opacity: 0
+                }
+            ],
+            {
+                duration:
+                    900 + Math.random() * 700,
+                easing: "ease-out"
+            }
+        );
+
+        document.body.appendChild(item);
+
+        setTimeout(() => {
+            item.remove();
+        }, 1700);
 
     }
 
-    function unlockSecret() {
+}
 
-      const code = document.getElementById("secretCode").value;
-      const secretMessage = document.getElementById("secretMessage");
-      const errorMessage = document.getElementById("errorMessage");
 
-      if (code === "09042026") {
+/* ================= RANDOM MESSAGE ================= */
 
-        secretMessage.style.display = "block";
-        errorMessage.style.display = "none";
+const messages = [
 
-      } else {
+    "you make ordinary days feel a little more special. ❤️",
 
-        secretMessage.style.display = "none";
-        errorMessage.style.display = "block";
+    "i hope you always remember how important you are to me.",
 
-      }
+    "even on quiet days, i'm still here thinking about you.",
+
+    "you are one of my favorite parts of every day.",
+
+    "distance doesn't change how much you mean to me.",
+
+    "i don't need a perfect day. i just need you in it.",
+
+    "thank you for choosing to stay."
+
+];
+
+
+function newMessage() {
+
+    const box =
+        document.getElementById(
+            "randomMessage"
+        );
+
+    const message =
+        messages[
+            Math.floor(
+                Math.random() * messages.length
+            )
+        ];
+
+    box.style.opacity = "0";
+
+    setTimeout(() => {
+
+        box.textContent = message;
+
+        box.style.opacity = "1";
+
+    }, 250);
+
+}
+
+
+/* ================= OPEN WHEN ================= */
+
+function showMessage(type) {
+
+    const texts = {
+
+        sad:
+            "if you're sad, please remember that you don't have to handle everything alone. i'm here. ❤️",
+
+        miss:
+            "if you miss me, just remember that somewhere out there, i'm probably missing you too. 🥺",
+
+        tired:
+            "rest, babyyy. you don't always have to be strong. take your time. 🤍",
+
+        happy:
+            "if you're happy, keep that smile. knowing you're happy makes me happy too. 🥰"
+
+    };
+
+    showNotification(texts[type]);
+
+}
+
+
+/* ================= LETTER ================= */
+
+const letter = `
+babyyy,
+
+i don't know if i can put everything i feel into words, but i still wanted to make this for you.
+
+i just want you to know that i appreciate you. every conversation, every little moment, every laugh, and even the quiet moments mean something to me.
+
+i know we're not perfect, and i know there will be days when things aren't easy. but if we're both willing to stay, communicate, and fix things together, that's what matters to me.
+
+i don't want something temporary.
+
+i want to keep choosing you, learning you, understanding you, and being there for you.
+
+thank you for giving me a chance.
+
+i'll keep doing my best to make you feel loved, appreciated, and safe.
+
+i love you, babyyy. ❤️
+`;
+
+
+function typeLetter() {
+
+    const target =
+        document.getElementById(
+            "letterText"
+        );
+
+    let index = 0;
+
+    const speed = 18;
+
+    function type() {
+
+        if (index < letter.length) {
+
+            target.textContent +=
+                letter.charAt(index);
+
+            index++;
+
+            setTimeout(type, speed);
+
+        }
 
     }
 
-  </script>
+    type();
+
+}
+
+
+/* ================= MEMORIES ================= */
+
+function openMemories() {
+
+    const overlay =
+        document.getElementById(
+            "memoriesOverlay"
+        );
+
+    overlay.style.display = "flex";
+
+    document.body.style.overflow = "hidden";
+
+    createMiniExplosion();
+
+}
+
+
+function closeMemories(event) {
+
+    if (
+        event &&
+        event.target !==
+        document.getElementById(
+            "memoriesOverlay"
+        )
+    ) {
+        return;
+    }
+
+    document.getElementById(
+        "memoriesOverlay"
+    ).style.display = "none";
+
+    document.body.style.overflow = "auto";
+
+}
+
+
+/* ================= GIFT ================= */
+
+function giftSurprise() {
+
+    createMiniExplosion();
+
+    showNotification(
+        "the real gift is having you in my life. 🎁❤️"
+    );
+
+}
+
+
+/* ================= HOLD HEART ================= */
+
+let holdTimer;
+let holding = false;
+
+
+function startHold() {
+
+    holding = true;
+
+    document.getElementById(
+        "holdText"
+    ).textContent =
+        "keep holding... ❤️";
+
+    holdTimer = setTimeout(() => {
+
+        if (holding) {
+
+            createMiniExplosion();
+
+            document.getElementById(
+                "holdText"
+            ).textContent =
+                "you found my heart. ❤️";
+
+        }
+
+    }, 3000);
+
+}
+
+
+function endHold() {
+
+    holding = false;
+
+    clearTimeout(holdTimer);
+
+}
+
+
+/* ================= DAY COUNTER ================= */
+
+function updateDayCounter() {
+
+    const start =
+        new Date("2026-09-04T00:00:00");
+
+    const now =
+        new Date();
+
+    const difference =
+        now - start;
+
+    const days =
+        Math.max(
+            0,
+            Math.floor(
+                difference /
+                (1000 * 60 * 60 * 24)
+            )
+        );
+
+    document.getElementById(
+        "dayCounter"
+    ).textContent =
+        days + " days";
+
+}
+
+updateDayCounter();
+
+
+/* ================= NIGHT ================= */
+
+function nightMoment() {
+
+    document.body.style.background =
+        "#03040a";
+
+    createMiniExplosion();
+
+    showNotification(
+        "just stay here for a moment. 🌙❤️"
+    );
+
+}
+
+
+/* ================= SECRET ================= */
+
+function unlockSecret() {
+
+    const input =
+        document.getElementById(
+            "secretInput"
+        ).value;
+
+    const result =
+        document.getElementById(
+            "secretResult"
+        );
+
+    if (input === "09042026") {
+
+        result.textContent =
+            "you unlocked it. ❤️ i love you more than you know.";
+
+        createMiniExplosion();
+
+    } else {
+
+        result.textContent =
+            "hmm... that's not it. try again. 👀";
+
+    }
+
+}
+
+
+/* ================= FINAL ================= */
+
+function finalSurprise() {
+
+    createMiniExplosion();
+
+    setTimeout(() => {
+
+        showNotification(
+            "one last thing: i'm really glad i found you. ❤️"
+        );
+
+    }, 300);
+
+}
+
+
+/* ================= NOTIFICATION ================= */
+
+let notificationTimer;
+
+
+function showNotification(text) {
+
+    const notification =
+        document.getElementById(
+            "notification"
+        );
+
+    notification.textContent =
+        text;
+
+    notification.classList.add(
+        "show"
+    );
+
+    clearTimeout(
+        notificationTimer
+    );
+
+    notificationTimer =
+        setTimeout(() => {
+
+            notification.classList.remove(
+                "show"
+            );
+
+        }, 3000);
+
+}
+
+</script>
 
 </body>
-
 </html>
