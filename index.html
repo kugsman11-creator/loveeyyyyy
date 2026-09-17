@@ -19,9 +19,6 @@
         radial-gradient(circle at 50% 15%, #6b243f 0%, #321625 30%, #160f16 65%, #09090c 100%);
       color: white;
       font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       text-align: center;
       overflow: hidden;
     }
@@ -116,6 +113,12 @@
       z-index: 2;
       width: 90%;
       max-width: 380px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
       animation: fadeIn 1.2s ease;
     }
 
@@ -157,8 +160,6 @@
     button:active {
       transform: scale(0.94);
     }
-
-    /* Heart opening animation */
 
     #heartIntro {
       display: none;
@@ -231,9 +232,9 @@
       inset: 0;
       background:
         radial-gradient(circle at top, #64223b 0%, #281522 35%, #0d0b10 80%);
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      padding: 20px;
+      padding: 30px 20px;
       overflow-y: auto;
       z-index: 10;
     }
@@ -242,7 +243,7 @@
       position: relative;
       width: 100%;
       max-width: 390px;
-      padding: 28px 22px;
+      padding: 28px 22px 40px;
       border-radius: 28px;
       background: rgba(31, 24, 34, 0.96);
       border: 1px solid rgba(255, 130, 165, 0.15);
@@ -250,6 +251,7 @@
         0 20px 60px rgba(0, 0, 0, 0.55),
         0 0 35px rgba(255, 70, 120, 0.08);
       text-align: center;
+      margin-bottom: 20px;
     }
 
     .big-heart {
@@ -467,8 +469,6 @@
 
   </div>
 
-  <!-- Heart Intro -->
-
   <div id="heartIntro">
 
     <div class="intro-heart">
@@ -523,7 +523,7 @@
         </div>
 
         <audio id="music" loop>
-          <source src="Adie - Paraluman (Lyrics).mp3" type="audio/mpeg">
+          <source src="music/Adie - Paraluman (Lyrics).mp3" type="audio/mpeg">
         </audio>
 
         <button class="music-button" onclick="toggleMusic()">
