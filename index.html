@@ -2,1510 +2,732 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#080608">
-<title>PRIVATE CLUB — J × MARY GRACE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#070609">
+<title>PRIVATE — MARY GRACE</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
-
 *{
-  box-sizing:border-box;
   margin:0;
   padding:0;
+  box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
 }
 
-:root{
-  --bg:#070607;
-  --bg2:#100a0d;
-  --card:rgba(255,255,255,.055);
-  --line:rgba(255,255,255,.11);
-  --soft:#b9adb2;
-  --white:#f7f1f3;
-  --rose:#d68a9f;
-  --rose2:#f0b7c6;
-  --gold:#d8b982;
-  --gold2:#f1d8a4;
-  --burg:#641d32;
-}
-
 html{
+  background:#070609;
   scroll-behavior:smooth;
-  background:var(--bg);
 }
 
 body{
   background:
-    radial-gradient(circle at 15% 5%,rgba(123,27,55,.25),transparent 32%),
-    radial-gradient(circle at 85% 20%,rgba(210,151,100,.08),transparent 25%),
-    radial-gradient(circle at 50% 80%,rgba(94,20,46,.18),transparent 35%),
-    var(--bg);
-  color:var(--white);
-  font-family:'DM Sans',sans-serif;
+    radial-gradient(circle at 50% 0%,rgba(130,62,78,.18),transparent 35%),
+    #070609;
+  color:#f5eee8;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   overflow-x:hidden;
 }
 
-body.locked{overflow:hidden}
+body.locked{
+  overflow:hidden;
+}
+
+button,
+input{
+  font:inherit;
+}
 
 button{
-  font:inherit;
-  color:inherit;
+  border:0;
+  outline:0;
+  cursor:pointer;
 }
-
-::selection{
-  background:var(--rose);
-  color:#fff;
-}
-
-/* ambient */
 
 .ambient{
   position:fixed;
   inset:0;
-  pointer-events:none;
-  z-index:-3;
   overflow:hidden;
+  pointer-events:none;
+  z-index:0;
 }
 
-.ambient:before,
-.ambient:after{
-  content:"";
+.orb{
   position:absolute;
+  width:280px;
+  height:280px;
   border-radius:50%;
-  filter:blur(90px);
-  animation:ambientMove 12s ease-in-out infinite alternate;
+  filter:blur(100px);
+  opacity:.14;
+  animation:float 13s ease-in-out infinite;
 }
 
-.ambient:before{
-  width:45vw;
-  height:45vw;
-  background:rgba(122,24,54,.18);
-  left:-15vw;
-  top:10vh;
+.orb.one{
+  background:#9b4258;
+  top:-100px;
+  left:-100px;
 }
 
-.ambient:after{
-  width:40vw;
-  height:40vw;
-  background:rgba(194,140,82,.07);
-  right:-15vw;
-  bottom:10vh;
+.orb.two{
+  background:#c79c60;
+  right:-130px;
+  top:35%;
   animation-delay:-5s;
 }
 
-@keyframes ambientMove{
-  from{transform:translate(0,0) scale(1)}
-  to{transform:translate(8vw,-5vh) scale(1.15)}
+.orb.three{
+  background:#682f45;
+  bottom:-130px;
+  left:30%;
+  animation-delay:-8s;
 }
 
-.noise{
-  position:fixed;
-  inset:0;
-  z-index:9998;
-  pointer-events:none;
-  opacity:.035;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+@keyframes float{
+  0%,100%{
+    transform:translate(0,0);
+  }
+
+  50%{
+    transform:translate(30px,-35px);
+  }
 }
 
-/* loader */
+/* =========================
+   PRIVATE LOCK
+========================= */
 
-.loader{
+#lockScreen{
   position:fixed;
   inset:0;
-  z-index:10000;
-  background:#050405;
+  z-index:100;
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:opacity .8s,visibility .8s;
+  padding:25px;
+  background:
+    radial-gradient(circle at center,rgba(110,45,60,.2),transparent 45%),
+    #070609;
+  transition:opacity .8s ease,visibility .8s ease;
 }
 
-.loader.hide{
+#lockScreen.hide{
   opacity:0;
   visibility:hidden;
 }
 
-.loaderBox{
-  width:min(330px,85vw);
+.lockBox{
+  width:min(430px,100%);
   text-align:center;
 }
 
-.loaderSmall{
+.privateLabel{
+  color:#b99b70;
+  font-size:9px;
+  letter-spacing:5px;
+  margin-bottom:25px;
+}
+
+.lockIcon{
+  width:76px;
+  height:76px;
+  border-radius:50%;
+  border:1px solid rgba(206,169,116,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 28px;
+  font-size:24px;
+  box-shadow:
+    0 0 40px rgba(181,130,85,.08),
+    inset 0 0 25px rgba(255,255,255,.025);
+}
+
+.lockTitle{
+  font-family:Georgia,serif;
+  font-size:clamp(38px,10vw,60px);
+  font-weight:400;
+  line-height:.9;
+  letter-spacing:-2px;
+  margin-bottom:15px;
+}
+
+.lockTitle em{
+  color:#b98b91;
+  font-style:italic;
+}
+
+.lockSub{
+  color:#888183;
+  font-size:11px;
+  letter-spacing:2px;
+  margin-bottom:35px;
+}
+
+#password{
+  width:100%;
+  height:55px;
+  padding:0 18px;
+  border-radius:2px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.035);
+  color:#fff;
+  text-align:center;
+  outline:none;
+  font-size:12px;
+  letter-spacing:1.5px;
+  transition:.3s;
+}
+
+#password::placeholder{
+  color:#656063;
+}
+
+#password:focus{
+  border-color:rgba(201,162,107,.65);
+  box-shadow:0 0 25px rgba(201,162,107,.08);
+}
+
+#unlock{
+  width:100%;
+  height:55px;
+  margin-top:12px;
+  background:linear-gradient(135deg,#c6a16d,#8e6842);
+  color:#090708;
   font-size:9px;
   letter-spacing:4px;
-  color:#8e7e84;
-  margin-bottom:22px;
+  font-weight:700;
+  transition:.3s;
 }
 
-.loaderTitle{
-  font-family:'Playfair Display',serif;
-  font-size:32px;
-  margin-bottom:30px;
+#unlock:active{
+  transform:scale(.98);
 }
 
-.loaderLine{
-  height:1px;
-  background:#292329;
-  overflow:hidden;
+.error{
+  height:18px;
+  margin-top:12px;
+  color:#b96772;
+  font-size:10px;
+  letter-spacing:1px;
 }
 
-.loaderProgress{
-  width:0;
-  height:100%;
-  background:linear-gradient(90deg,var(--rose),var(--gold));
-  animation:load 2.2s ease forwards;
+/* =========================
+   MAIN
+========================= */
+
+#main{
+  position:relative;
+  z-index:2;
+  opacity:0;
+  transition:opacity 1.2s ease;
 }
 
-@keyframes load{
-  to{width:100%}
+#main.show{
+  opacity:1;
 }
 
-/* navigation */
+/* =========================
+   NAV
+========================= */
 
 .nav{
   position:fixed;
   top:0;
   left:0;
   right:0;
-  height:72px;
-  z-index:500;
+  z-index:20;
+  height:65px;
+  padding:0 22px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 6vw;
-  background:rgba(7,6,7,.5);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  border-bottom:1px solid rgba(255,255,255,.05);
+  background:linear-gradient(
+    to bottom,
+    rgba(7,6,9,.94),
+    transparent
+  );
+  backdrop-filter:blur(8px);
 }
 
 .brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  font-size:10px;
-  letter-spacing:3px;
-  font-weight:600;
+  color:#b99b70;
+  font-size:8px;
+  letter-spacing:4px;
 }
 
-.brandMark{
-  width:28px;
-  height:28px;
-  border:1px solid rgba(216,185,130,.6);
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  color:var(--gold2);
-  font-family:'Playfair Display',serif;
-  font-size:12px;
-}
-
-.navRight{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-
-.navStatus{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  color:#9b9296;
+.status{
+  color:#777173;
   font-size:8px;
   letter-spacing:2px;
 }
 
-.liveDot{
-  width:6px;
-  height:6px;
-  background:#7fc5a0;
-  border-radius:50%;
-  box-shadow:0 0 10px #7fc5a0;
+.status span{
+  color:#a7c995;
 }
 
-.musicBtn{
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.04);
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-}
-
-/* hero */
+/* =========================
+   HERO
+========================= */
 
 .hero{
   min-height:100svh;
-  padding:130px 6vw 70px;
+  padding:130px 24px 70px;
   display:flex;
-  align-items:center;
+  flex-direction:column;
   justify-content:center;
   position:relative;
-  overflow:hidden;
 }
 
-.heroGrid{
-  position:absolute;
-  inset:0;
-  opacity:.09;
-  background-image:
-    linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
-  background-size:70px 70px;
-  mask-image:linear-gradient(to bottom,black,transparent 80%);
-}
-
-.heroContent{
-  width:min(1100px,100%);
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:60px;
-  align-items:center;
-}
-
-.heroKicker{
-  color:var(--gold);
-  font-size:9px;
+.heroTop{
+  color:#b99b70;
+  font-size:8px;
   letter-spacing:5px;
-  margin-bottom:25px;
+  margin-bottom:23px;
 }
 
-.heroTitle{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(55px,9vw,115px);
-  line-height:.9;
-  font-weight:500;
+.hero h1{
+  font-family:Georgia,serif;
+  font-weight:400;
+  font-size:clamp(60px,17vw,110px);
+  line-height:.82;
   letter-spacing:-5px;
 }
 
-.heroTitle em{
-  color:var(--rose2);
-  font-weight:500;
-}
-
-.heroSub{
-  max-width:530px;
-  color:#aaa0a5;
-  line-height:1.9;
-  font-size:14px;
-  margin-top:30px;
-}
-
-.heroActions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:35px;
-}
-
-.btn{
-  border:1px solid rgba(255,255,255,.13);
-  background:rgba(255,255,255,.045);
-  padding:13px 18px;
-  border-radius:999px;
-  font-size:9px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:.3s;
-}
-
-.btn:hover{
-  border-color:rgba(216,185,130,.6);
-  transform:translateY(-2px);
-}
-
-.btn.primary{
-  background:linear-gradient(135deg,#8a304a,#54172a);
-  border-color:rgba(240,183,198,.25);
-}
-
-/* orb */
-
-.heroVisual{
-  display:flex;
-  justify-content:center;
-  perspective:1000px;
-}
-
-.vipOrb{
-  width:min(390px,78vw);
-  aspect-ratio:1;
-  position:relative;
-  transform-style:preserve-3d;
-  animation:orbFloat 7s ease-in-out infinite;
-}
-
-@keyframes orbFloat{
-  0%,100%{transform:rotateX(5deg) rotateY(-7deg)}
-  50%{transform:rotateX(-4deg) rotateY(8deg) translateY(-13px)}
-}
-
-.orbRing{
-  position:absolute;
-  inset:9%;
-  border:1px solid rgba(216,185,130,.3);
-  border-radius:50%;
-  transform:rotateX(68deg);
-}
-
-.orbRing:nth-child(2){
-  inset:16%;
-  transform:rotateY(70deg);
-  border-color:rgba(214,138,159,.3);
-}
-
-.orbRing:nth-child(3){
-  inset:24%;
-  transform:rotateX(70deg) rotateY(25deg);
-  border-color:rgba(255,255,255,.15);
-}
-
-.orbCore{
-  position:absolute;
-  inset:27%;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 35% 25%,rgba(255,255,255,.24),transparent 12%),
-    radial-gradient(circle at 50% 45%,#8c2f4d,#411426 42%,#130a0e 75%);
-  box-shadow:
-    inset -20px -25px 50px rgba(0,0,0,.65),
-    0 0 80px rgba(132,37,68,.28);
-  display:grid;
-  place-items:center;
-  border:1px solid rgba(240,183,198,.22);
-}
-
-.orbCore span{
-  font-family:'Playfair Display',serif;
-  font-size:40px;
+.hero h1 em{
+  color:#b98b91;
   font-style:italic;
 }
 
-.orbTag{
-  position:absolute;
-  padding:7px 10px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(10,8,10,.7);
-  backdrop-filter:blur(12px);
-  border-radius:6px;
-  font-size:7px;
-  letter-spacing:2px;
-  color:#b8adb1;
+.heroDesc{
+  max-width:480px;
+  color:#898284;
+  font-size:12px;
+  line-height:1.9;
+  margin-top:30px;
 }
 
-.tagOne{top:10%;right:0}
-.tagTwo{bottom:20%;left:0}
-.tagThree{bottom:4%;right:18%}
-
-/* general */
-
-.section{
-  padding:120px 6vw;
-  position:relative;
+.heroLine{
+  width:70px;
+  height:1px;
+  background:#b99b70;
+  margin-top:32px;
 }
 
-.container{
-  width:min(1100px,100%);
-  margin:auto;
+/* =========================
+   FEATURED
+========================= */
+
+.featured{
+  padding:20px 18px 100px;
 }
 
 .sectionHead{
-  margin-bottom:50px;
+  padding:0 6px 22px;
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
 }
 
-.eyebrow{
-  color:var(--gold);
+.sectionEyebrow{
+  color:#b99b70;
   font-size:8px;
   letter-spacing:4px;
-  text-transform:uppercase;
-  margin-bottom:13px;
+  margin-bottom:8px;
 }
 
 .sectionTitle{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(36px,6vw,68px);
-  line-height:1;
-  font-weight:500;
-  letter-spacing:-2px;
+  font-family:Georgia,serif;
+  font-size:32px;
+  font-weight:400;
 }
 
-.sectionText{
-  max-width:600px;
-  color:#948b90;
-  font-size:13px;
-  line-height:1.9;
-  margin-top:18px;
+.counter{
+  color:#716a6c;
+  font-size:8px;
+  letter-spacing:2px;
 }
 
-/* cards */
-
-.membership{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:25px;
-}
-
-.memberCard{
+.featureCard{
   position:relative;
-  min-height:310px;
-  border:1px solid rgba(216,185,130,.18);
-  border-radius:22px;
   overflow:hidden;
-  background:
-    radial-gradient(circle at 85% 15%,rgba(216,185,130,.12),transparent 25%),
-    linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018));
-  box-shadow:0 30px 80px rgba(0,0,0,.3);
-  padding:28px;
-  transition:.4s;
-}
-
-.memberCard:hover{
-  transform:translateY(-5px);
-  border-color:rgba(216,185,130,.35);
-}
-
-.cardTop{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.cardChip{
-  width:38px;
-  height:28px;
-  border-radius:6px;
-  border:1px solid rgba(216,185,130,.4);
-  background:linear-gradient(135deg,#80633d,#c8a96f,#6b4d29);
-}
-
-.cardNumber{
-  color:#777075;
-  font-size:7px;
-  letter-spacing:3px;
-}
-
-.memberRole{
-  margin-top:65px;
-  font-size:8px;
-  letter-spacing:3px;
-  color:var(--gold);
-}
-
-.memberName{
-  font-family:'Playfair Display',serif;
-  font-size:34px;
-  margin-top:9px;
-}
-
-.memberMeta{
-  display:flex;
-  justify-content:space-between;
-  margin-top:35px;
-  color:#7e757a;
-  font-size:7px;
-  letter-spacing:2px;
-}
-
-.memberMeta strong{
-  display:block;
-  color:#cfc5ca;
-  margin-top:6px;
-  font-size:8px;
-}
-
-.officialBox{
-  margin-top:25px;
-  padding:35px;
-  border:1px solid rgba(214,138,159,.2);
-  border-radius:20px;
-  background:
-    radial-gradient(circle at 50% 0%,rgba(131,32,60,.16),transparent 50%),
-    rgba(255,255,255,.025);
-  text-align:center;
-}
-
-.statusLabel{
-  color:#81777c;
-  font-size:8px;
-  letter-spacing:3px;
-}
-
-.statusBig{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(36px,7vw,65px);
-  margin:12px 0;
-  color:#f0c4d0;
-}
-
-.statusLine{
-  color:#958b90;
-  font-size:11px;
-  line-height:1.8;
-}
-
-.statusPill{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  margin-top:20px;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(127,197,160,.2);
-  color:#94caae;
-  font-size:7px;
-  letter-spacing:2px;
-}
-
-/* timeline */
-
-.timeline{
-  position:relative;
-  margin-top:30px;
-}
-
-.timeline:before{
-  content:"";
-  position:absolute;
-  left:20px;
-  top:0;
-  bottom:0;
-  width:1px;
-  background:linear-gradient(var(--rose),rgba(255,255,255,.05));
-}
-
-.timelineItem{
-  position:relative;
-  padding:0 0 50px 65px;
-}
-
-.timelineDot{
-  position:absolute;
-  left:13px;
-  top:3px;
-  width:15px;
-  height:15px;
-  border:1px solid var(--rose2);
-  background:#13090d;
-  border-radius:50%;
-  box-shadow:0 0 18px rgba(214,138,159,.3);
-}
-
-.timelineDate{
-  font-size:8px;
-  letter-spacing:3px;
-  color:var(--gold);
-}
-
-.timelineTitle{
-  font-family:'Playfair Display',serif;
-  font-size:29px;
-  margin-top:8px;
-}
-
-.timelineText{
-  color:#8e858a;
-  font-size:12px;
-  line-height:1.9;
-  max-width:600px;
-  margin-top:10px;
-}
-
-/* stats */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-top:30px;
-}
-
-.stat{
-  padding:25px 18px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:rgba(255,255,255,.025);
-}
-
-.statNum{
-  font-family:'Playfair Display',serif;
-  font-size:30px;
-}
-
-.statLabel{
-  color:#777075;
-  font-size:7px;
-  letter-spacing:2px;
-  margin-top:8px;
-}
-
-/* her */
-
-.herGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-
-.herCard{
-  padding:28px 23px;
-  min-height:190px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
-  transition:.35s;
-}
-
-.herCard:hover{
-  transform:translateY(-5px);
-  border-color:rgba(214,138,159,.3);
-}
-
-.herIcon{
-  font-size:18px;
-  margin-bottom:25px;
-}
-
-.herCard h3{
-  font-family:'Playfair Display',serif;
-  font-size:24px;
-  font-weight:500;
-}
-
-.herCard p{
-  color:#8d8489;
-  font-size:11px;
-  line-height:1.8;
-  margin-top:10px;
-}
-
-.tagCloud{
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  margin-top:30px;
-}
-
-.tag{
-  padding:11px 14px;
-  border-radius:999px;
-  border:1px solid rgba(214,138,159,.15);
-  background:rgba(214,138,159,.04);
-  color:#c8b9bf;
-  font-size:8px;
-  letter-spacing:1.5px;
-}
-
-/* reassurance */
-
-.insecurity{
-  border-radius:25px;
-  overflow:hidden;
-  border:1px solid rgba(214,138,159,.16);
-  background:
-    radial-gradient(circle at 50% 0%,rgba(134,35,62,.18),transparent 45%),
-    rgba(255,255,255,.025);
-}
-
-.insecurityTop{
-  padding:45px 30px 30px;
-  text-align:center;
-}
-
-.insecurityTitle{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(35px,6vw,58px);
-}
-
-.insecuritySub{
-  color:#8d8489;
-  font-size:12px;
-  line-height:1.8;
-  max-width:600px;
-  margin:15px auto 0;
-}
-
-.reassureButtons{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  flex-wrap:wrap;
-  padding:0 25px 30px;
-}
-
-.reassureBtn{
+  min-height:68vh;
   border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.035);
-  padding:12px 14px;
-  border-radius:999px;
-  font-size:8px;
-  letter-spacing:1.5px;
-  cursor:pointer;
+  background:#111014;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
 }
 
-.reassureDisplay{
-  margin:0 25px 25px;
-  min-height:220px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:35px;
-  border-radius:18px;
-  background:rgba(0,0,0,.2);
-  border:1px solid rgba(255,255,255,.05);
-}
-
-.reassureText{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(21px,4vw,31px);
-  line-height:1.55;
-  max-width:720px;
-}
-
-.reassureText small{
-  display:block;
-  color:#80767b;
-  font-family:'DM Sans',sans-serif;
-  font-size:8px;
-  letter-spacing:3px;
-  margin-bottom:15px;
-}
-
-/* grids */
-
-.complimentGrid,
-.littleGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:13px;
-}
-
-.compliment,
-.little{
-  padding:27px;
-  border-radius:18px;
-  border:1px solid var(--line);
-  background:linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
-}
-
-.complimentNo,
-.little span{
-  font-size:8px;
-  color:var(--gold);
-  letter-spacing:3px;
-}
-
-.compliment h3,
-.little h4{
-  font-family:'Playfair Display',serif;
-  font-size:26px;
-  margin:15px 0 9px;
-  font-weight:500;
-}
-
-.compliment p,
-.little p{
-  color:#8e858a;
-  line-height:1.8;
-  font-size:11px;
-}
-
-/* letter */
-
-.letter{
-  max-width:850px;
-  margin:auto;
-  border:1px solid rgba(216,185,130,.15);
-  border-radius:24px;
-  padding:clamp(30px,6vw,65px);
-  background:
-    linear-gradient(135deg,rgba(216,185,130,.045),transparent 40%),
-    rgba(255,255,255,.025);
-}
-
-.letterTitle{
-  font-family:'Playfair Display',serif;
-  font-size:40px;
-  margin-bottom:30px;
-}
-
-.letter p{
-  color:#a69ca1;
-  line-height:2;
-  font-size:13px;
-  margin-bottom:20px;
-}
-
-.signature{
-  color:#e4b4c2;
-  font-family:'Playfair Display',serif;
-  font-size:25px;
-  font-style:italic;
-  margin-top:35px;
-}
-
-/* photo archive */
-
-.photoArchive{
-  position:relative;
-  padding:25px;
-  border-radius:30px;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 15% 20%,rgba(151,39,72,.18),transparent 30%),
-    radial-gradient(circle at 85% 80%,rgba(216,185,130,.10),transparent 30%),
-    linear-gradient(145deg,#100a0d,#080608 65%);
-  border:1px solid rgba(216,185,130,.14);
-  box-shadow:
-    0 40px 100px rgba(0,0,0,.45),
-    inset 0 1px rgba(255,255,255,.06);
-}
-
-.photoArchive:before{
-  content:"PRIVATE VISUAL ARCHIVE";
+.featureCard img{
   position:absolute;
-  top:18px;
-  right:25px;
-  font-size:7px;
-  letter-spacing:3px;
-  color:#655b60;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 1.2s ease;
 }
 
-.featuredPhoto{
-  position:relative;
-  min-height:520px;
-  border-radius:23px;
-  overflow:hidden;
-  cursor:pointer;
-  border:1px solid rgba(255,255,255,.11);
-  background:#120b0e;
-  box-shadow:0 25px 70px rgba(0,0,0,.5);
+.featureCard:active img{
+  transform:scale(1.025);
 }
 
-.featuredPhoto:after{
-  content:"";
+.featureShade{
   position:absolute;
   inset:0;
   background:
-    linear-gradient(180deg,transparent 40%,rgba(0,0,0,.82)),
-    linear-gradient(90deg,rgba(75,15,35,.12),transparent 50%);
-  pointer-events:none;
+    linear-gradient(
+      to top,
+      rgba(4,3,5,.97),
+      rgba(4,3,5,.03) 65%
+    ),
+    linear-gradient(
+      to right,
+      rgba(4,3,5,.35),
+      transparent
+    );
 }
 
-.featuredPhoto img{
-  width:100%;
-  height:100%;
-  min-height:520px;
-  object-fit:cover;
-  display:block;
-  transition:transform 1s ease,filter 1s ease;
-}
-
-.featuredPhoto:hover img{
-  transform:scale(1.035);
-  filter:brightness(.8);
-}
-
-.featuredLabel{
+.featureText{
   position:absolute;
-  z-index:2;
-  top:22px;
-  left:22px;
-  padding:9px 12px;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:999px;
-  background:rgba(7,6,7,.5);
-  backdrop-filter:blur(14px);
-  font-size:7px;
-  letter-spacing:2px;
-}
-
-.featuredInfo{
-  position:absolute;
-  z-index:2;
-  left:28px;
-  right:28px;
+  left:24px;
+  right:24px;
   bottom:25px;
 }
 
-.featuredInfo span{
-  color:var(--gold2);
-  font-size:7px;
-  letter-spacing:3px;
+.featureTag{
+  color:#d2ae78;
+  font-size:8px;
+  letter-spacing:4px;
+  margin-bottom:10px;
 }
 
-.featuredInfo h3{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(30px,5vw,48px);
-  font-weight:500;
-  margin-top:8px;
+.featureText h2{
+  font-family:Georgia,serif;
+  font-weight:400;
+  font-size:clamp(38px,9vw,65px);
+  line-height:.92;
 }
 
-.featuredInfo p{
-  color:#c0b6ba;
-  max-width:600px;
-  line-height:1.7;
+.featureText p{
+  color:#c5bfc0;
   font-size:11px;
-  margin-top:8px;
+  line-height:1.7;
+  max-width:390px;
+  margin-top:15px;
 }
+
+/* =========================
+   GALLERY
+========================= */
 
 .gallery{
+  padding:0 18px 110px;
+}
+
+.photoGrid{
   display:grid;
-  grid-template-columns:repeat(12,1fr);
+  grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:12px;
 }
 
 .photo{
   position:relative;
+  height:58vw;
+  min-height:210px;
   overflow:hidden;
-  border-radius:17px;
+  background:#111014;
   border:1px solid rgba(255,255,255,.08);
-  cursor:pointer;
-  min-height:250px;
-  background:#100b0e;
 }
 
-.photo:nth-child(1){grid-column:span 4}
-.photo:nth-child(2){grid-column:span 4}
-.photo:nth-child(3){grid-column:span 4}
-.photo:nth-child(4){grid-column:span 3}
-.photo:nth-child(5){grid-column:span 3}
-.photo:nth-child(6){grid-column:span 3}
-.photo:nth-child(7){grid-column:span 3}
-.photo:nth-child(8){grid-column:span 3}
-.photo:nth-child(9){grid-column:span 3}
-.photo:nth-child(10){grid-column:span 3}
-.photo:nth-child(11){grid-column:span 3}
-.photo:nth-child(12){grid-column:span 4}
-.photo:nth-child(13){grid-column:span 4}
-.photo:nth-child(14){grid-column:span 4}
-.photo:nth-child(15){grid-column:span 6}
-.photo:nth-child(16){grid-column:span 6}
+.photo:nth-child(3n){
+  grid-column:span 2;
+  height:78vw;
+}
 
 .photo img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
-  transition:transform .7s ease,filter .7s ease;
+  transition:transform .8s ease;
 }
 
-.photo:before{
-  content:"";
+.photo:active img{
+  transform:scale(1.04);
+}
+
+.photoOverlay{
   position:absolute;
   inset:0;
-  z-index:1;
-  pointer-events:none;
-  background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.78));
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.75),
+    transparent 58%
+  );
 }
 
-.photo:hover img{
-  transform:scale(1.07);
-  filter:brightness(.72);
-}
-
-.photoInfo{
+.photoNumber{
   position:absolute;
-  z-index:2;
-  left:0;
-  right:0;
-  bottom:0;
-  padding:30px 16px 15px;
-  pointer-events:none;
+  top:12px;
+  left:13px;
+  color:#d0b17e;
+  font-size:8px;
+  letter-spacing:2px;
 }
 
-.photoInfo span{
-  color:#c1adb5;
+.photoCompliment{
+  position:absolute;
+  left:15px;
+  right:15px;
+  bottom:15px;
+  font-family:Georgia,serif;
+  font-size:21px;
+  line-height:1.05;
+}
+
+.photoHint{
+  margin-top:7px;
+  color:#aaa1a3;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   font-size:7px;
   letter-spacing:2px;
 }
 
-.photoInfo h4{
-  font-family:'Playfair Display',serif;
-  font-size:18px;
-  margin-top:4px;
-  font-weight:500;
+/* =========================
+   COMPLIMENTS
+========================= */
+
+.compliments{
+  padding:0 22px 110px;
 }
 
-/* promises */
-
-.promiseList{
-  display:grid;
-  gap:10px;
+.quote{
+  padding:42px 0;
+  border-top:1px solid rgba(255,255,255,.08);
 }
 
-.promise{
-  display:flex;
-  gap:20px;
-  padding:24px;
-  border:1px solid var(--line);
-  border-radius:15px;
-  background:rgba(255,255,255,.025);
+.quote:last-child{
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.promiseNo{
-  color:var(--gold);
-  font-size:8px;
-  letter-spacing:2px;
-  min-width:30px;
+.quoteMark{
+  color:#a77d55;
+  font-family:Georgia,serif;
+  font-size:45px;
+  line-height:.5;
+  margin-bottom:18px;
 }
 
-.promise p{
-  color:#aaa0a5;
-  font-family:'Playfair Display',serif;
-  font-size:19px;
-  line-height:1.5;
+.quote p{
+  font-family:Georgia,serif;
+  font-size:clamp(25px,7vw,44px);
+  line-height:1.08;
+  font-weight:400;
 }
 
-/* music */
-
-.musicPanel{
-  padding:35px;
-  border:1px solid rgba(214,138,159,.17);
-  border-radius:22px;
-  background:
-    radial-gradient(circle at 80% 20%,rgba(127,39,65,.15),transparent 30%),
-    rgba(255,255,255,.025);
-}
-
-.musicTop{
-  display:flex;
-  align-items:center;
-  gap:20px;
-}
-
-.album{
-  width:65px;
-  height:65px;
-  border-radius:12px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(145deg,#68213a,#17090f);
-  border:1px solid rgba(255,255,255,.12);
-  font-family:'Playfair Display',serif;
-  font-size:25px;
-}
-
-.songTitle{
-  font-family:'Playfair Display',serif;
-  font-size:23px;
-}
-
-.songArtist{
-  color:#777075;
-  font-size:9px;
-  letter-spacing:2px;
-  margin-top:5px;
-}
-
-.wave{
-  display:flex;
-  align-items:center;
-  gap:3px;
-  height:50px;
-  margin:25px 0 15px;
-}
-
-.wave i{
+.quote small{
   display:block;
-  width:3px;
-  border-radius:10px;
-  background:linear-gradient(var(--rose2),var(--burg));
-  height:var(--h);
-  opacity:.55;
-  animation:wave 1.1s ease-in-out infinite alternate;
-  animation-delay:var(--d);
+  color:#756e70;
+  font-size:8px;
+  letter-spacing:3px;
+  margin-top:18px;
 }
 
-.musicPanel:not(.playing) .wave i{
-  animation-play-state:paused;
+/* =========================
+   FINAL
+========================= */
+
+.privateNote{
+  padding:80px 25px 120px;
+  text-align:center;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(119,48,65,.13),
+      transparent 55%
+    );
 }
 
-@keyframes wave{
-  to{transform:scaleY(.25)}
+.privateNote .mini{
+  color:#b99b70;
+  font-size:8px;
+  letter-spacing:4px;
+  margin-bottom:22px;
 }
 
-.musicControls{
+.privateNote h2{
+  font-family:Georgia,serif;
+  font-size:clamp(40px,10vw,70px);
+  font-weight:400;
+  line-height:.92;
+}
+
+.privateNote p{
+  color:#8b8586;
+  max-width:470px;
+  margin:25px auto 0;
+  font-size:12px;
+  line-height:1.9;
+}
+
+/* =========================
+   MUSIC
+========================= */
+
+.music{
+  position:fixed;
+  left:15px;
+  right:15px;
+  bottom:15px;
+  z-index:30;
+  height:57px;
+  padding:0 15px;
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
+  background:rgba(15,13,17,.88);
+  border:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(20px);
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
 }
 
-.musicMain{
-  width:45px;
-  height:45px;
+.musicDisc{
+  width:30px;
+  height:30px;
   border-radius:50%;
-  border:1px solid rgba(214,138,159,.3);
-  background:#55182d;
-  cursor:pointer;
-  display:grid;
-  place-items:center;
-}
-
-.musicHint{
-  color:#726a6f;
-  font-size:8px;
-  letter-spacing:1px;
-}
-
-/* vault */
-
-.vaultGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:11px;
-}
-
-.vaultCard{
-  padding:25px 20px;
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:rgba(255,255,255,.025);
-  cursor:pointer;
-  transition:.3s;
-}
-
-.vaultCard:hover{
-  border-color:rgba(216,185,130,.35);
-  transform:translateY(-3px);
-}
-
-.lockIcon{
-  font-size:17px;
-  margin-bottom:20px;
-}
-
-.vaultCard h4{
-  font-family:'Playfair Display',serif;
-  font-size:20px;
-  font-weight:500;
-}
-
-.vaultCard p{
-  color:#756d71;
-  font-size:9px;
-  line-height:1.7;
-  margin-top:8px;
-}
-
-/* secret */
-
-.secretBox{
-  text-align:center;
-  padding:60px 25px;
-  border:1px solid rgba(216,185,130,.13);
-  border-radius:24px;
-  background:
-    radial-gradient(circle at center,rgba(111,30,50,.16),transparent 55%),
-    rgba(255,255,255,.018);
-}
-
-.secretLock{
-  font-size:32px;
-  margin-bottom:20px;
-}
-
-.secretTitle{
-  font-family:'Playfair Display',serif;
-  font-size:38px;
-}
-
-.secretText{
-  color:#83797e;
-  max-width:550px;
-  margin:13px auto 25px;
-  font-size:11px;
-  line-height:1.8;
-}
-
-/* final */
-
-.final{
-  min-height:90svh;
+  border:1px solid #a67e56;
   display:flex;
   align-items:center;
   justify-content:center;
-  text-align:center;
-  padding:100px 20px;
+  font-size:11px;
+  animation:spin 5s linear infinite;
+  animation-play-state:paused;
 }
 
-.finalInner{
-  max-width:800px;
+.music.playing .musicDisc{
+  animation-play-state:running;
 }
 
-.finalEyebrow{
-  color:var(--gold);
-  font-size:8px;
-  letter-spacing:5px;
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
 }
 
-.finalTitle{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(55px,11vw,120px);
-  line-height:.88;
-  margin:22px 0 35px;
-  letter-spacing:-5px;
+.musicInfo{
+  flex:1;
 }
 
-.finalTitle em{
-  color:#d997aa;
+.musicInfo b{
+  display:block;
+  font-size:9px;
+  letter-spacing:2px;
   font-weight:500;
 }
 
-.finalText{
-  color:#948a8f;
-  line-height:2;
-  font-size:13px;
-  max-width:650px;
-  margin:auto;
+.musicInfo span{
+  display:block;
+  color:#706a6c;
+  font-size:8px;
+  margin-top:3px;
 }
 
-.finalSignature{
-  font-family:'Playfair Display',serif;
-  color:#e6b9c6;
-  font-style:italic;
-  font-size:27px;
-  margin-top:35px;
+.musicBtn{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.13);
+  background:transparent;
+  color:#eee;
 }
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
-  padding:30px 20px 50px;
+  padding:30px 20px 115px;
   text-align:center;
-  color:#514a4e;
-  font-size:7px;
+  color:#514b4d;
+  font-size:8px;
   letter-spacing:3px;
 }
 
-/* modal */
+footer strong{
+  color:#9d7d5d;
+  font-weight:400;
+}
 
-.modal{
+/* =========================
+   VIEWER
+========================= */
+
+#viewer{
   position:fixed;
   inset:0;
-  z-index:2000;
+  z-index:90;
   display:none;
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:rgba(0,0,0,.8);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
+  background:rgba(3,2,4,.97);
 }
 
-.modal.show{
+#viewer.open{
   display:flex;
 }
 
-.modalBox{
-  width:min(720px,100%);
-  max-height:88vh;
-  overflow:auto;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:24px;
-  background:#100b0e;
-  box-shadow:0 30px 100px rgba(0,0,0,.7);
-  padding:35px;
-  position:relative;
-}
-
-.close{
-  position:absolute;
-  top:17px;
-  right:17px;
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.04);
-  cursor:pointer;
-  z-index:5;
-}
-
-.modalKicker{
-  color:var(--gold);
-  font-size:8px;
-  letter-spacing:3px;
-}
-
-.modalTitle{
-  font-family:'Playfair Display',serif;
-  font-size:36px;
-  margin:12px 0 20px;
-}
-
-.modalBody{
-  color:#9d9398;
-  font-size:12px;
-  line-height:2;
-  white-space:pre-line;
-}
-
-.fullPhoto{
+#viewer img{
   max-width:100%;
-  max-height:78vh;
-  border-radius:14px;
-  display:block;
-  margin:auto;
+  max-height:86vh;
   object-fit:contain;
-  box-shadow:0 30px 100px rgba(0,0,0,.7);
+  box-shadow:0 25px 100px rgba(0,0,0,.7);
 }
 
-/* reveal */
-
-.reveal{
-  opacity:0;
-  transform:translateY(30px);
-  transition:opacity .8s ease,transform .8s ease;
+.closeViewer{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.04);
+  color:white;
+  font-size:18px;
 }
 
-.reveal.visible{
-  opacity:1;
-  transform:none;
-}
+/* =========================
+   DESKTOP
+========================= */
 
-/* responsive */
-
-@media(max-width:800px){
-
-  .nav{
-    padding:0 18px;
-  }
-
-  .navStatus{
-    display:none;
-  }
+@media(min-width:800px){
 
   .hero{
-    padding:115px 20px 60px;
+    padding-left:8vw;
   }
 
-  .heroContent{
-    grid-template-columns:1fr;
-    gap:55px;
+  .featured,
+  .gallery,
+  .compliments{
+    max-width:1100px;
+    margin:auto;
   }
 
-  .heroTitle{
-    font-size:64px;
-    letter-spacing:-3px;
-  }
-
-  .heroSub{
-    font-size:12px;
-  }
-
-  .heroVisual{
-    order:2;
-  }
-
-  .vipOrb{
-    width:280px;
-  }
-
-  .section{
-    padding:80px 20px;
-  }
-
-  .membership{
-    grid-template-columns:1fr;
-  }
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .herGrid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .complimentGrid,
-  .littleGrid{
-    grid-template-columns:1fr;
-  }
-
-  .photoArchive{
-    padding:12px;
-    border-radius:22px;
-  }
-
-  .featuredPhoto,
-  .featuredPhoto img{
-    min-height:420px;
-  }
-
-  .gallery{
-    grid-template-columns:1fr 1fr;
+  .photoGrid{
+    grid-template-columns:repeat(3,1fr);
   }
 
   .photo,
-  .photo:nth-child(n){
-    grid-column:span 1;
-    min-height:220px;
+  .photo:nth-child(3n){
+    grid-column:auto;
+    height:470px;
   }
 
-  .photo:first-child{
-    grid-column:span 2;
+  .photo:nth-child(4n){
+    grid-row:span 2;
+    height:950px;
   }
 
-  .vaultGrid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .promise p{
-    font-size:16px;
-  }
-
-  .letter{
-    padding:32px 24px;
-  }
-
-  .finalTitle{
-    font-size:67px;
-    letter-spacing:-3px;
-  }
-}
-
-@media(max-width:430px){
-
-  .brand{
-    letter-spacing:2px;
-    font-size:8px;
-  }
-
-  .heroTitle{
-    font-size:55px;
-  }
-
-  .sectionTitle{
-    font-size:43px;
-  }
-
-  .herGrid,
-  .vaultGrid{
-    grid-template-columns:1fr;
-  }
-
-  .featuredPhoto,
-  .featuredPhoto img{
-    min-height:360px;
-  }
-
-  .gallery{
-    grid-template-columns:1fr;
-  }
-
-  .photo,
-  .photo:nth-child(n),
-  .photo:first-child{
-    grid-column:span 1;
-    min-height:280px;
-  }
-
-  .finalTitle{
-    font-size:57px;
+  .featureCard{
+    height:760px;
   }
 }
 </style>
@@ -1513,1528 +735,820 @@ footer{
 
 <body class="locked">
 
-<div class="noise"></div>
-<div class="ambient"></div>
-
-<div class="loader" id="loader">
-  <div class="loaderBox">
-    <div class="loaderSmall">PRIVATE RELATIONSHIP SYSTEM</div>
-    <div class="loaderTitle">Preparing your access...</div>
-    <div class="loaderLine">
-      <div class="loaderProgress"></div>
-    </div>
-  </div>
+<div class="ambient">
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
 </div>
 
-<nav class="nav">
-  <div class="brand">
-    <div class="brandMark">J×M</div>
-    <span>PRIVATE CLUB</span>
-  </div>
+<!-- PRIVATE ACCESS -->
 
-  <div class="navRight">
-    <div class="navStatus">
-      <span class="liveDot"></span>
-      OFFICIAL ACCESS
-    </div>
-    <button class="musicBtn" id="navMusic">♪</button>
-  </div>
-</nav>
+<section id="lockScreen">
 
-<section class="hero" id="home">
-  <div class="heroGrid"></div>
+  <div class="lockBox">
 
-  <div class="heroContent">
-
-    <div class="heroCopy reveal">
-
-      <div class="heroKicker">
-        PRIVATE RELATIONSHIP CLUB · EST. 2026
-      </div>
-
-      <h1 class="heroTitle">
-        finally,<br>
-        <em>my girl.</em>
-      </h1>
-
-      <p class="heroSub">
-        This is not just another website. This is a private little world
-        built for the girl who started as someone I wanted to pursue,
-        and became someone I am now lucky enough to call my girlfriend.
-      </p>
-
-      <div class="heroActions">
-        <button class="btn primary" onclick="goTo('membership')">
-          Enter Private Club
-        </button>
-
-        <button class="btn" onclick="goTo('letter')">
-          Read My Letter
-        </button>
-      </div>
-
+    <div class="privateLabel">
+      PRIVATE COLLECTION · 001
     </div>
 
-    <div class="heroVisual reveal">
-
-      <div class="vipOrb">
-        <div class="orbRing"></div>
-        <div class="orbRing"></div>
-        <div class="orbRing"></div>
-
-        <div class="orbCore">
-          <span>J × M</span>
-        </div>
-
-        <div class="orbTag tagOne">OFFICIAL</div>
-        <div class="orbTag tagTwo">ONE OF ONE</div>
-        <div class="orbTag tagThree">06 · 10 · 2026</div>
-      </div>
-
+    <div class="lockIcon">
+      ⌁
     </div>
 
-  </div>
-</section>
+    <h1 class="lockTitle">
+      for my<br>
+      <em>pretty girl.</em>
+    </h1>
 
-<section class="section" id="membership">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">01 · MEMBERSHIP</div>
-    <h2 class="sectionTitle">your VIP access.</h2>
-    <p class="sectionText">
-      There are millions of people in the world. Somehow, this little
-      private club ended up belonging to just two.
-    </p>
-  </div>
-
-  <div class="membership">
-
-    <div class="memberCard reveal">
-      <div class="cardTop">
-        <div class="cardChip"></div>
-        <div class="cardNumber">MEMBER · 001</div>
-      </div>
-
-      <div class="memberRole">PRIMARY MEMBER</div>
-      <div class="memberName">Jay-r</div>
-
-      <div class="memberMeta">
-        <div>ACCESS<strong>UNLIMITED</strong></div>
-        <div>STATUS<strong>BOYFRIEND</strong></div>
-        <div>EXPIRY<strong>NEVER</strong></div>
-      </div>
+    <div class="lockSub">
+      exclusive access · one person only
     </div>
 
-    <div class="memberCard reveal">
-      <div class="cardTop">
-        <div class="cardChip"></div>
-        <div class="cardNumber">MEMBER · 002</div>
-      </div>
-
-      <div class="memberRole">MOST IMPORTANT MEMBER</div>
-      <div class="memberName">Mary Grace</div>
-
-      <div class="memberMeta">
-        <div>ACCESS<strong>UNLIMITED</strong></div>
-        <div>STATUS<strong>GIRLFRIEND</strong></div>
-        <div>EXPIRY<strong>NEVER</strong></div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="officialBox reveal">
-    <div class="statusLabel">CURRENT RELATIONSHIP STATUS</div>
-    <div class="statusBig">OFFICIAL.</div>
-
-    <div class="statusLine">
-      She said yes.<br>
-      And somehow, that sentence changed everything.
-    </div>
-
-    <div class="statusPill">
-      <span class="liveDot"></span>
-      VERIFIED RELATIONSHIP
-    </div>
-  </div>
-
-</div>
-</section>
-
-<section class="section">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">02 · THE STORY</div>
-    <h2 class="sectionTitle">from pursuing<br>to us.</h2>
-    <p class="sectionText">
-      Thirty-two days. One question. One answer that turned the entire
-      story into something new.
-    </p>
-  </div>
-
-  <div class="timeline">
-
-    <div class="timelineItem reveal">
-      <div class="timelineDot"></div>
-      <div class="timelineDate">SEPTEMBER 04, 2026</div>
-      <div class="timelineTitle">The beginning.</div>
-      <div class="timelineText">
-        This was the day I officially started pursuing you.
-        I did not know exactly where the story would go,
-        but I knew I wanted to find out.
-      </div>
-    </div>
-
-    <div class="timelineItem reveal">
-      <div class="timelineDot"></div>
-      <div class="timelineDate">32 DAYS LATER</div>
-      <div class="timelineTitle">Still choosing you.</div>
-      <div class="timelineText">
-        Every day in between gave me another reason to appreciate you,
-        admire you, and believe that waiting for the right answer
-        would be worth it.
-      </div>
-    </div>
-
-    <div class="timelineItem reveal">
-      <div class="timelineDot"></div>
-      <div class="timelineDate">OCTOBER 06, 2026</div>
-      <div class="timelineTitle">You said yes.</div>
-      <div class="timelineText">
-        The answer I had been hoping for finally became real.
-        The girl I had been pursuing became my girlfriend.
-        And suddenly, “maybe someday” became “us.”
-      </div>
-    </div>
-
-  </div>
-
-  <div class="stats reveal">
-    <div class="stat"><div class="statNum">32</div><div class="statLabel">DAYS OF COURTSHIP</div></div>
-    <div class="stat"><div class="statNum">01</div><div class="statLabel">YES THAT CHANGED EVERYTHING</div></div>
-    <div class="stat"><div class="statNum">02</div><div class="statLabel">PEOPLE IN THIS CLUB</div></div>
-    <div class="stat"><div class="statNum">∞</div><div class="statLabel">REASONS TO LOVE YOU</div></div>
-  </div>
-
-</div>
-</section>
-
-<section class="section" id="her">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">03 · HER PROFILE</div>
-    <h2 class="sectionTitle">the girl<br>behind it all.</h2>
-    <p class="sectionText">
-      If I had to describe you using only a few words,
-      I would probably run out of words before I ran out of reasons.
-    </p>
-  </div>
-
-  <div class="herGrid">
-
-    <div class="herCard reveal"><div class="herIcon">✦</div><h3>Beautiful.</h3><p>Not just in pictures. Not just when you're dressed up. You are beautiful even in the moments you do not notice it.</p></div>
-
-    <div class="herCard reveal"><div class="herIcon">♡</div><h3>Precious.</h3><p>There is something about you that makes me want to protect your peace and remind you of your worth.</p></div>
-
-    <div class="herCard reveal"><div class="herIcon">∞</div><h3>Rare.</h3><p>You are not someone I could simply replace with another person. You are one of one.</p></div>
-
-    <div class="herCard reveal"><div class="herIcon">✧</div><h3>Special.</h3><p>Even ordinary moments feel different when you are the person I get to share them with.</p></div>
-
-    <div class="herCard reveal"><div class="herIcon">☾</div><h3>Comfort.</h3><p>Somehow your presence can make a normal day feel softer, calmer, and more meaningful.</p></div>
-
-    <div class="herCard reveal"><div class="herIcon">♥</div><h3>My favorite.</h3><p>Out of all the people I could have met, I am grateful that I met you.</p></div>
-
-  </div>
-
-  <div class="tagCloud reveal">
-    <span class="tag">BEAUTIFUL</span>
-    <span class="tag">IRREPLACEABLE</span>
-    <span class="tag">PRECIOUS</span>
-    <span class="tag">ONE OF ONE</span>
-    <span class="tag">LOVED</span>
-    <span class="tag">SPECIAL</span>
-    <span class="tag">MY FAVORITE</span>
-    <span class="tag">ADORABLE</span>
-    <span class="tag">UNMATCHED</span>
-    <span class="tag">WORTH PROTECTING</span>
-    <span class="tag">MY GIRL</span>
-    <span class="tag">HOME</span>
-  </div>
-
-</div>
-</section>
-
-<section class="section">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">04 · REASSURANCE CENTER</div>
-    <h2 class="sectionTitle">for the days<br>you forget.</h2>
-    <p class="sectionText">
-      If insecurity ever gets louder than the truth,
-      come here. Let me remind you how I see you.
-    </p>
-  </div>
-
-  <div class="insecurity reveal">
-
-    <div class="insecurityTop">
-      <div class="insecurityTitle">you are enough.</div>
-
-      <div class="insecuritySub">
-        You do not have to become someone else to be loved by me.
-        You do not have to look perfect. You do not have to hide
-        the parts you feel insecure about.
-      </div>
-    </div>
-
-    <div class="reassureButtons">
-      <button class="reassureBtn" onclick="reassure(0)">I FEEL INSECURE</button>
-      <button class="reassureBtn" onclick="reassure(1)">I DON'T FEEL PRETTY</button>
-      <button class="reassureBtn" onclick="reassure(2)">I AM OVERTHINKING</button>
-      <button class="reassureBtn" onclick="reassure(3)">I NEED A REMINDER</button>
-      <button class="reassureBtn" onclick="reassure(4)">I NEED A COMPLIMENT</button>
-    </div>
-
-    <div class="reassureDisplay">
-      <div class="reassureText" id="reassureText">
-        <small>PRIVATE REMINDER</small>
-        You are still the girl I look at and think,
-        “how did I get this lucky?”
-      </div>
-    </div>
-
-  </div>
-
-</div>
-</section>
-
-<section class="section">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">05 · COMPLIMENT ARCHIVE</div>
-    <h2 class="sectionTitle">things i hope<br>you believe.</h2>
-  </div>
-
-  <div class="complimentGrid">
-
-    <div class="compliment reveal"><div class="complimentNo">01 · YOUR FACE</div><h3>Effortlessly beautiful.</h3><p>I could compliment your face a hundred times and still feel like I have not said enough. You are genuinely gorgeous to me.</p></div>
-
-    <div class="compliment reveal"><div class="complimentNo">02 · YOUR SMILE</div><h3>My favorite sight.</h3><p>There is something about seeing you genuinely happy that makes me want to stay around for as many smiles as I can.</p></div>
-
-    <div class="compliment reveal"><div class="complimentNo">03 · YOUR PERSONALITY</div><h3>Rare edition.</h3><p>Your personality is part of what makes your beauty different. It is not something a picture could ever fully capture.</p></div>
-
-    <div class="compliment reveal"><div class="complimentNo">04 · YOUR HEART</div><h3>Worth protecting.</h3><p>The way you care and love matters to me. I hope I can always make you feel safe enough to be yourself.</p></div>
-
-    <div class="compliment reveal"><div class="complimentNo">05 · YOUR PRESENCE</div><h3>Impossible to replace.</h3><p>You do not have to do anything extraordinary. Sometimes just having you around is already enough.</p></div>
-
-    <div class="compliment reveal"><div class="complimentNo">06 · THE WHOLE YOU</div><h3>One of one.</h3><p>I am not comparing you to anybody. I love you because you are you. That is the part I could never replace.</p></div>
-
-  </div>
-
-</div>
-</section>
-
-<section class="section" id="letter">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">06 · PRIVATE LETTER</div>
-    <h2 class="sectionTitle">from me,<br>to you.</h2>
-  </div>
-
-  <div class="letter reveal">
-
-    <div class="letterTitle">My girl,</div>
-
-    <p>
-      I honestly do not know how to put everything I feel into one
-      message, because there are so many things I want you to know.
-      But if there is one thing I hope you never forget, it is this:
-      I am genuinely grateful that you chose me.
-    </p>
-
-    <p>
-      I started pursuing you on September 4. I did not know exactly
-      how this story would end. I only knew that I liked you,
-      admired you, and wanted the chance to become someone special
-      in your life.
-    </p>
-
-    <p>
-      Then October 6 came, and you finally said yes.
-      Thirty-two days later, the answer I had been hoping for
-      became real. You were no longer just the girl I was pursuing.
-      You became my girlfriend.
-    </p>
-
-    <p>
-      And babyyy, I hope you understand how special that is to me.
-      I know there are moments when you might look at yourself and
-      notice things you do not like. Maybe you compare yourself.
-      Maybe you overthink. Maybe there are days when you do not feel
-      beautiful at all.
-    </p>
-
-    <p>
-      But please remember that the version of yourself you criticize
-      is still the same girl I look at with so much admiration.
-      I do not only love the version of you that feels confident.
-      I want you to know that you are still loved on the days
-      when you are insecure too.
-    </p>
-
-    <p>
-      You do not need to compete with anyone.
-      You do not need to become prettier for me.
-      You do not need to change yourself just because you think
-      someone else might be better.
-    </p>
-
-    <p>
-      To me, you are already someone worth choosing.
-      Someone worth appreciating.
-      Someone worth reassuring.
-      Someone worth keeping close.
-    </p>
-
-    <p>
-      I hope I can be the person who reminds you of that whenever
-      you forget. I hope I can make you feel loved not only through
-      words, but through the way I treat you, listen to you,
-      respect you, and stay beside you.
-    </p>
-
-    <p>
-      Thank you for giving me this chance.
-      Thank you for saying yes.
-      Thank you for becoming my girl.
-    </p>
-
-    <p>
-      I do not know every chapter that comes after this one,
-      but I know I am happy that this chapter has you in it.
-    </p>
-
-    <div class="signature">— your boyfriend, Jay-r.</div>
-
-  </div>
-
-</div>
-</section>
-
-<section class="section">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">07 · LITTLE THINGS</div>
-    <h2 class="sectionTitle">things i notice<br>about you.</h2>
-  </div>
-
-  <div class="littleGrid">
-
-    <div class="little reveal"><span>01</span><h4>The way you smile.</h4><p>Especially when the smile is genuine and you forget for a moment that anyone is watching.</p></div>
-
-    <div class="little reveal"><span>02</span><h4>The way you react.</h4><p>The small expressions you make sometimes say more than the words you actually say.</p></div>
-
-    <div class="little reveal"><span>03</span><h4>The little details.</h4><p>The things you might think nobody notices? I notice more than you think.</p></div>
-
-    <div class="little reveal"><span>04</span><h4>The person you are.</h4><p>Your beauty caught my attention, but who you are is what makes me want to stay.</p></div>
-
-    <div class="little reveal"><span>05</span><h4>Your presence.</h4><p>You can make an ordinary moment feel like something I will remember later.</p></div>
-
-    <div class="little reveal"><span>06</span><h4>The fact that you're you.</h4><p>Honestly, I do not need a complicated reason. You are simply someone I am grateful to have.</p></div>
-
-  </div>
-
-</div>
-</section>
-
-<!-- PHOTO ARCHIVE -->
-<section class="section" id="memories">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">08 · PRIVATE ARCHIVE</div>
-    <h2 class="sectionTitle">our little<br>collection.</h2>
-    <p class="sectionText">
-      Sixteen frames. Sixteen little pieces of the girl
-      I am now lucky enough to call my girlfriend.
-    </p>
-  </div>
-
-  <div class="photoArchive reveal">
-
-    <!-- FEATURED NEW PHOTO -->
-    <div class="featuredPhoto" onclick="openPhoto(7)">
-
-      <img
-        src="att.5iUfJVAU_LQmT-P2IGKtLU3rJfoELn6bFiUBatxovNs.jpeg"
-        alt="featured memory"
-      >
-
-      <div class="featuredLabel">
-        FEATURED MEMORY · 008
-      </div>
-
-      <div class="featuredInfo">
-        <span>PRIVATE COLLECTION</span>
-        <h3>the girl i finally get to call mine.</h3>
-        <p>
-          One more frame added to the private archive —
-          because some pictures deserve more than just a place in a gallery.
-        </p>
-      </div>
-
-    </div>
-
-    <div class="gallery">
-
-      <div class="photo reveal" onclick="openPhoto(0)">
-        <img src="att.97vp2zl5u6zg5e1ga2nZvjJr63US-mqfEx8krTg7Dy4.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 001</span><h4>my favorite girl.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(1)">
-        <img src="att.9oDOCCrwe-68ysLHTxM8x0OFCqNx0unnl6IPjXeGick.webp.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 002</span><h4>beautiful, as always.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(2)">
-        <img src="att.dxVrpz5CFicrFlhsH4_HBTjqow0Wnvzpxzh6wFa8jng.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 003</span><h4>a moment worth keeping.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(3)">
-        <img src="att.Jr0-cisZdHMb-42ePl7aLX1ohblw6zZwoSdxxarrToc.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 004</span><h4>still can't believe you're mine.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(4)">
-        <img src="att.JtDwQAQHdf_SdmXunn3nftLqXULfan0x-lwsBEnxoqs.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 005</span><h4>one of my favorites.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(5)">
-        <img src="att.KQBr38IqOa6wXPvkkgj2vBCIfTQhjlWdr7_miZkNv7A.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 006</span><h4>you, being you.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(6)">
-        <img src="att.mrOSrZs_omicGNRYyw2eOrluHgrZ4JTsEQzY9iCnnhQ.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 007</span><h4>always worth remembering.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(7)">
-        <img src="att.5iUfJVAU_LQmT-P2IGKtLU3rJfoELn6bFiUBatxovNs.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 008</span><h4>the featured one.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(8)">
-        <img src="att.G1sk46QmiEOLNSMFF0sKmXdptQZ6N587p65v4ChM_WQ.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 009</span><h4>another beautiful frame.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(9)">
-        <img src="att.H3ccb3u4oBzB8vq1kOMVc127xelrJ21RaSxwlW4VIvg.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 010</span><h4>one for the archive.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(10)">
-        <img src="att.K9ehbG15roPf-cZTKkUf-oguVo9G61kvUK0gpOXPRq4.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 011</span><h4>still you.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(11)">
-        <img src="att.ncPtzfXyMgg9YfKbabv4pA10_mRTbdYrOW2oz8YY5Bg.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 012</span><h4>worth keeping.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(12)">
-        <img src="att.Nz5IuhwFHnyUAZZx7Oevs8oP6oMC1sKDW82kvZeP9rw.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 013</span><h4>my favorite person.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(13)">
-        <img src="att.R85aRRHZd-gPakjHIDOwLeJiajLk7F2mxtniaZIUZG8.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 014</span><h4>another little memory.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(14)">
-        <img src="att.rbeahay57SagM4qYOQwTeA_fv6zBfxFU-4GiRNL4W38.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 015</span><h4>you look unreal.</h4></div>
-      </div>
-
-      <div class="photo reveal" onclick="openPhoto(15)">
-        <img src="att.SbxyYoBPZ39pEaRRsywBnKYvU7R0lcyf4soYGxkYCTc.jpeg" alt="">
-        <div class="photoInfo"><span>ARCHIVE · 016</span><h4>forever worth remembering.</h4></div>
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-</section>
-
-<section class="section">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">09 · WHY HER</div>
-    <h2 class="sectionTitle">why i<br>choose you.</h2>
-  </div>
-
-  <div class="promiseList">
-
-    <div class="promise reveal"><div class="promiseNo">01</div><p>Because being around you feels different.</p></div>
-
-    <div class="promise reveal"><div class="promiseNo">02</div><p>Because your beauty is only one part of what makes you special.</p></div>
-
-    <div class="promise reveal"><div class="promiseNo">03</div><p>Because I do not want a perfect girl. I want you.</p></div>
-
-    <div class="promise reveal"><div class="promiseNo">04</div><p>Because I want to know the real you, including the parts you sometimes struggle to love.</p></div>
-
-    <div class="promise reveal"><div class="promiseNo">05</div><p>Because somehow, after meeting you, choosing you became easy.</p></div>
-
-    <div class="promise reveal"><div class="promiseNo">06</div><p>Because out of everyone I could have met, I am grateful that I met you.</p></div>
-
-  </div>
-
-</div>
-</section>
-
-<section class="section">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">10 · PRIVATE PROMISES</div>
-    <h2 class="sectionTitle">things i want<br>you to feel.</h2>
-  </div>
-
-  <div class="littleGrid">
-
-    <div class="little reveal"><span>PROMISE 01</span><h4>Safe.</h4><p>I want you to feel like you can be yourself around me without having to pretend.</p></div>
-
-    <div class="little reveal"><span>PROMISE 02</span><h4>Heard.</h4><p>Your feelings deserve space, even when you are unsure how to explain them.</p></div>
-
-    <div class="little reveal"><span>PROMISE 03</span><h4>Appreciated.</h4><p>I never want you to wonder whether I notice the little things you do.</p></div>
-
-    <div class="little reveal"><span>PROMISE 04</span><h4>Beautiful.</h4><p>Especially on the days when you have trouble believing it yourself.</p></div>
-
-    <div class="little reveal"><span>PROMISE 05</span><h4>Chosen.</h4><p>I want my actions to remind you that you are not just an option to me.</p></div>
-
-    <div class="little reveal"><span>PROMISE 06</span><h4>Loved.</h4><p>Not only when everything is easy, but through the ordinary days too.</p></div>
-
-  </div>
-
-</div>
-</section>
-
-<section class="section">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">11 · SOUNDTRACK</div>
-    <h2 class="sectionTitle">our song,<br>playing quietly.</h2>
-  </div>
-
-  <div class="musicPanel reveal" id="musicPanel">
-
-    <div class="musicTop">
-      <div class="album">♡</div>
-
-      <div>
-        <div class="songTitle">Paraluman</div>
-        <div class="songArtist">ADIE · PRIVATE SOUNDTRACK</div>
-      </div>
-    </div>
-
-    <div class="wave">
-      <i style="--h:18px;--d:0s"></i>
-      <i style="--h:30px;--d:.1s"></i>
-      <i style="--h:22px;--d:.2s"></i>
-      <i style="--h:40px;--d:.3s"></i>
-      <i style="--h:27px;--d:.4s"></i>
-      <i style="--h:45px;--d:.5s"></i>
-      <i style="--h:20px;--d:.6s"></i>
-      <i style="--h:35px;--d:.7s"></i>
-      <i style="--h:25px;--d:.8s"></i>
-      <i style="--h:42px;--d:.9s"></i>
-      <i style="--h:30px;--d:1s"></i>
-      <i style="--h:17px;--d:1.1s"></i>
-      <i style="--h:38px;--d:1.2s"></i>
-      <i style="--h:25px;--d:1.3s"></i>
-      <i style="--h:43px;--d:1.4s"></i>
-    </div>
-
-    <div class="musicControls">
-      <button class="musicMain" id="musicMain">▶</button>
-      <div class="musicHint" id="musicHint">
-        TAP TO PLAY · AUTOMATIC PLAY ATTEMPTED
-      </div>
-    </div>
-
-  </div>
-
-</div>
-</section>
-
-<section class="section" id="vault">
-<div class="container">
-
-  <div class="sectionHead reveal">
-    <div class="eyebrow">12 · PRIVATE VAULT</div>
-    <h2 class="sectionTitle">open when<br>you need me.</h2>
-    <p class="sectionText">
-      Little messages for specific moments.
-      Tap one and let me talk to you for a second.
-    </p>
-  </div>
-
-  <div class="vaultGrid">
-
-    <div class="vaultCard reveal" onclick="openVault(0)">
-      <div class="lockIcon">♡</div>
-      <h4>When you miss me</h4>
-      <p>A small reminder that I am thinking about you too.</p>
-    </div>
-
-    <div class="vaultCard reveal" onclick="openVault(1)">
-      <div class="lockIcon">☾</div>
-      <h4>When you overthink</h4>
-      <p>Read this before believing every thought in your head.</p>
-    </div>
-
-    <div class="vaultCard reveal" onclick="openVault(2)">
-      <div class="lockIcon">✦</div>
-      <h4>When you feel ugly</h4>
-      <p>A reminder from the person who sees you differently.</p>
-    </div>
-
-    <div class="vaultCard reveal" onclick="openVault(3)">
-      <div class="lockIcon">∞</div>
-      <h4>When you need love</h4>
-      <p>You should never have to earn reassurance.</p>
-    </div>
-
-    <div class="vaultCard reveal" onclick="openVault(4)">
-      <div class="lockIcon">♡</div>
-      <h4>When you had a bad day</h4>
-      <p>Leave the day here. You do not have to carry it alone.</p>
-    </div>
-
-    <div class="vaultCard reveal" onclick="openVault(5)">
-      <div class="lockIcon">✧</div>
-      <h4>When you need a smile</h4>
-      <p>Because sometimes you just need someone to remind you.</p>
-    </div>
-
-  </div>
-
-</div>
-</section>
-
-<section class="section">
-<div class="container">
-
-  <div class="secretBox reveal">
-
-    <div class="secretLock">🔐</div>
-
-    <div class="eyebrow">RESTRICTED ACCESS</div>
-
-    <div class="secretTitle">there is one more thing.</div>
-
-    <div class="secretText">
-      A private message hidden inside this website.
-      You need the correct access code to open it.
-    </div>
-
-    <button class="btn primary" onclick="openSecret()">
-      Request Access
+    <input
+      id="password"
+      type="password"
+      autocomplete="off"
+      placeholder="ENTER PRIVATE CODE"
+    >
+
+    <button id="unlock">
+      UNLOCK PRIVATE COLLECTION
     </button>
 
-  </div>
-
-</div>
-</section>
-
-<section class="final">
-
-  <div class="finalInner reveal">
-
-    <div class="finalEyebrow">
-      PRIVATE CLUB · ACCESS COMPLETE
-    </div>
-
-    <div class="finalTitle">
-      girlfriend.<br>
-      <em>finally.</em>
-    </div>
-
-    <div class="finalText">
-
-      I could make a thousand pages about you
-      and still feel like I have more to say.
-
-      <br><br>
-
-      You started as the girl I wanted to pursue.
-
-      <br>
-
-      Then, on October 6, 2026,
-      you became the girl I get to call my girlfriend.
-
-      <br><br>
-
-      So if you ever forget how beautiful you are,
-      how special you are, or how much you matter...
-
-      <br><br>
-
-      come back here.
-
-      <br>
-
-      I'll remind you.
-
-      <br><br>
-
-      always.
-
-    </div>
-
-    <div class="finalSignature">
-      your boyfriend, Jay-r.
-    </div>
+    <div class="error" id="error"></div>
 
   </div>
 
 </section>
 
-<footer>
-  J × MARY GRACE · PRIVATE RELATIONSHIP CLUB · 2026
-</footer>
 
-<!-- MESSAGE MODAL -->
+<!-- MAIN -->
 
-<div class="modal" id="modal">
+<main id="main">
 
-  <div class="modalBox">
+  <nav class="nav">
 
-    <button class="close" onclick="closeModal()">×</button>
-
-    <div class="modalKicker" id="modalKicker">
-      PRIVATE MESSAGE
+    <div class="brand">
+      J × MARY GRACE
     </div>
 
-    <div class="modalTitle" id="modalTitle">
-      For you.
+    <div class="status">
+      ACCESS <span>● GRANTED</span>
     </div>
 
-    <div class="modalBody" id="modalBody"></div>
+  </nav>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="heroTop">
+      PRIVATE ARCHIVE · MARY GRACE
+    </div>
+
+    <h1>
+      my<br>
+      <em>pretty</em><br>
+      girl.
+    </h1>
+
+    <p class="heroDesc">
+      a private collection of the girl who somehow makes
+      every picture look like it belongs in a magazine.
+    </p>
+
+    <div class="heroLine"></div>
+
+  </section>
+
+
+  <!-- FEATURED PHOTO -->
+
+  <section class="featured">
+
+    <div class="sectionHead">
+
+      <div>
+        <div class="sectionEyebrow">
+          FEATURED PORTRAIT
+        </div>
+
+        <div class="sectionTitle">
+          the one.
+        </div>
+      </div>
+
+      <div class="counter">
+        01 / 08
+      </div>
+
+    </div>
+
+
+    <div class="featureCard" onclick="openViewer(0)">
+
+      <img
+        src="vip-featured.jpg"
+        alt="Mary Grace"
+      >
+
+      <div class="featureShade"></div>
+
+      <div class="featureText">
+
+        <div class="featureTag">
+          PRIVATE FAVORITE
+        </div>
+
+        <h2>
+          effortlessly<br>
+          beautiful.
+        </h2>
+
+        <p>
+          no filter, no explanation, no competition.
+          you just naturally have that kind of beauty.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PHOTO GALLERY -->
+
+  <section class="gallery">
+
+    <div class="sectionHead">
+
+      <div>
+        <div class="sectionEyebrow">
+          HER ARCHIVE
+        </div>
+
+        <div class="sectionTitle">
+          simply her.
+        </div>
+      </div>
+
+      <div class="counter">
+        02 — 08
+      </div>
+
+    </div>
+
+
+    <div class="photoGrid">
+
+
+      <div class="photo" onclick="openViewer(1)">
+
+        <img src="att.97vp2zl5u6zg5e1ga2nZvjJr63US-mqfEx8krTg7Dy4.jpeg">
+
+        <div class="photoOverlay"></div>
+
+        <div class="photoNumber">
+          02
+        </div>
+
+        <div class="photoCompliment">
+          unreal pretty.
+
+          <div class="photoHint">
+            NO EFFORT NEEDED
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="photo" onclick="openViewer(2)">
+
+        <img src="att.9oDOCCrwe-68ysLHTxM8x0OFCqNx0unnl6IPjXeGick.webp.jpeg">
+
+        <div class="photoOverlay"></div>
+
+        <div class="photoNumber">
+          03
+        </div>
+
+        <div class="photoCompliment">
+          beautiful in every angle.
+
+          <div class="photoHint">
+            EVERY SINGLE ONE
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="photo" onclick="openViewer(3)">
+
+        <img src="att.dxVrpz5CFicrFlhsH4_HBTjqow0Wnvzpxzh6wFa8jng.jpeg">
+
+        <div class="photoOverlay"></div>
+
+        <div class="photoNumber">
+          04
+        </div>
+
+        <div class="photoCompliment">
+          the kind of pretty
+          you remember.
+
+          <div class="photoHint">
+            PERMANENT IMPRESSION
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="photo" onclick="openViewer(4)">
+
+        <img src="att.Jr0-cisZdHMb-42ePl7aLX1ohblw6zZwoSdxxarrToc.jpeg">
+
+        <div class="photoOverlay"></div>
+
+        <div class="photoNumber">
+          05
+        </div>
+
+        <div class="photoCompliment">
+          genuinely gorgeous.
+
+          <div class="photoHint">
+            NO DEBATE
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="photo" onclick="openViewer(5)">
+
+        <img src="att.JtDwQAQHdf_SdmXunn3nftLqXULfan0x-lwsBEnxoqs.jpeg">
+
+        <div class="photoOverlay"></div>
+
+        <div class="photoNumber">
+          06
+        </div>
+
+        <div class="photoCompliment">
+          my favorite face.
+
+          <div class="photoHint">
+            ALWAYS
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="photo" onclick="openViewer(6)">
+
+        <img src="att.KQBr38IqOa6wXPvkkgj2vBCIfTQhjlWdr7_miZkNv7A.jpeg">
+
+        <div class="photoOverlay"></div>
+
+        <div class="photoNumber">
+          07
+        </div>
+
+        <div class="photoCompliment">
+          too beautiful to ignore.
+
+          <div class="photoHint">
+            IMPOSSIBLE
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="photo" onclick="openViewer(7)">
+
+        <img src="att.mrOSrZs_omicGNRYyw2eOrluHgrZ4JTsEQzY9iCnnhQ.jpeg">
+
+        <div class="photoOverlay"></div>
+
+        <div class="photoNumber">
+          08
+        </div>
+
+        <div class="photoCompliment">
+          still can't believe
+          you're my girl.
+
+          <div class="photoHint">
+            LUCKIEST BOY
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- COMPLIMENT WALL -->
+
+  <section class="compliments">
+
+    <div class="sectionHead">
+
+      <div>
+        <div class="sectionEyebrow">
+          PRIVATE NOTES
+        </div>
+
+        <div class="sectionTitle">
+          things i notice.
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="quote">
+
+      <div class="quoteMark">
+        “
+      </div>
+
+      <p>
+        you're not just pretty.
+        you have this presence that makes people look twice.
+      </p>
+
+      <small>
+        01 · THE WAY YOU CARRY YOURSELF
+      </small>
+
+    </div>
+
+
+    <div class="quote">
+
+      <div class="quoteMark">
+        “
+      </div>
+
+      <p>
+        somehow, you look beautiful even when
+        you aren't trying to.
+      </p>
+
+      <small>
+        02 · EFFORTLESS
+      </small>
+
+    </div>
+
+
+    <div class="quote">
+
+      <div class="quoteMark">
+        “
+      </div>
+
+      <p>
+        if i had to choose my favorite view,
+        i'd probably choose you.
+      </p>
+
+      <small>
+        03 · FAVORITE VIEW
+      </small>
+
+    </div>
+
+
+    <div class="quote">
+
+      <div class="quoteMark">
+        “
+      </div>
+
+      <p>
+        there's something about your smile
+        that makes everything feel lighter.
+      </p>
+
+      <small>
+        04 · THAT SMILE
+      </small>
+
+    </div>
+
+
+    <div class="quote">
+
+      <div class="quoteMark">
+        “
+      </div>
+
+      <p>
+        you're the kind of beautiful
+        that doesn't get old.
+      </p>
+
+      <small>
+        05 · STILL YOU
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <!-- FINAL -->
+
+  <section class="privateNote">
+
+    <div class="mini">
+      COLLECTION COMPLETE
+    </div>
+
+    <h2>
+      my pretty<br>
+      girlfriend.
+    </h2>
+
+    <p>
+      every picture here is proof of one simple fact:
+      i really got lucky with you.
+    </p>
+
+  </section>
+
+
+  <footer>
+
+    PRIVATE COLLECTION ·
+    <strong>J × MARY GRACE</strong>
+
+    <br><br>
+
+    MADE FOR ONE GIRL ONLY.
+
+  </footer>
+
+</main>
+
+
+<!-- MUSIC -->
+
+<div class="music" id="musicBar">
+
+  <div class="musicDisc">
+    ♫
+  </div>
+
+  <div class="musicInfo">
+
+    <b>
+      PARALUMAN
+    </b>
+
+    <span>
+      private soundtrack · adie
+    </span>
 
   </div>
 
-</div>
-
-<!-- PHOTO MODAL -->
-
-<div class="modal" id="photoModal">
-
-  <div class="modalBox"
-       style="background:transparent;border:none;box-shadow:none">
-
-    <button class="close" onclick="closePhoto()">×</button>
-
-    <img class="fullPhoto" id="fullPhoto" alt="memory">
-
-  </div>
+  <button
+    class="musicBtn"
+    id="musicBtn"
+  >
+    Ⅱ
+  </button>
 
 </div>
 
-<audio id="musicAudio" loop preload="auto" playsinline>
-  <source src="music/Adie - Paraluman (Lyrics).mp3" type="audio/mpeg">
+
+<audio
+  id="musicAudio"
+  loop
+  preload="auto"
+  playsinline
+>
+  <source
+    src="Adie - Paraluman (Lyrics).mp3"
+    type="audio/mpeg"
+  >
 </audio>
+
+
+<!-- PHOTO VIEWER -->
+
+<div id="viewer">
+
+  <button
+    class="closeViewer"
+    onclick="closeViewer()"
+  >
+    ×
+  </button>
+
+  <img
+    id="viewerImg"
+    src=""
+    alt="Mary Grace"
+  >
+
+</div>
+
 
 <script>
 
-/* navigation */
+/* =========================================
+   PRIVATE ACCESS
+========================================= */
 
-function goTo(id){
-  document.getElementById(id)?.scrollIntoView({
-    behavior:"smooth"
-  });
-}
+const SECRET =
+  "MY PRETTYY GIRLFRIEND BABYYY";
+
+const lockScreen =
+  document.getElementById("lockScreen");
+
+const main =
+  document.getElementById("main");
+
+const password =
+  document.getElementById("password");
+
+const unlock =
+  document.getElementById("unlock");
+
+const error =
+  document.getElementById("error");
 
 
-/* loader */
+function tryUnlock(){
 
-window.addEventListener("load",()=>{
+  const entered =
+    password.value.trim();
 
-  setTimeout(()=>{
+  if(entered === SECRET){
 
-    document.getElementById("loader").classList.add("hide");
+    error.textContent = "";
+
+    lockScreen.classList.add("hide");
+
     document.body.classList.remove("locked");
 
-  },2400);
-
-});
-
-
-/* reveal */
-
-const observer=new IntersectionObserver((entries)=>{
-
-  entries.forEach(entry=>{
-
-    if(entry.isIntersecting){
-      entry.target.classList.add("visible");
-    }
-
-  });
-
-},{
-  threshold:.08
-});
-
-document.querySelectorAll(".reveal").forEach(el=>{
-  observer.observe(el);
-});
-
-
-/* reassurance */
-
-const reassuranceMessages=[
-
-{
-title:"YOU ARE STILL BEAUTIFUL",
-text:"Please do not let one insecure thought become the truth. You are still the girl I look at and admire. You are still beautiful to me, even on the days when you cannot see it yourself."
-},
-
-{
-title:"YOU DO NOT HAVE TO BE PERFECT",
-text:"You never have to look perfect for me to love looking at you. I love the real you. The tired you. The quiet you. The insecure you. The happy you. All of you deserves love."
-},
-
-{
-title:"DON'T BELIEVE EVERY THOUGHT",
-text:"Overthinking can make small things feel huge. Take a breath. You are not suddenly less beautiful, less important, or less loved just because your mind is being loud today."
-},
-
-{
-title:"A REMINDER FROM ME",
-text:"You are not competing with anybody. You do not have to become someone else to be enough for me. I chose you because you are you."
-},
-
-{
-title:"ONE MORE COMPLIMENT",
-text:"You are genuinely gorgeous. Your face, your smile, your presence, your personality — all of it has something that makes you different. And yes, I will probably keep telling you that until you finally believe me."
-}
-
-];
-
-function reassure(index){
-
-  const box=document.getElementById("reassureText");
-  const item=reassuranceMessages[index];
-
-  box.style.opacity="0";
-
-  setTimeout(()=>{
-
-    box.innerHTML=`
-      <small>${item.title}</small>
-      ${item.text}
-    `;
-
-    box.style.opacity="1";
-
-  },180);
-
-}
-
-
-/* modal */
-
-const modal=document.getElementById("modal");
-
-function openMessage(title,text,kicker="PRIVATE MESSAGE"){
-
-  document.getElementById("modalTitle").textContent=title;
-  document.getElementById("modalBody").textContent=text;
-  document.getElementById("modalKicker").textContent=kicker;
-
-  modal.classList.add("show");
-  document.body.classList.add("locked");
-
-}
-
-function closeModal(){
-
-  modal.classList.remove("show");
-  document.body.classList.remove("locked");
-
-}
-
-modal.addEventListener("click",(e)=>{
-
-  if(e.target===modal){
-    closeModal();
-  }
-
-});
-
-
-/* vault */
-
-const vaultMessages=[
-
-{
-title:"when you miss me",
-kicker:"OPEN WHEN YOU MISS ME",
-text:`if you are reading this because you miss me, then i hope you know that there is a very good chance i am missing you too.
-
-distance, busy days, or whatever is happening around us does not change the fact that you are important to me.
-
-so don't feel silly for missing me.
-
-i like knowing that somewhere in this world, there is a girl i get to call mine.
-
-and yes...
-
-i miss you too, babyyy.`
-},
-
-{
-title:"when you overthink",
-kicker:"OPEN WHEN YOU OVERTHINK",
-text:`pause for a second.
-
-not every thought deserves to be believed.
-
-if your mind is telling you that you are not enough, remember that i chose you.
-
-if your mind is telling you that you are not beautiful, remember that i look at you differently.
-
-if your mind is telling you that you might lose me because someone else is better, remember that i am not searching for someone else.
-
-you are my girl.
-
-breathe.
-
-you are loved.`
-},
-
-{
-title:"when you feel ugly",
-kicker:"OPEN WHEN YOU DON'T FEEL PRETTY",
-text:`i wish you could borrow my eyes for a moment.
-
-maybe then you would understand why i keep calling you beautiful.
-
-you notice the things you dislike.
-
-i notice the girl i fell for.
-
-you notice imperfections.
-
-i notice you.
-
-and honestly, i would still choose you on the days when you feel like the least beautiful version of yourself.
-
-because my love for you was never based on perfection.`
-},
-
-{
-title:"when you need love",
-kicker:"OPEN WHEN YOU NEED REASSURANCE",
-text:`you do not have to earn my love by being perfect.
-
-you do not have to always be happy.
-
-you do not have to always look good.
-
-you do not have to know exactly what to say.
-
-you can simply be you.
-
-and i will still be here reminding you that you matter.
-
-that you are beautiful.
-
-that you are precious.
-
-that you are loved.`
-},
-
-{
-title:"when you had a bad day",
-kicker:"OPEN AFTER A BAD DAY",
-text:`today was difficult.
-
-and that is okay.
-
-you do not have to carry every bad thing into tomorrow.
-
-rest.
-
-breathe.
-
-eat something.
-
-drink some water.
-
-and let yourself be taken care of for a little while.
-
-one bad day does not define you.
-
-tomorrow gets another chance.
-
-and so do you.`
-},
-
-{
-title:"when you need a smile",
-kicker:"OPEN WHEN YOU NEED A SMILE",
-text:`hello, beautiful.
-
-yes, you.
-
-the girl reading this.
-
-just wanted to remind you that somewhere, your boyfriend is probably thinking:
-
-"grabe ka gwapa sa akong girlfriend."
-
-so please smile.
-
-there.
-
-that's better.
-
-and yes, i still think you're gorgeous.`
-}
-
-];
-
-function openVault(index){
-
-  const item=vaultMessages[index];
-
-  openMessage(
-    item.title,
-    item.text,
-    item.kicker
-  );
-
-}
-
-
-/* secret */
-
-function openSecret(){
-
-  const code=prompt("ENTER PRIVATE ACCESS CODE");
-
-  if(code===null)return;
-
-  if(code.trim().toUpperCase()==="MARY"){
-
-    openMessage(
-      "A final reminder.",
-`if you somehow reached this part...
-
-then here is something i want you to keep.
-
-you are not just someone i call my girlfriend.
-
-you are someone i am genuinely grateful to have met.
-
-thank you for saying yes.
-
-thank you for choosing me.
-
-and thank you for letting me become part of your life.
-
-whatever happens in the future, i hope you always remember this:
-
-there was a day when one girl finally said yes to one boy who had been hoping for that answer.
-
-and that boy was very, very happy.
-
-— jay-r`,
-      "SECRET ACCESS GRANTED"
-    );
+    main.classList.add("show");
+
+    /*
+      IMPORTANT:
+      The unlock button is a real user interaction.
+      This gives iPhone/Safari the best chance
+      to allow the music to start automatically.
+    */
+
+    startMusic();
 
   }else{
 
-    openMessage(
-      "Access denied.",
-      "That is not the correct code.\n\nHint: the code is connected to the girl this entire website was made for.",
-      "PRIVATE VAULT"
-    );
+    error.textContent =
+      "PRIVATE CODE NOT RECOGNIZED";
+
+    password.value = "";
+
+    setTimeout(()=>{
+
+      error.textContent = "";
+
+    },2200);
 
   }
 
 }
 
 
-/* PHOTO SYSTEM — 16 PHOTOS */
-
-const photos=[
-
-"att.97vp2zl5u6zg5e1ga2nZvjJr63US-mqfEx8krTg7Dy4.jpeg",
-
-"att.9oDOCCrwe-68ysLHTxM8x0OFCqNx0unnl6IPjXeGick.webp.jpeg",
-
-"att.dxVrpz5CFicrFlhsH4_HBTjqow0Wnvzpxzh6wFa8jng.jpeg",
-
-"att.Jr0-cisZdHMb-42ePl7aLX1ohblw6zZwoSdxxarrToc.jpeg",
-
-"att.JtDwQAQHdf_SdmXunn3nftLqXULfan0x-lwsBEnxoqs.jpeg",
-
-"att.KQBr38IqOa6wXPvkkgj2vBCIfTQhjlWdr7_miZkNv7A.jpeg",
-
-"att.mrOSrZs_omicGNRYyw2eOrluHgrZ4JTsEQzY9iCnnhQ.jpeg",
-
-"att.5iUfJVAU_LQmT-P2IGKtLU3rJfoELn6bFiUBatxovNs.jpeg",
-
-"att.G1sk46QmiEOLNSMFF0sKmXdptQZ6N587p65v4ChM_WQ.jpeg",
-
-"att.H3ccb3u4oBzB8vq1kOMVc127xelrJ21RaSxwlW4VIvg.jpeg",
-
-"att.K9ehbG15roPf-cZTKkUf-oguVo9G61kvUK0gpOXPRq4.jpeg",
-
-"att.ncPtzfXyMgg9YfKbabv4pA10_mRTbdYrOW2oz8YY5Bg.jpeg",
-
-"att.Nz5IuhwFHnyUAZZx7Oevs8oP6oMC1sKDW82kvZeP9rw.jpeg",
-
-"att.R85aRRHZd-gPakjHIDOwLeJiajLk7F2mxtniaZIUZG8.jpeg",
-
-"att.rbeahay57SagM4qYOQwTeA_fv6zBfxFU-4GiRNL4W38.jpeg",
-
-"att.SbxyYoBPZ39pEaRRsywBnKYvU7R0lcyf4soYGxkYCTc.jpeg"
-
-];
-
-function openPhoto(index){
-
-  document.getElementById("fullPhoto").src=photos[index];
-
-  document.getElementById("photoModal").classList.add("show");
-
-  document.body.classList.add("locked");
-
-}
-
-function closePhoto(){
-
-  document.getElementById("photoModal").classList.remove("show");
-
-  document.body.classList.remove("locked");
-
-}
+unlock.addEventListener(
+  "click",
+  tryUnlock
+);
 
 
-/* music */
+password.addEventListener(
+  "keydown",
+  function(e){
 
-const audio=document.getElementById("musicAudio");
-const musicMain=document.getElementById("musicMain");
-const navMusic=document.getElementById("navMusic");
-const musicPanel=document.getElementById("musicPanel");
-const musicHint=document.getElementById("musicHint");
-
-let musicStarted=false;
-let audioContext=null;
-let sourceNode=null;
-let gainNode=null;
-let bassNode=null;
-let clarityNode=null;
-let audioReady=false;
-
-function setupAudio(){
-
-  if(audioReady)return;
-
-  try{
-
-    audioContext=new(
-      window.AudioContext ||
-      window.webkitAudioContext
-    )();
-
-    sourceNode=audioContext.createMediaElementSource(audio);
-
-    bassNode=audioContext.createBiquadFilter();
-    bassNode.type="lowshelf";
-    bassNode.frequency.value=120;
-    bassNode.gain.value=1.5;
-
-    clarityNode=audioContext.createBiquadFilter();
-    clarityNode.type="peaking";
-    clarityNode.frequency.value=2800;
-    clarityNode.Q.value=.8;
-    clarityNode.gain.value=1.5;
-
-    gainNode=audioContext.createGain();
-    gainNode.gain.value=1.35;
-
-    sourceNode
-      .connect(bassNode)
-      .connect(clarityNode)
-      .connect(gainNode)
-      .connect(audioContext.destination);
-
-    audioReady=true;
-
-  }catch(error){
-
-    audioReady=false;
+    if(e.key === "Enter"){
+      tryUnlock();
+    }
 
   }
+);
 
-}
+
+/* =========================================
+   AUTOMATIC MUSIC
+========================================= */
+
+const audio =
+  document.getElementById("musicAudio");
+
+const musicBar =
+  document.getElementById("musicBar");
+
+const musicBtn =
+  document.getElementById("musicBtn");
+
 
 async function startMusic(){
 
   try{
 
-    setupAudio();
-
-    if(audioContext && audioContext.state==="suspended"){
-      await audioContext.resume();
-    }
-
-    audio.volume=1;
+    audio.volume = 0.65;
 
     await audio.play();
 
-    musicStarted=true;
+    musicBar.classList.add("playing");
 
-    updateMusicUI();
+    musicBtn.textContent = "Ⅱ";
 
-  }catch(error){
+  }catch(e){
 
-    musicStarted=false;
+    /*
+      If Safari blocks playback,
+      the first tap anywhere after unlocking
+      will try again.
+    */
 
-    updateMusicUI();
-
-  }
-
-}
-
-function stopMusic(){
-
-  audio.pause();
-
-  musicStarted=false;
-
-  updateMusicUI();
-
-}
-
-function toggleMusic(){
-
-  if(musicStarted){
-    stopMusic();
-  }else{
-    startMusic();
-  }
-
-}
-
-function updateMusicUI(){
-
-  if(musicStarted){
-
-    musicMain.textContent="Ⅱ";
-    navMusic.textContent="Ⅱ";
-    musicPanel.classList.add("playing");
-    musicHint.textContent="NOW PLAYING · PARALUMAN";
-
-  }else{
-
-    musicMain.textContent="▶";
-    navMusic.textContent="♪";
-    musicPanel.classList.remove("playing");
-    musicHint.textContent="TAP TO PLAY · PARALUMAN";
-
-  }
-
-}
-
-musicMain.addEventListener("click",toggleMusic);
-navMusic.addEventListener("click",toggleMusic);
-
-
-/* autoplay */
-
-window.addEventListener("load",()=>{
-
-  setTimeout(()=>{
-    startMusic();
-  },2600);
-
-});
-
-
-/* fallback */
-
-let interactionUsed=false;
-
-async function unlockMusic(){
-
-  if(interactionUsed)return;
-
-  interactionUsed=true;
-
-  if(!musicStarted){
-    await startMusic();
-  }
-
-}
-
-[
-  "touchstart",
-  "pointerdown"
-].forEach(eventName=>{
-
-  document.addEventListener(
-    eventName,
-    unlockMusic,
-    {
-      once:true,
-      passive:true
-    }
-  );
-
-});
-
-
-/* escape */
-
-document.addEventListener("keydown",(e)=>{
-
-  if(e.key==="Escape"){
-
-    closeModal();
-    closePhoto();
-
-  }
-
-});
-
-
-/* hero tilt */
-
-const orb=document.querySelector(".vipOrb");
-
-if(window.matchMedia("(pointer:fine)").matches){
-
-  document.addEventListener("mousemove",(e)=>{
-
-    const x=(e.clientX/window.innerWidth-.5);
-    const y=(e.clientY/window.innerHeight-.5);
-
-    orb.style.transform=`
-      rotateX(${-y*8}deg)
-      rotateY(${x*10}deg)
-    `;
-
-  });
-
-}
-
-
-/* photo swipe */
-
-let touchStartX=0;
-
-document
-  .getElementById("photoModal")
-  .addEventListener("touchstart",(e)=>{
-
-    touchStartX=e.changedTouches[0].clientX;
-
-  },{
-    passive:true
-  });
-
-document
-  .getElementById("photoModal")
-  .addEventListener("touchend",(e)=>{
-
-    const endX=e.changedTouches[0].clientX;
-
-    if(Math.abs(endX-touchStartX)>80){
-      closePhoto();
-    }
-
-  },{
-    passive:true
-  });
-
-
-/* floating lights */
-
-for(let i=0;i<18;i++){
-
-  const light=document.createElement("div");
-
-  light.style.position="fixed";
-  light.style.width=(Math.random()*3+1)+"px";
-  light.style.height=light.style.width;
-  light.style.borderRadius="50%";
-
-  light.style.background=Math.random()>.5
-    ?"rgba(240,183,198,.35)"
-    :"rgba(216,185,130,.3)";
-
-  light.style.left=Math.random()*100+"vw";
-  light.style.top=Math.random()*100+"vh";
-  light.style.pointerEvents="none";
-  light.style.zIndex="-1";
-  light.style.filter="blur(1px)";
-
-  light.style.animation=
-    `ambientFloat ${5+Math.random()*8}s ease-in-out infinite alternate`;
-
-  document.body.appendChild(light);
-
-}
-
-const floatingStyle=document.createElement("style");
-
-floatingStyle.textContent=`
-
-@keyframes ambientFloat{
-
-  from{
-    transform:translate3d(0,0,0);
-    opacity:.2;
-  }
-
-  to{
-    transform:translate3d(
-      ${Math.random()*50-25}px,
-      ${Math.random()*70-35}px,
-      0
+    console.log(
+      "Safari blocked autoplay. Waiting for interaction."
     );
-    opacity:.7;
+
   }
 
 }
 
-`;
 
-document.head.appendChild(floatingStyle);
+/* =========================================
+   MUSIC BUTTON
+========================================= */
+
+musicBtn.addEventListener(
+  "click",
+  async function(){
+
+    if(audio.paused){
+
+      try{
+
+        await audio.play();
+
+        musicBar.classList.add("playing");
+
+        musicBtn.textContent = "Ⅱ";
+
+      }catch(e){
+
+        console.log(e);
+
+      }
+
+    }else{
+
+      audio.pause();
+
+      musicBar.classList.remove("playing");
+
+      musicBtn.textContent = "▶";
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   FIRST TOUCH FALLBACK
+========================================= */
+
+document.addEventListener(
+  "touchstart",
+  function(){
+
+    if(
+      audio.paused &&
+      lockScreen.classList.contains("hide")
+    ){
+
+      startMusic();
+
+    }
+
+  },
+  {once:true}
+);
+
+
+/* =========================================
+   PHOTO VIEWER
+========================================= */
+
+const photos = [
+
+  "vip-featured.jpg",
+
+  "att.97vp2zl5u6zg5e1ga2nZvjJr63US-mqfEx8krTg7Dy4.jpeg",
+
+  "att.9oDOCCrwe-68ysLHTxM8x0OFCqNx0unnl6IPjXeGick.webp.jpeg",
+
+  "att.dxVrpz5CFicrFlhsH4_HBTjqow0Wnvzpxzh6wFa8jng.jpeg",
+
+  "att.Jr0-cisZdHMb-42ePl7aLX1ohblw6zZwoSdxxarrToc.jpeg",
+
+  "att.JtDwQAQHdf_SdmXunn3nftLqXULfan0x-lwsBEnxoqs.jpeg",
+
+  "att.KQBr38IqOa6wXPvkkgj2vBCIfTQhjlWdr7_miZkNv7A.jpeg",
+
+  "att.mrOSrZs_omicGNRYyw2eOrluHgrZ4JTsEQzY9iCnnhQ.jpeg"
+
+];
+
+
+const viewer =
+  document.getElementById("viewer");
+
+const viewerImg =
+  document.getElementById("viewerImg");
+
+
+function openViewer(index){
+
+  viewerImg.src =
+    photos[index];
+
+  viewer.classList.add("open");
+
+}
+
+
+function closeViewer(){
+
+  viewer.classList.remove("open");
+
+  viewerImg.src = "";
+
+}
+
+
+viewer.addEventListener(
+  "click",
+  function(e){
+
+    if(e.target === viewer){
+      closeViewer();
+    }
+
+  }
+);
+
+
+document.addEventListener(
+  "keydown",
+  function(e){
+
+    if(e.key === "Escape"){
+      closeViewer();
+    }
+
+  }
+);
+
+
+/* =========================================
+   IMAGE ERROR HANDLER
+========================================= */
+
+document
+  .querySelectorAll("img")
+  .forEach(function(img){
+
+    img.addEventListener(
+      "error",
+      function(){
+
+        img.style.background =
+          "linear-gradient(135deg,#171319,#0c0b0e)";
+
+      }
+    );
+
+  });
 
 </script>
 
