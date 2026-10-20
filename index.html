@@ -1,1556 +1,345 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#070609">
-<title>PRIVATE — MARY GRACE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#09060d">
+<title>for you, babyyy ♡</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html{
-  background:#070609;
-  scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
-  background:
-    radial-gradient(circle at 50% 0%,rgba(130,62,78,.18),transparent 35%),
-    #070609;
-  color:#f5eee8;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-  overflow-x:hidden;
+  margin:0;background:#09060d;color:#fff0f6;
+  font-family:Georgia,"Times New Roman",serif;
+  overflow-x:hidden
 }
-
-body.locked{
-  overflow:hidden;
-}
-
-button,
-input{
-  font:inherit;
-}
-
-button{
-  border:0;
-  outline:0;
-  cursor:pointer;
-}
-
-.ambient{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-  z-index:0;
-}
-
-.orb{
-  position:absolute;
-  width:280px;
-  height:280px;
-  border-radius:50%;
-  filter:blur(100px);
-  opacity:.14;
-  animation:float 13s ease-in-out infinite;
-}
-
-.orb.one{
-  background:#9b4258;
-  top:-100px;
-  left:-100px;
-}
-
-.orb.two{
-  background:#c79c60;
-  right:-130px;
-  top:35%;
-  animation-delay:-5s;
-}
-
-.orb.three{
-  background:#682f45;
-  bottom:-130px;
-  left:30%;
-  animation-delay:-8s;
-}
-
-@keyframes float{
-  0%,100%{
-    transform:translate(0,0);
-  }
-
-  50%{
-    transform:translate(30px,-35px);
-  }
-}
-
-/* =========================
-   PRIVATE LOCK
-========================= */
-
-#lockScreen{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:25px;
-  background:
-    radial-gradient(circle at center,rgba(110,45,60,.2),transparent 45%),
-    #070609;
-  transition:opacity .8s ease,visibility .8s ease;
-}
-
-#lockScreen.hide{
-  opacity:0;
-  visibility:hidden;
-}
-
-.lockBox{
-  width:min(430px,100%);
-  text-align:center;
-}
-
-.privateLabel{
-  color:#b99b70;
-  font-size:9px;
-  letter-spacing:5px;
-  margin-bottom:25px;
-}
-
-.lockIcon{
-  width:76px;
-  height:76px;
-  border-radius:50%;
-  border:1px solid rgba(206,169,116,.35);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 28px;
-  font-size:24px;
-  box-shadow:
-    0 0 40px rgba(181,130,85,.08),
-    inset 0 0 25px rgba(255,255,255,.025);
-}
-
-.lockTitle{
-  font-family:Georgia,serif;
-  font-size:clamp(38px,10vw,60px);
-  font-weight:400;
-  line-height:.9;
-  letter-spacing:-2px;
-  margin-bottom:15px;
-}
-
-.lockTitle em{
-  color:#b98b91;
-  font-style:italic;
-}
-
-.lockSub{
-  color:#888183;
-  font-size:11px;
-  letter-spacing:2px;
-  margin-bottom:35px;
-}
-
-#password{
-  width:100%;
-  height:55px;
-  padding:0 18px;
-  border-radius:2px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.035);
-  color:#fff;
-  text-align:center;
-  outline:none;
-  font-size:12px;
-  letter-spacing:1.5px;
-  transition:.3s;
-}
-
-#password::placeholder{
-  color:#656063;
-}
-
-#password:focus{
-  border-color:rgba(201,162,107,.65);
-  box-shadow:0 0 25px rgba(201,162,107,.08);
-}
-
-#unlock{
-  width:100%;
-  height:55px;
-  margin-top:12px;
-  background:linear-gradient(135deg,#c6a16d,#8e6842);
-  color:#090708;
-  font-size:9px;
-  letter-spacing:4px;
-  font-weight:700;
-  transition:.3s;
-}
-
-#unlock:active{
-  transform:scale(.98);
-}
-
-.error{
-  height:18px;
-  margin-top:12px;
-  color:#b96772;
-  font-size:10px;
-  letter-spacing:1px;
-}
-
-/* =========================
-   MAIN
-========================= */
-
-#main{
-  position:relative;
-  z-index:2;
-  opacity:0;
-  transition:opacity 1.2s ease;
-}
-
-#main.show{
-  opacity:1;
-}
-
-/* =========================
-   NAV
-========================= */
-
-.nav{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:20;
-  height:65px;
-  padding:0 22px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:linear-gradient(
-    to bottom,
-    rgba(7,6,9,.94),
-    transparent
-  );
-  backdrop-filter:blur(8px);
-}
-
-.brand{
-  color:#b99b70;
-  font-size:8px;
-  letter-spacing:4px;
-}
-
-.status{
-  color:#777173;
-  font-size:8px;
-  letter-spacing:2px;
-}
-
-.status span{
-  color:#a7c995;
-}
-
-/* =========================
-   HERO
-========================= */
-
+button{font:inherit;cursor:pointer}
+#stars{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+nav,main,footer{position:relative;z-index:1}
+nav{text-align:center;padding:23px 10px;font:10px Arial,sans-serif;letter-spacing:4px;color:#eabbd2}
 .hero{
-  min-height:100svh;
-  padding:130px 24px 70px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  position:relative;
+  min-height:100svh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;
+  padding:65px 22px 45px
 }
-
-.heroTop{
-  color:#b99b70;
-  font-size:8px;
-  letter-spacing:5px;
-  margin-bottom:23px;
+.eyebrow,.label{
+  color:#ff9fc8;font:10px Arial,sans-serif;
+  letter-spacing:4px;text-align:center
 }
-
-.hero h1{
-  font-family:Georgia,serif;
-  font-weight:400;
-  font-size:clamp(60px,17vw,110px);
-  line-height:.82;
-  letter-spacing:-5px;
+h1{font-size:clamp(45px,12vw,76px);font-weight:normal;line-height:1.05;margin:18px 0}
+h1 span,h2 em{color:#ff9fc8;font-weight:normal}
+.subtitle{color:#c8aabb;line-height:1.9;font-size:14px}
+.heart-stage{width:175px;height:175px;display:grid;place-items:center;position:relative;margin:20px}
+.heart{font-size:92px;color:#ff82b0;filter:drop-shadow(0 0 20px #ff4e91);animation:beat 2s infinite}
+.orbit{position:absolute;width:160px;height:160px;border:1px solid #ff9fc844;border-radius:50%;animation:spin 10s linear infinite}
+.orbit:after{content:"✦";color:#ff9fc8;position:absolute;top:0;left:50%}
+.orbit.two{width:130px;height:130px;border-color:#b89aff44;animation-direction:reverse}
+@keyframes beat{50%{transform:scale(1.12)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn{
+  border:1px solid #ffb5d1a8;color:#fff0f6;
+  background:linear-gradient(120deg,#ff8fb82b,#b89aff20);
+  border-radius:40px;padding:14px 23px;font:11px Arial,sans-serif;
+  letter-spacing:1.5px;box-shadow:0 0 25px #ff8fb820
 }
-
-.hero h1 em{
-  color:#b98b91;
-  font-style:italic;
-}
-
-.heroDesc{
-  max-width:480px;
-  color:#898284;
-  font-size:12px;
-  line-height:1.9;
-  margin-top:30px;
-}
-
-.heroLine{
-  width:70px;
-  height:1px;
-  background:#b99b70;
-  margin-top:32px;
-}
-
-/* =========================
-   FEATURED
-========================= */
-
-.featured{
-  padding:20px 18px 100px;
-}
-
-.sectionHead{
-  padding:0 6px 22px;
-  display:flex;
-  align-items:end;
-  justify-content:space-between;
-}
-
-.sectionEyebrow{
-  color:#b99b70;
-  font-size:8px;
-  letter-spacing:4px;
-  margin-bottom:8px;
-}
-
-.sectionTitle{
-  font-family:Georgia,serif;
-  font-size:32px;
-  font-weight:400;
-}
-
-.counter{
-  color:#716a6c;
-  font-size:8px;
-  letter-spacing:2px;
-}
-
-.featureCard{
-  position:relative;
-  overflow:hidden;
-  min-height:68vh;
-  border:1px solid rgba(255,255,255,.1);
-  background:#111014;
-  box-shadow:0 30px 80px rgba(0,0,0,.45);
-}
-
-.featureCard img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transition:transform 1.2s ease;
-}
-
-.featureCard:active img{
-  transform:scale(1.025);
-}
-
-.featureShade{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(
-      to top,
-      rgba(4,3,5,.97),
-      rgba(4,3,5,.03) 65%
-    ),
-    linear-gradient(
-      to right,
-      rgba(4,3,5,.35),
-      transparent
-    );
-}
-
-.featureText{
-  position:absolute;
-  left:24px;
-  right:24px;
-  bottom:25px;
-}
-
-.featureTag{
-  color:#d2ae78;
-  font-size:8px;
-  letter-spacing:4px;
-  margin-bottom:10px;
-}
-
-.featureText h2{
-  font-family:Georgia,serif;
-  font-weight:400;
-  font-size:clamp(38px,9vw,65px);
-  line-height:.92;
-}
-
-.featureText p{
-  color:#c5bfc0;
-  font-size:11px;
-  line-height:1.7;
-  max-width:390px;
-  margin-top:15px;
-}
-
-/* =========================
-   GALLERY
-========================= */
-
-.gallery{
-  padding:0 18px 110px;
-}
-
-.photoGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.photo{
-  position:relative;
-  height:58vw;
-  min-height:210px;
-  overflow:hidden;
-  background:#111014;
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.photo:nth-child(3n){
-  grid-column:span 2;
-  height:78vw;
-}
-
-.photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transition:transform .8s ease;
-}
-
-.photo:active img{
-  transform:scale(1.04);
-}
-
-.photoOverlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    to top,
-    rgba(0,0,0,.75),
-    transparent 58%
-  );
-}
-
-.photoNumber{
-  position:absolute;
-  top:12px;
-  left:13px;
-  color:#d0b17e;
-  font-size:8px;
-  letter-spacing:2px;
-}
-
-.photoCompliment{
-  position:absolute;
-  left:15px;
-  right:15px;
-  bottom:15px;
-  font-family:Georgia,serif;
-  font-size:21px;
-  line-height:1.05;
-}
-
-.photoHint{
-  margin-top:7px;
-  color:#aaa1a3;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-  font-size:7px;
-  letter-spacing:2px;
-}
-
-/* =========================
-   COMPLIMENTS
-========================= */
-
-.compliments{
-  padding:0 22px 110px;
-}
-
-.quote{
-  padding:42px 0;
-  border-top:1px solid rgba(255,255,255,.08);
-}
-
-.quote:last-child{
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.quoteMark{
-  color:#a77d55;
-  font-family:Georgia,serif;
-  font-size:45px;
-  line-height:.5;
-  margin-bottom:18px;
-}
-
-.quote p{
-  font-family:Georgia,serif;
-  font-size:clamp(25px,7vw,44px);
-  line-height:1.08;
-  font-weight:400;
-}
-
-.quote small{
-  display:block;
-  color:#756e70;
-  font-size:8px;
-  letter-spacing:3px;
-  margin-top:18px;
-}
-
-/* =========================
-   FINAL
-========================= */
-
-.privateNote{
-  padding:80px 25px 120px;
-  text-align:center;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(119,48,65,.13),
-      transparent 55%
-    );
-}
-
-.privateNote .mini{
-  color:#b99b70;
-  font-size:8px;
-  letter-spacing:4px;
-  margin-bottom:22px;
-}
-
-.privateNote h2{
-  font-family:Georgia,serif;
-  font-size:clamp(40px,10vw,70px);
-  font-weight:400;
-  line-height:.92;
-}
-
-.privateNote p{
-  color:#8b8586;
-  max-width:470px;
-  margin:25px auto 0;
-  font-size:12px;
-  line-height:1.9;
-}
-
-/* =========================
-   MUSIC
-========================= */
-
-.music{
-  position:fixed;
-  left:15px;
-  right:15px;
-  bottom:15px;
-  z-index:30;
-  height:57px;
-  padding:0 15px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  background:rgba(15,13,17,.88);
-  border:1px solid rgba(255,255,255,.1);
-  backdrop-filter:blur(20px);
-  box-shadow:0 15px 40px rgba(0,0,0,.4);
-}
-
-.musicDisc{
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  border:1px solid #a67e56;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:11px;
-  animation:spin 5s linear infinite;
-  animation-play-state:paused;
-}
-
-.music.playing .musicDisc{
-  animation-play-state:running;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-.musicInfo{
-  flex:1;
-}
-
-.musicInfo b{
-  display:block;
-  font-size:9px;
-  letter-spacing:2px;
-  font-weight:500;
-}
-
-.musicInfo span{
-  display:block;
-  color:#706a6c;
-  font-size:8px;
-  margin-top:3px;
-}
-
-.musicBtn{
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.13);
-  background:transparent;
-  color:#eee;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-  padding:30px 20px 115px;
-  text-align:center;
-  color:#514b4d;
-  font-size:8px;
-  letter-spacing:3px;
-}
-
-footer strong{
-  color:#9d7d5d;
-  font-weight:400;
-}
-
-/* =========================
-   VIEWER
-========================= */
-
-#viewer{
-  position:fixed;
-  inset:0;
-  z-index:90;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:rgba(3,2,4,.97);
-}
-
-#viewer.open{
-  display:flex;
-}
-
-#viewer img{
-  max-width:100%;
-  max-height:86vh;
-  object-fit:contain;
-  box-shadow:0 25px 100px rgba(0,0,0,.7);
-}
-
-.closeViewer{
-  position:absolute;
-  top:20px;
-  right:20px;
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.15);
-  background:rgba(255,255,255,.04);
-  color:white;
-  font-size:18px;
-}
-
-/* =========================
-   DESKTOP
-========================= */
-
-@media(min-width:800px){
-
-  .hero{
-    padding-left:8vw;
-  }
-
-  .featured,
-  .gallery,
-  .compliments{
-    max-width:1100px;
-    margin:auto;
-  }
-
-  .photoGrid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .photo,
-  .photo:nth-child(3n){
-    grid-column:auto;
-    height:470px;
-  }
-
-  .photo:nth-child(4n){
-    grid-row:span 2;
-    height:950px;
-  }
-
-  .featureCard{
-    height:760px;
-  }
-}
+.btn:active{transform:scale(.97)}
+.tiny{font:9px Arial,sans-serif;letter-spacing:1.5px;color:#a88c9d;margin-top:14px}
+#letter{display:none}
+#letter.open{display:block}
+section.content{max-width:740px;margin:auto;padding:65px 20px}
+h2{text-align:center;font-size:clamp(30px,8vw,44px);font-weight:normal;line-height:1.3;margin:17px 0 28px}
+.glass{background:linear-gradient(145deg,#ffffff0c,#ff8fb808);border:1px solid #ffb8d222;border-radius:22px;padding:25px 20px}
+.poem{font-size:15px;line-height:2;text-align:center;white-space:pre-line;color:#f1dce7}
+.poem em{color:#ff9fc8}
+.memories{display:grid;gap:14px}
+.memory{border:1px solid #ffb8d222;background:#ffffff07;border-radius:18px;padding:22px}
+.memory .icon{font-size:23px;margin-bottom:12px}
+.memory .date{color:#ff9fc8;font:9px Arial,sans-serif;letter-spacing:2px;margin-bottom:10px}
+.memory h3{font-weight:normal;font-size:21px;margin:0 0 10px;color:#ffd7e7}
+.memory p{font-size:14px;line-height:1.9;color:#c8aabb;margin:0}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.photo{height:190px;position:relative;overflow:hidden;border-radius:16px;background:linear-gradient(145deg,#46243e,#17101d);border:1px solid #ffb8d222}
+.photo:first-child{grid-column:1/-1;height:260px}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo p{position:absolute;bottom:0;left:0;right:0;margin:0;padding:28px 12px 12px;background:linear-gradient(transparent,#09060de8);font-size:12px}
+.music{text-align:center}
+.disc{width:95px;height:95px;border-radius:50%;margin:0 auto 20px;display:grid;place-items:center;background:radial-gradient(circle,#17101d 0 15%,#ffb3d3 16% 20%,#6b3156 21% 40%,#170f1c 41% 60%,#ff9fc8 61% 63%,#28132b 64%);font-size:24px}
+.disc.playing{animation:spin 5s linear infinite}
+.status{font:10px Arial,sans-serif;color:#ff9fc8;line-height:1.8;margin-top:14px}
+.final{text-align:center;padding-bottom:90px!important}
+.final p{font-size:15px;line-height:2;color:#c8aabb}
+footer{text-align:center;padding:25px;font:9px Arial,sans-serif;letter-spacing:2px;color:#8f7485}
+.petal{position:fixed;top:-30px;z-index:5;pointer-events:none;animation:fall 7s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(400deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 
-<body class="locked">
+<body>
+<canvas id="stars"></canvas>
+<nav>made with all my love ♡</nav>
 
-<div class="ambient">
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div class="orb three"></div>
-</div>
+<main>
+  <section class="hero" id="home">
+    <div class="eyebrow">a little piece of my heart</div>
+    <h1>for you,<br><span>babyyy.</span></h1>
+    <p class="subtitle">if i could keep one feeling forever,<br>it would be the feeling of being with you.</p>
 
-<!-- PRIVATE ACCESS -->
-
-<section id="lockScreen">
-
-  <div class="lockBox">
-
-    <div class="privateLabel">
-      PRIVATE COLLECTION · 001
+    <div class="heart-stage">
+      <div class="orbit"></div>
+      <div class="orbit two"></div>
+      <div class="heart">♥</div>
     </div>
 
-    <div class="lockIcon">
-      ⌁
-    </div>
+    <button class="btn" id="openBtn" type="button">open your little surprise ♡</button>
+    <div class="tiny">a little reminder of how loved you are</div>
+  </section>
 
-    <h1 class="lockTitle">
-      for my<br>
-      <em>pretty girl.</em>
-    </h1>
+  <div id="letter">
+    <section class="content">
+      <div class="label">a letter for you</div>
+      <h2>you feel like <em>home.</em></h2>
+      <div class="glass">
+        <div class="poem">i never needed every day to be perfect,
+or every moment to feel like a movie.
 
-    <div class="lockSub">
-      exclusive access · one person only
-    </div>
+sometimes, all i need is you beside me,
+walking with me without needing anywhere special to go.
 
-    <input
-      id="password"
-      type="password"
-      autocomplete="off"
-      placeholder="ENTER PRIVATE CODE"
-    >
+<em>because somehow, even the simplest days
+become memories i want to keep.</em>
 
-    <button id="unlock">
-      UNLOCK PRIVATE COLLECTION
-    </button>
+i love the little things we do,
+the days we spend together,
+and the comfort of knowing that i get to share
+parts of my life with you.
 
-    <div class="error" id="error"></div>
+i know i won't always have the perfect words,
+but my love for you is not measured
+by how beautifully i can explain it.
 
+it's in the way i want to listen,
+the way i want to understand you,
+and the way i keep choosing us,
+even on ordinary days.
+
+<em>if i could ask for one simple thing,
+it would be more time with you.</em>
+
+more little walks,
+more random conversations,
+more moments when we forget about everything else
+because, for a while, we're together.
+
+and if life gives us a thousand ordinary days,
+i hope i get to spend so many of them
+holding your hand.
+
+i love you, babyyy.
+and i'm still looking forward
+to all the memories we haven't made yet. ♡</div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="label">little moments, big feelings</div>
+      <h2>our kind of <em>memories.</em></h2>
+      <div class="memories">
+        <article class="memory">
+          <div class="icon">♡</div>
+          <div class="date">OUR SUNDAYS</div>
+          <h3>sunday with you</h3>
+          <p>going to church together, spending time with each other, sometimes going out, sometimes just hanging around and enjoying the fresh air. nothing too fancy, just us, making an ordinary sunday feel a little more beautiful.</p>
+        </article>
+        <article class="memory">
+          <div class="icon">☾</div>
+          <div class="date">A FRIDAY TO REMEMBER</div>
+          <h3>just us, around colon</h3>
+          <p>that friday when we went around colon, just walking, looking around, and enjoying the time we had together. we didn't need a big plan or a special destination. getting to spend that time with you was already enough to make the day worth remembering.</p>
+        </article>
+        <article class="memory">
+          <div class="icon">✧</div>
+          <div class="date">THE LITTLE THINGS</div>
+          <h3>nothing fancy, just you</h3>
+          <p>maybe these moments look simple to other people, but they mean something to me. they're little pieces of our story, and i hope we keep making more of them, one day and one memory at a time.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="label">moments worth keeping</div>
+      <h2>our little <em>gallery.</em></h2>
+      <div class="gallery">
+        <div class="photo">
+          <img src="photo1.jpeg" alt="our memory" onerror="this.style.display='none'">
+          <p>one of my favorite memories ♡</p>
+        </div>
+        <div class="photo">
+          <img src="photo2.jpeg" alt="a memory together" onerror="this.style.display='none'">
+          <p>a little moment with you</p>
+        </div>
+        <div class="photo">
+          <img src="photo3.jpeg" alt="another memory" onerror="this.style.display='none'">
+          <p>more days like this, please</p>
+        </div>
+      </div>
+      <p class="tiny" style="text-align:center;line-height:2">replace these filenames with your actual photo filenames</p>
+    </section>
+
+    <section class="content">
+      <div class="label">press play, think of us</div>
+      <h2>our little <em>soundtrack.</em></h2>
+      <div class="glass music">
+        <div class="disc" id="disc">♫</div>
+        <h3 style="font-weight:normal;font-size:22px;margin:0 0 8px">paraluman</h3>
+        <p class="tiny" style="margin-bottom:22px">adie · just for you</p>
+        <audio id="song" loop preload="none">
+          <source src="Adie - Paraluman (Lyrics).mp3" type="audio/mpeg">
+        </audio>
+        <button class="btn" id="musicBtn" type="button">play our song ♫</button>
+        <p class="status" id="musicStatus">tap play if the music doesn't start automatically ♡</p>
+      </div>
+    </section>
+
+    <section class="content final">
+      <div class="label">before you go</div>
+      <h2>still you.<br><em>always you.</em></h2>
+      <p>thank you for being part of my days, babyyy. from our sunday moments to that random friday around colon, i treasure the time i get to spend with you.<br><br>we still have so many stories to tell and ordinary days to turn into something beautiful.<br><br><em>i hope you never forget how much you mean to me. ♡</em></p>
+      <button class="btn" id="againBtn" type="button">go back to the beginning ♡</button>
+    </section>
   </div>
-
-</section>
-
-
-<!-- MAIN -->
-
-<main id="main">
-
-  <nav class="nav">
-
-    <div class="brand">
-      J × MARY GRACE
-    </div>
-
-    <div class="status">
-      ACCESS <span>● GRANTED</span>
-    </div>
-
-  </nav>
-
-
-  <!-- HERO -->
-
-  <section class="hero">
-
-    <div class="heroTop">
-      PRIVATE ARCHIVE · MARY GRACE
-    </div>
-
-    <h1>
-      my<br>
-      <em>pretty</em><br>
-      girl.
-    </h1>
-
-    <p class="heroDesc">
-      a private collection of the girl who somehow makes
-      every picture look like it belongs in a magazine.
-    </p>
-
-    <div class="heroLine"></div>
-
-  </section>
-
-
-  <!-- FEATURED PHOTO -->
-
-  <section class="featured">
-
-    <div class="sectionHead">
-
-      <div>
-        <div class="sectionEyebrow">
-          FEATURED PORTRAIT
-        </div>
-
-        <div class="sectionTitle">
-          the one.
-        </div>
-      </div>
-
-      <div class="counter">
-        01 / 08
-      </div>
-
-    </div>
-
-
-    <div class="featureCard" onclick="openViewer(0)">
-
-      <img
-        src="vip-featured.jpg"
-        alt="Mary Grace"
-      >
-
-      <div class="featureShade"></div>
-
-      <div class="featureText">
-
-        <div class="featureTag">
-          PRIVATE FAVORITE
-        </div>
-
-        <h2>
-          effortlessly<br>
-          beautiful.
-        </h2>
-
-        <p>
-          no filter, no explanation, no competition.
-          you just naturally have that kind of beauty.
-        </p>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- PHOTO GALLERY -->
-
-  <section class="gallery">
-
-    <div class="sectionHead">
-
-      <div>
-        <div class="sectionEyebrow">
-          HER ARCHIVE
-        </div>
-
-        <div class="sectionTitle">
-          simply her.
-        </div>
-      </div>
-
-      <div class="counter">
-        02 — 08
-      </div>
-
-    </div>
-
-
-    <div class="photoGrid">
-
-
-      <div class="photo" onclick="openViewer(1)">
-
-        <img src="att.97vp2zl5u6zg5e1ga2nZvjJr63US-mqfEx8krTg7Dy4.jpeg">
-
-        <div class="photoOverlay"></div>
-
-        <div class="photoNumber">
-          02
-        </div>
-
-        <div class="photoCompliment">
-          unreal pretty.
-
-          <div class="photoHint">
-            NO EFFORT NEEDED
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="photo" onclick="openViewer(2)">
-
-        <img src="att.9oDOCCrwe-68ysLHTxM8x0OFCqNx0unnl6IPjXeGick.webp.jpeg">
-
-        <div class="photoOverlay"></div>
-
-        <div class="photoNumber">
-          03
-        </div>
-
-        <div class="photoCompliment">
-          beautiful in every angle.
-
-          <div class="photoHint">
-            EVERY SINGLE ONE
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="photo" onclick="openViewer(3)">
-
-        <img src="att.dxVrpz5CFicrFlhsH4_HBTjqow0Wnvzpxzh6wFa8jng.jpeg">
-
-        <div class="photoOverlay"></div>
-
-        <div class="photoNumber">
-          04
-        </div>
-
-        <div class="photoCompliment">
-          the kind of pretty
-          you remember.
-
-          <div class="photoHint">
-            PERMANENT IMPRESSION
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="photo" onclick="openViewer(4)">
-
-        <img src="att.Jr0-cisZdHMb-42ePl7aLX1ohblw6zZwoSdxxarrToc.jpeg">
-
-        <div class="photoOverlay"></div>
-
-        <div class="photoNumber">
-          05
-        </div>
-
-        <div class="photoCompliment">
-          genuinely gorgeous.
-
-          <div class="photoHint">
-            NO DEBATE
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="photo" onclick="openViewer(5)">
-
-        <img src="att.JtDwQAQHdf_SdmXunn3nftLqXULfan0x-lwsBEnxoqs.jpeg">
-
-        <div class="photoOverlay"></div>
-
-        <div class="photoNumber">
-          06
-        </div>
-
-        <div class="photoCompliment">
-          my favorite face.
-
-          <div class="photoHint">
-            ALWAYS
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="photo" onclick="openViewer(6)">
-
-        <img src="att.KQBr38IqOa6wXPvkkgj2vBCIfTQhjlWdr7_miZkNv7A.jpeg">
-
-        <div class="photoOverlay"></div>
-
-        <div class="photoNumber">
-          07
-        </div>
-
-        <div class="photoCompliment">
-          too beautiful to ignore.
-
-          <div class="photoHint">
-            IMPOSSIBLE
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="photo" onclick="openViewer(7)">
-
-        <img src="att.mrOSrZs_omicGNRYyw2eOrluHgrZ4JTsEQzY9iCnnhQ.jpeg">
-
-        <div class="photoOverlay"></div>
-
-        <div class="photoNumber">
-          08
-        </div>
-
-        <div class="photoCompliment">
-          still can't believe
-          you're my girl.
-
-          <div class="photoHint">
-            LUCKIEST BOY
-          </div>
-        </div>
-
-      </div>
-
-
-    </div>
-
-  </section>
-
-
-  <!-- COMPLIMENT WALL -->
-
-  <section class="compliments">
-
-    <div class="sectionHead">
-
-      <div>
-        <div class="sectionEyebrow">
-          PRIVATE NOTES
-        </div>
-
-        <div class="sectionTitle">
-          things i notice.
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="quote">
-
-      <div class="quoteMark">
-        “
-      </div>
-
-      <p>
-        you're not just pretty.
-        you have this presence that makes people look twice.
-      </p>
-
-      <small>
-        01 · THE WAY YOU CARRY YOURSELF
-      </small>
-
-    </div>
-
-
-    <div class="quote">
-
-      <div class="quoteMark">
-        “
-      </div>
-
-      <p>
-        somehow, you look beautiful even when
-        you aren't trying to.
-      </p>
-
-      <small>
-        02 · EFFORTLESS
-      </small>
-
-    </div>
-
-
-    <div class="quote">
-
-      <div class="quoteMark">
-        “
-      </div>
-
-      <p>
-        if i had to choose my favorite view,
-        i'd probably choose you.
-      </p>
-
-      <small>
-        03 · FAVORITE VIEW
-      </small>
-
-    </div>
-
-
-    <div class="quote">
-
-      <div class="quoteMark">
-        “
-      </div>
-
-      <p>
-        there's something about your smile
-        that makes everything feel lighter.
-      </p>
-
-      <small>
-        04 · THAT SMILE
-      </small>
-
-    </div>
-
-
-    <div class="quote">
-
-      <div class="quoteMark">
-        “
-      </div>
-
-      <p>
-        you're the kind of beautiful
-        that doesn't get old.
-      </p>
-
-      <small>
-        05 · STILL YOU
-      </small>
-
-    </div>
-
-  </section>
-
-
-  <!-- FINAL -->
-
-  <section class="privateNote">
-
-    <div class="mini">
-      COLLECTION COMPLETE
-    </div>
-
-    <h2>
-      my pretty<br>
-      girlfriend.
-    </h2>
-
-    <p>
-      every picture here is proof of one simple fact:
-      i really got lucky with you.
-    </p>
-
-  </section>
-
-
-  <footer>
-
-    PRIVATE COLLECTION ·
-    <strong>J × MARY GRACE</strong>
-
-    <br><br>
-
-    MADE FOR ONE GIRL ONLY.
-
-  </footer>
-
 </main>
 
-
-<!-- MUSIC -->
-
-<div class="music" id="musicBar">
-
-  <div class="musicDisc">
-    ♫
-  </div>
-
-  <div class="musicInfo">
-
-    <b>
-      PARALUMAN
-    </b>
-
-    <span>
-      private soundtrack · adie
-    </span>
-
-  </div>
-
-  <button
-    class="musicBtn"
-    id="musicBtn"
-  >
-    Ⅱ
-  </button>
-
-</div>
-
-
-<audio
-  id="musicAudio"
-  loop
-  preload="auto"
-  playsinline
->
-  <source
-    src="Adie - Paraluman (Lyrics).mp3"
-    type="audio/mpeg"
-  >
-</audio>
-
-
-<!-- PHOTO VIEWER -->
-
-<div id="viewer">
-
-  <button
-    class="closeViewer"
-    onclick="closeViewer()"
-  >
-    ×
-  </button>
-
-  <img
-    id="viewerImg"
-    src=""
-    alt="Mary Grace"
-  >
-
-</div>
-
+<footer>made for you, with a heart that chooses you ♡</footer>
 
 <script>
+(function(){
+  "use strict";
 
-/* =========================================
-   PRIVATE ACCESS
-========================================= */
+  var openBtn = document.getElementById("openBtn");
+  var letter = document.getElementById("letter");
+  var song = document.getElementById("song");
+  var musicBtn = document.getElementById("musicBtn");
+  var musicStatus = document.getElementById("musicStatus");
+  var disc = document.getElementById("disc");
+  var opened = false;
 
-const SECRET =
-  "MY PRETTYY GIRLFRIEND BABYYY";
-
-const lockScreen =
-  document.getElementById("lockScreen");
-
-const main =
-  document.getElementById("main");
-
-const password =
-  document.getElementById("password");
-
-const unlock =
-  document.getElementById("unlock");
-
-const error =
-  document.getElementById("error");
-
-
-function tryUnlock(){
-
-  const entered =
-    password.value.trim();
-
-  if(entered === SECRET){
-
-    error.textContent = "";
-
-    lockScreen.classList.add("hide");
-
-    document.body.classList.remove("locked");
-
-    main.classList.add("show");
-
-    /*
-      IMPORTANT:
-      The unlock button is a real user interaction.
-      This gives iPhone/Safari the best chance
-      to allow the music to start automatically.
-    */
-
-    startMusic();
-
-  }else{
-
-    error.textContent =
-      "PRIVATE CODE NOT RECOGNIZED";
-
-    password.value = "";
-
-    setTimeout(()=>{
-
-      error.textContent = "";
-
-    },2200);
-
+  function petals(count){
+    var symbols = ["♡","✿","♥","❀"];
+    for(var i=0;i<count;i++){
+      var p=document.createElement("span");
+      p.className="petal";
+      p.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+      p.style.left=Math.random()*100+"vw";
+      p.style.fontSize=(12+Math.random()*12)+"px";
+      p.style.color=Math.random()>.5?"#ff9fc8":"#d3b4ff";
+      p.style.animationDuration=(5+Math.random()*5)+"s";
+      document.body.appendChild(p);
+      (function(el){setTimeout(function(){el.remove();},11000);})(p);
+    }
   }
 
-}
-
-
-unlock.addEventListener(
-  "click",
-  tryUnlock
-);
-
-
-password.addEventListener(
-  "keydown",
-  function(e){
-
-    if(e.key === "Enter"){
-      tryUnlock();
+  function revealPage(){
+    if(opened){
+      letter.scrollIntoView({behavior:"auto",block:"start"});
+      return;
     }
 
-  }
-);
+    opened=true;
+    letter.classList.add("open");
+    letter.style.display="block";
+    openBtn.textContent="your surprise is open ♡";
+    openBtn.setAttribute("aria-expanded","true");
 
+    // allow the browser to lay out the revealed content before scrolling
+    requestAnimationFrame(function(){
+      letter.scrollIntoView({behavior:"smooth",block:"start"});
+    });
 
-/* =========================================
-   AUTOMATIC MUSIC
-========================================= */
+    petals(20);
 
-const audio =
-  document.getElementById("musicAudio");
-
-const musicBar =
-  document.getElementById("musicBar");
-
-const musicBtn =
-  document.getElementById("musicBtn");
-
-
-async function startMusic(){
-
-  try{
-
-    audio.volume = 0.65;
-
-    await audio.play();
-
-    musicBar.classList.add("playing");
-
-    musicBtn.textContent = "Ⅱ";
-
-  }catch(e){
-
-    /*
-      If Safari blocks playback,
-      the first tap anywhere after unlocking
-      will try again.
-    */
-
-    console.log(
-      "Safari blocked autoplay. Waiting for interaction."
-    );
-
+    // try to play after the user's tap; ios may still require a separate music tap
+    song.play().then(function(){
+      musicBtn.textContent="pause our song ♡";
+      musicStatus.textContent="playing just for you ♡";
+      disc.classList.add("playing");
+    }).catch(function(){
+      musicStatus.textContent="your surprise is open ♡ tap play to listen";
+    });
   }
 
-}
-
-
-/* =========================================
-   MUSIC BUTTON
-========================================= */
-
-musicBtn.addEventListener(
-  "click",
-  async function(){
-
-    if(audio.paused){
-
-      try{
-
-        await audio.play();
-
-        musicBar.classList.add("playing");
-
-        musicBtn.textContent = "Ⅱ";
-
-      }catch(e){
-
-        console.log(e);
-
-      }
-
-    }else{
-
-      audio.pause();
-
-      musicBar.classList.remove("playing");
-
-      musicBtn.textContent = "▶";
-
-    }
-
-  }
-);
-
-
-/* =========================================
-   FIRST TOUCH FALLBACK
-========================================= */
-
-document.addEventListener(
-  "touchstart",
-  function(){
-
-    if(
-      audio.paused &&
-      lockScreen.classList.contains("hide")
-    ){
-
-      startMusic();
-
-    }
-
-  },
-  {once:true}
-);
-
-
-/* =========================================
-   PHOTO VIEWER
-========================================= */
-
-const photos = [
-
-  "vip-featured.jpg",
-
-  "att.97vp2zl5u6zg5e1ga2nZvjJr63US-mqfEx8krTg7Dy4.jpeg",
-
-  "att.9oDOCCrwe-68ysLHTxM8x0OFCqNx0unnl6IPjXeGick.webp.jpeg",
-
-  "att.dxVrpz5CFicrFlhsH4_HBTjqow0Wnvzpxzh6wFa8jng.jpeg",
-
-  "att.Jr0-cisZdHMb-42ePl7aLX1ohblw6zZwoSdxxarrToc.jpeg",
-
-  "att.JtDwQAQHdf_SdmXunn3nftLqXULfan0x-lwsBEnxoqs.jpeg",
-
-  "att.KQBr38IqOa6wXPvkkgj2vBCIfTQhjlWdr7_miZkNv7A.jpeg",
-
-  "att.mrOSrZs_omicGNRYyw2eOrluHgrZ4JTsEQzY9iCnnhQ.jpeg"
-
-];
-
-
-const viewer =
-  document.getElementById("viewer");
-
-const viewerImg =
-  document.getElementById("viewerImg");
-
-
-function openViewer(index){
-
-  viewerImg.src =
-    photos[index];
-
-  viewer.classList.add("open");
-
-}
-
-
-function closeViewer(){
-
-  viewer.classList.remove("open");
-
-  viewerImg.src = "";
-
-}
-
-
-viewer.addEventListener(
-  "click",
-  function(e){
-
-    if(e.target === viewer){
-      closeViewer();
-    }
-
-  }
-);
-
-
-document.addEventListener(
-  "keydown",
-  function(e){
-
-    if(e.key === "Escape"){
-      closeViewer();
-    }
-
-  }
-);
-
-
-/* =========================================
-   IMAGE ERROR HANDLER
-========================================= */
-
-document
-  .querySelectorAll("img")
-  .forEach(function(img){
-
-    img.addEventListener(
-      "error",
-      function(){
-
-        img.style.background =
-          "linear-gradient(135deg,#171319,#0c0b0e)";
-
-      }
-    );
-
+  openBtn.addEventListener("click",function(event){
+    event.preventDefault();
+    revealPage();
   });
 
-</script>
+  musicBtn.addEventListener("click",function(){
+    if(song.paused){
+      song.play().then(function(){
+        musicBtn.textContent="pause our song ♡";
+        musicStatus.textContent="playing just for you ♡";
+        disc.classList.add("playing");
+      }).catch(function(){
+        musicStatus.textContent="couldn't play the song. check the mp3 filename and folder ♡";
+      });
+    }else{
+      song.pause();
+      musicBtn.textContent="play our song ♫";
+      musicStatus.textContent="paused for a little while ♡";
+      disc.classList.remove("playing");
+    }
+  });
 
+  song.addEventListener("error",function(){
+    musicStatus.textContent="check that the mp3 file is in the same folder as index.html ♡";
+  });
+
+  document.getElementById("againBtn").addEventListener("click",function(){
+    window.scrollTo({top:0,behavior:"smooth"});
+    petals(12);
+  });
+
+  // star background
+  var canvas=document.getElementById("stars");
+  var ctx=canvas.getContext("2d");
+  var stars=[];
+  var w=0,h=0,dpr=1;
+
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    w=window.innerWidth;
+    h=window.innerHeight;
+    canvas.width=w*dpr;
+    canvas.height=h*dpr;
+    canvas.style.width=w+"px";
+    canvas.style.height=h+"px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    stars=[];
+    for(var i=0;i<Math.min(90,Math.floor(w/4));i++){
+      stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.3+.2,a:Math.random()*6});
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      s.a+=.015;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle="rgba(255,220,238,"+(.2+Math.abs(Math.sin(s.a))*.65)+")";
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  draw();
+  window.addEventListener("resize",resize);
+  petals(8);
+})();
+</script>
 </body>
 </html>
