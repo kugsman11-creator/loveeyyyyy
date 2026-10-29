@@ -2,907 +2,1283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0b0810">
-<title>just us ♡</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09070d">
+  <title>you & me ♡</title>
 
-<style>
-:root {
-  --bg:#0b0810;
-  --pink:#ff9bce;
-  --purple:#d4a8ff;
-  --white:#fff5fb;
-  --muted:#b5a5b7;
-  --line:rgba(255,255,255,.11);
-}
-* { box-sizing:border-box; margin:0; padding:0; }
-html { scroll-behavior:smooth; scroll-padding-top:75px; }
-body {
-  background:var(--bg);
-  color:var(--white);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  overflow-x:hidden;
-}
-button,input { font:inherit; }
-button { cursor:pointer; -webkit-tap-highlight-color:transparent; }
-a { color:inherit; text-decoration:none; }
+  <style>
+    :root {
+      --bg: #09070d;
+      --panel: #15101b;
+      --pink: #ff8eb8;
+      --purple: #b99aff;
+      --white: #fff7fc;
+      --muted: #b9aebb;
+      --line: rgba(255,255,255,.09);
+    }
 
-#ambient {
-  position:fixed; inset:0; z-index:-2; pointer-events:none;
-  background:
-    radial-gradient(ellipse at 10% 15%,rgba(176,76,157,.15),transparent 42%),
-    radial-gradient(ellipse at 90% 70%,rgba(117,72,180,.12),transparent 40%),
-    var(--bg);
-}
-#particles {
-  position:fixed; inset:0; z-index:10;
-  pointer-events:none; overflow:hidden;
-}
-.particle {
-  position:absolute; bottom:-30px; color:#ffacd9;
-  text-shadow:0 0 15px #ff5eb4;
-  animation:floatup linear forwards;
-}
-@keyframes floatup {
-  0% { transform:translateY(0) rotate(0); opacity:0; }
-  15% { opacity:.65; }
-  100% { transform:translateY(-110vh) translateX(var(--dx)) rotate(180deg); opacity:0; }
-}
-.grain {
-  position:fixed; inset:0; z-index:15; opacity:.035;
-  pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-#intro {
-  position:fixed; inset:0; z-index:100;
-  display:flex; align-items:center; justify-content:center;
-  padding:25px; text-align:center;
-  background:radial-gradient(ellipse at center,#291329,#100a15 55%,#08070c);
-  transition:opacity .9s,visibility .9s;
-}
-#intro.gone { opacity:0; visibility:hidden; pointer-events:none; }
-.intro-inner { max-width:450px; }
-.heart {
-  width:90px; height:90px; margin:0 auto 30px;
-  border:1px solid rgba(255,170,218,.55);
-  border-radius:50%; display:grid; place-items:center;
-  color:var(--pink); font-size:40px;
-  box-shadow:0 0 55px rgba(255,104,181,.16);
-  animation:breathe 3s infinite ease-in-out;
-}
-@keyframes breathe {
-  50% { transform:scale(1.06); box-shadow:0 0 75px rgba(255,104,181,.25); }
-}
-.eyebrow {
-  color:var(--pink); font-size:10px;
-  letter-spacing:4px; line-height:1.9;
-}
-h1,h2,h3 { font-weight:400; }
-.intro-title {
-  font-family:Georgia,serif;
-  font-size:clamp(43px,10vw,75px);
-  line-height:1.08; letter-spacing:-2px;
-  margin:20px 0;
-}
-.gradient {
-  background:linear-gradient(110deg,#fff5fb,#ff9bce,#d4a8ff,#fff5fb);
-  background-size:220%;
-  color:transparent;
-  -webkit-background-clip:text;
-  background-clip:text;
-  animation:shimmer 8s linear infinite;
-}
-@keyframes shimmer { to { background-position:220%; } }
-.intro-copy {
-  max-width:330px; margin:0 auto 28px;
-  color:var(--muted); font-size:13px; line-height:1.9;
-}
-.primary,.outline,.small-btn {
-  border:1px solid rgba(255,170,218,.48);
-  border-radius:100px; padding:13px 20px;
-  background:linear-gradient(110deg,rgba(255,117,183,.17),rgba(186,119,255,.12));
-  color:#fff3fa; font-size:10px; letter-spacing:1px;
-  transition:.25s;
-}
-.primary:active,.outline:active,.small-btn:active { transform:scale(.97); }
-.intro-foot {
-  margin-top:25px; color:#88778d;
-  font-size:9px; letter-spacing:2px;
-}
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
 
-nav {
-  position:sticky; top:0; z-index:50;
-  min-height:62px; padding:12px 5%;
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-  border-bottom:1px solid rgba(255,255,255,.07);
-  background:rgba(11,8,16,.84);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-}
-.brand { font-family:Georgia,serif; font-size:18px; white-space:nowrap; }
-.brand span { color:var(--pink); }
-.nav-links {
-  display:flex; gap:15px; overflow-x:auto;
-  scrollbar-width:none; white-space:nowrap;
-  font-size:10px; color:#c5b8c9;
-}
-.nav-links::-webkit-scrollbar { display:none; }
-.nav-links a:hover { color:var(--pink); }
+    body {
+      background:
+        radial-gradient(ellipse at 15% 10%, #261329 0%, transparent 38%),
+        radial-gradient(ellipse at 90% 45%, #19112d 0%, transparent 38%),
+        var(--bg);
+      color: var(--white);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
 
-.hero {
-  min-height:75svh; padding:80px 22px 70px;
-  display:flex; align-items:center; justify-content:center;
-  text-align:center; position:relative;
-}
-.hero-content { max-width:650px; }
-.hero h2 {
-  font-family:Georgia,serif;
-  font-size:clamp(47px,11vw,88px);
-  line-height:1.04; letter-spacing:-3px;
-  margin:22px 0;
-}
-.hero-description {
-  max-width:440px; margin:auto;
-  color:var(--muted); font-size:13px; line-height:2;
-}
-.hero-actions {
-  display:flex; justify-content:center;
-  flex-wrap:wrap; gap:10px; margin-top:28px;
-}
-.scroll-hint {
-  position:absolute; bottom:23px; left:0; right:0;
-  color:#89768d; font-size:9px; letter-spacing:3px;
-}
+    body.glow-mode {
+      --pink: #ffb5d3;
+      --purple: #d2baff;
+      background:
+        radial-gradient(ellipse at 20% 10%, #49203d 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 55%, #30204c 0%, transparent 45%),
+        var(--bg);
+    }
 
-.section {
-  padding:75px 18px; max-width:900px; margin:auto;
-  scroll-margin-top:75px;
-}
-.heading {
-  text-align:center; max-width:570px;
-  margin:0 auto 32px;
-}
-.heading h2 {
-  font-family:Georgia,serif;
-  font-size:clamp(31px,7vw,47px);
-  line-height:1.2; margin:12px 0;
-}
-.heading p { color:var(--muted); font-size:12px; line-height:1.9; }
+    button, input {
+      font: inherit;
+    }
 
-/* vertical tiktok video */
-.video-card {
-  max-width:510px; margin:auto;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:20px; overflow:hidden;
-  background:#100d15;
-  box-shadow:0 25px 85px rgba(0,0,0,.35),0 0 45px rgba(221,106,173,.07);
-}
-.video-top {
-  padding:14px 15px; display:flex;
-  justify-content:space-between; align-items:center; gap:10px;
-  border-bottom:1px solid var(--line);
-  color:#cdbfd0; font-size:10px;
-}
-.dot { color:#ff89b8; margin-right:6px; }
-.video-stage {
-  position:relative; width:100%;
-  display:flex; justify-content:center; align-items:center;
-  padding:15px 10px;
-  background:
-    radial-gradient(ellipse at center,rgba(105,57,111,.18),transparent 75%),
-    #08070b;
-}
-.video-stage::before {
-  content:""; position:absolute;
-  width:70%; height:75%; border-radius:50%;
-  background:rgba(223,93,170,.10);
-  filter:blur(65px); pointer-events:none;
-}
-video {
-  position:relative; z-index:1;
-  display:block;
-  width:auto;
-  height:auto;
-  max-width:100%;
-  max-height:68svh;
-  aspect-ratio:9 / 16;
-  object-fit:contain;
-  background:#050508;
-  border-radius:10px;
-  box-shadow:0 10px 40px rgba(0,0,0,.4);
-}
-#progress {
-  height:3px; width:0;
-  background:linear-gradient(90deg,#ff83bd,#d6a2ff);
-}
-.video-bottom { padding:15px; }
-.video-caption {
-  font-family:Georgia,serif;
-  font-size:19px; color:#f6dce9;
-}
-.video-help {
-  margin-top:6px; font-size:10px;
-  color:#928394; line-height:1.8;
-}
-.video-controls {
-  display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;
-}
-.small-btn { padding:10px 14px; font-size:10px; }
+    button {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.card-grid {
-  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px;
-}
-.memory-card {
-  padding:19px 15px; min-height:150px;
-  border:1px solid var(--line); border-radius:15px;
-  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.01));
-  transition:.3s; cursor:pointer;
-}
-.memory-card:active { transform:scale(.98); }
-.memory-card:hover { border-color:rgba(255,157,204,.4); }
-.memory-icon { font-size:22px; margin-bottom:14px; }
-.memory-card h3 { font-family:Georgia,serif; font-size:18px; margin-bottom:8px; }
-.memory-card p { color:var(--muted); font-size:11px; line-height:1.8; }
+    button:focus-visible, a:focus-visible, input:focus-visible {
+      outline: 2px solid var(--pink);
+      outline-offset: 4px;
+    }
 
-.letter {
-  padding:27px 20px; text-align:center;
-  border:1px solid rgba(255,157,204,.22);
-  border-radius:18px;
-  background:linear-gradient(145deg,rgba(255,155,204,.065),rgba(183,137,255,.035));
-}
-.letter-mark { color:var(--pink); font-size:28px; }
-.letter h2 { font-family:Georgia,serif; font-size:32px; margin:14px 0 20px; }
-.letter-text {
-  max-width:550px; margin:auto;
-  white-space:pre-line;
-  font-family:Georgia,serif; color:#d7c8d8;
-  font-size:15px; line-height:2.1;
-}
-.signature {
-  margin-top:25px; color:var(--pink);
-  font-family:Georgia,serif; font-style:italic; font-size:20px;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.timeline {
-  max-width:600px; margin:auto;
-  border-left:1px solid rgba(255,157,204,.35);
-  padding-left:24px;
-}
-.timeline-item { position:relative; padding-bottom:30px; }
-.timeline-item::before {
-  content:""; position:absolute; left:-30px; top:5px;
-  width:11px; height:11px; border-radius:50%;
-  background:#ff9dcc; box-shadow:0 0 15px rgba(255,157,204,.6);
-}
-.timeline-item small { color:var(--pink); letter-spacing:2px; font-size:9px; }
-.timeline-item h3 { font-family:Georgia,serif; font-size:22px; margin:9px 0; }
-.timeline-item p { color:var(--muted); font-size:12px; line-height:1.9; }
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
 
-.reason-box {
-  border:1px solid var(--line); border-radius:17px;
-  padding:22px 14px;
-  background:linear-gradient(140deg,rgba(255,155,204,.06),rgba(215,169,255,.04));
-  text-align:center;
-}
-.reason-count { color:var(--pink); font-size:10px; letter-spacing:3px; }
-.reason-text {
-  min-height:130px; display:grid; place-items:center;
-  max-width:560px; margin:15px auto;
-  font-family:Georgia,serif;
-  font-size:clamp(22px,5vw,33px); line-height:1.5;
-}
-.reason-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; }
-.search {
-  width:100%; margin:20px 0 12px; padding:13px;
-  border:1px solid var(--line); border-radius:11px;
-  background:#100e17; color:white; outline:none; font-size:12px;
-}
-.search:focus { border-color:rgba(255,157,204,.55); }
-.reason-list { display:grid; gap:8px; text-align:left; }
-.reason-row {
-  display:flex; gap:10px; align-items:flex-start;
-  padding:12px; border:1px solid rgba(255,255,255,.07);
-  border-radius:10px; background:rgba(255,255,255,.02);
-  color:#d7cbd9; font-size:11px; line-height:1.8;
-}
-.reason-row .num { color:var(--pink); min-width:30px; }
-.reason-row .reason-content { flex:1; cursor:pointer; }
-.reason-row button { border:0; background:none; color:var(--pink); padding:2px; }
-.pagination {
-  display:flex; align-items:center; justify-content:center;
-  gap:15px; margin-top:16px; color:var(--muted); font-size:11px;
-}
-.small-note { margin-top:18px; color:#938297; font-size:10px; line-height:1.8; }
+    .orb {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      filter: blur(85px);
+      opacity: .17;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
 
-.secret-box {
-  text-align:center; padding:30px 18px;
-  border:1px solid rgba(255,157,204,.22);
-  border-radius:18px;
-  background:radial-gradient(ellipse at center,rgba(198,100,173,.1),transparent 75%);
-}
-.secret-icon { font-size:35px; margin-bottom:15px; }
-.secret-box h2 { font-family:Georgia,serif; font-size:30px; margin-bottom:12px; }
-.secret-box p { max-width:430px; margin:0 auto 20px; color:var(--muted); font-size:12px; line-height:1.9; }
-.secret-message {
-  display:none; max-width:500px; margin:23px auto 0;
-  color:#f3d4e8; font-family:Georgia,serif;
-  font-size:18px; line-height:1.9;
-}
-.secret-message.show { display:block; animation:reveal .8s both; }
-@keyframes reveal { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .orb.one {
+      background: #ff5da2;
+      top: 12%;
+      left: -100px;
+    }
 
-.final-section {
-  padding:90px 22px 70px; text-align:center;
-  background:radial-gradient(ellipse at center,rgba(146,57,125,.13),transparent 65%);
-}
-.final-heart { color:var(--pink); font-size:43px; animation:breathe 2.5s infinite; }
-.final-section h2 {
-  font-family:Georgia,serif;
-  font-size:clamp(38px,9vw,65px);
-  margin:20px 0; line-height:1.1;
-}
-.final-section p { max-width:450px; margin:auto; color:var(--muted); font-size:12px; line-height:2; }
-footer {
-  padding:25px 15px 35px; border-top:1px solid var(--line);
-  text-align:center; color:#827387; font-size:9px;
-  letter-spacing:2px; line-height:2;
-}
-#toast {
-  position:fixed; bottom:23px; left:50%; z-index:200;
-  transform:translate(-50%,20px); width:max-content; max-width:90%;
-  padding:12px 17px; border:1px solid rgba(255,157,204,.35);
-  border-radius:100px; background:#19111e; color:#ffe6f4;
-  font-size:11px; opacity:0; pointer-events:none; transition:.3s;
-  text-align:center;
-}
-#toast.show { opacity:1; transform:translate(-50%,0); }
+    .orb.two {
+      background: #8965ff;
+      right: -120px;
+      top: 48%;
+      animation-delay: -5s;
+    }
 
-@media(min-width:650px) {
-  .card-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
-  .section { padding-top:95px; padding-bottom:95px; }
-  .letter { padding:42px; }
-  video { max-height:75svh; }
-}
-@media(max-width:390px) {
-  nav { padding:11px 3%; }
-  .brand { font-size:16px; }
-  .nav-links { gap:11px; font-size:9px; }
-  .video-stage { padding:10px 6px; }
-}
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
-    transition-duration:.01ms!important;
-  }
-}
-</style>
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(45px, -30px) scale(1.2); }
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 6%;
+      background: rgba(9,7,13,.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: lowercase;
+    }
+
+    .brand span {
+      color: var(--pink);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .nav a {
+      transition: color .25s;
+    }
+
+    .nav a:hover {
+      color: var(--pink);
+    }
+
+    .glow-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--white);
+      border-radius: 100px;
+      padding: 9px 12px;
+      font-size: 11px;
+    }
+
+    .hero {
+      min-height: 88svh;
+      padding: 80px 22px 65px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      color: var(--pink);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 4px;
+      margin-bottom: 23px;
+    }
+
+    .hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(49px, 12vw, 91px);
+      font-weight: 400;
+      line-height: .99;
+      letter-spacing: -3px;
+      max-width: 800px;
+    }
+
+    .hero h1 em {
+      color: var(--pink);
+      font-weight: 400;
+    }
+
+    .hero p {
+      max-width: 320px;
+      margin: 24px auto 30px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .primary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 0;
+      border-radius: 100px;
+      padding: 15px 24px;
+      color: #1b0b16;
+      background: linear-gradient(120deg, #ffb4d0, #d8b5ff);
+      font-weight: 800;
+      font-size: 12px;
+      box-shadow: 0 8px 35px #e78bc522;
+      transition: transform .25s, box-shadow .25s;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px #e78bc544;
+    }
+
+    .tiny-note {
+      font-size: 10px;
+      color: #867789;
+      margin-top: 18px;
+      letter-spacing: 1px;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 24px;
+      color: #99869c;
+      font-size: 10px;
+      letter-spacing: 2px;
+      animation: bob 2s ease-in-out infinite;
+    }
+
+    @keyframes bob {
+      50% { transform: translateY(5px); }
+    }
+
+    .section {
+      width: min(100% - 36px, 900px);
+      margin: 0 auto;
+      padding: 70px 0;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .section-head .eyebrow {
+      margin-bottom: 13px;
+    }
+
+    .section-head h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(31px, 7vw, 47px);
+      font-weight: 400;
+      line-height: 1.15;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+      margin: 13px auto 0;
+      max-width: 350px;
+    }
+
+    .video-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 24px;
+    }
+
+    .video-frame {
+      position: relative;
+      width: min(100%, 340px);
+      padding: 7px;
+      border-radius: 27px;
+      background: linear-gradient(145deg, #ff9fc6, #8b6cc7, #37233e);
+      box-shadow:
+        0 0 0 1px #ffffff12,
+        0 15px 65px #c25c9b20;
+      transition: box-shadow .35s, transform .35s;
+    }
+
+    .video-frame:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 75px #d76bb833;
+    }
+
+    .video-frame video {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 68svh;
+      aspect-ratio: 9 / 16;
+      object-fit: contain;
+      background: #050407;
+      border-radius: 21px;
+    }
+
+    .video-caption {
+      text-align: center;
+      max-width: 350px;
+    }
+
+    .video-caption h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 27px;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    .video-caption p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    .video-actions {
+      display: flex;
+      justify-content: center;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .soft-btn {
+      padding: 11px 15px;
+      border: 1px solid var(--line);
+      background: #ffffff08;
+      color: var(--white);
+      border-radius: 100px;
+      font-size: 11px;
+      transition: background .2s;
+    }
+
+    .soft-btn:hover {
+      background: #ffffff13;
+    }
+
+    .video-error {
+      display: none;
+      color: #ffc4da;
+      background: #ff8eb810;
+      border: 1px solid #ff8eb82a;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 14px;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .memory-card {
+      text-align: left;
+      position: relative;
+      min-height: 155px;
+      padding: 20px 15px;
+      border: 1px solid var(--line);
+      border-radius: 19px;
+      color: var(--white);
+      background: linear-gradient(145deg, #ffffff0a, #ffffff03);
+      transition: transform .25s, border-color .25s, background .25s;
+    }
+
+    .memory-card:hover {
+      transform: translateY(-4px);
+      border-color: #ff8eb84a;
+      background: #ff8eb80c;
+    }
+
+    .memory-icon {
+      font-size: 23px;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .memory-card h3 {
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .memory-card p {
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .memory-card .tap-label {
+      display: block;
+      margin-top: 13px;
+      color: var(--pink);
+      font-size: 9px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .letter-box {
+      padding: 30px 22px;
+      border: 1px solid #ffb4d01e;
+      border-radius: 24px;
+      background:
+        radial-gradient(ellipse at top right, #c18bff10, transparent 55%),
+        linear-gradient(145deg, #1a111f, #110d17);
+      text-align: center;
+    }
+
+    .letter-box .letter-heart {
+      font-size: 29px;
+      margin-bottom: 18px;
+    }
+
+    .letter-box h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 31px;
+      font-weight: 400;
+      margin-bottom: 17px;
+    }
+
+    .letter-box p {
+      max-width: 500px;
+      margin: 0 auto;
+      color: #d0c2d2;
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .letter-sign {
+      color: var(--pink);
+      font-size: 12px;
+      margin-top: 24px;
+    }
+
+    .secret-panel {
+      display: none;
+      margin-top: 18px;
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid #ff8eb830;
+      background: #ff8eb809;
+      color: #f3d9e8;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 17px;
+      line-height: 1.8;
+      text-align: center;
+      animation: reveal .5s ease both;
+    }
+
+    .secret-panel.show {
+      display: block;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .note-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .note-search {
+      width: 100%;
+      padding: 14px 16px;
+      background: #ffffff08;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      color: var(--white);
+      outline: none;
+    }
+
+    .note-search::placeholder {
+      color: #948497;
+    }
+
+    .note-display {
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 27px 20px;
+      border: 1px solid var(--line);
+      border-radius: 23px;
+      background: linear-gradient(145deg, #ffffff08, #ffffff02);
+    }
+
+    .note-number {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--pink);
+      margin-bottom: 20px;
+    }
+
+    .note-text {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(20px, 5vw, 27px);
+      line-height: 1.5;
+    }
+
+    .note-controls .video-actions {
+      margin-top: 4px;
+    }
+
+    .note-results {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .note-result {
+      text-align: left;
+      color: var(--muted);
+      background: #ffffff05;
+      border: 1px solid var(--line);
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .note-result strong {
+      display: block;
+      color: var(--pink);
+      margin-bottom: 4px;
+    }
+
+    .note-result:hover {
+      background: #ff8eb80d;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px 20px 55px;
+      border-top: 1px solid var(--line);
+      color: #96879a;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    .footer .big-heart {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 13px;
+      animation: heartbeat 1.8s infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.12); }
+      30% { transform: scale(1); }
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -35px;
+      z-index: 30;
+      pointer-events: none;
+      animation: floatUp 3s ease-out forwards;
+      filter: drop-shadow(0 0 8px #ff8eb855);
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(.6); }
+      15% { opacity: .9; }
+      100% { opacity: 0; transform: translateY(-85vh) rotate(35deg) scale(1.3); }
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 50;
+      transform: translate(-50%, 20px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 12px 17px;
+      max-width: calc(100% - 32px);
+      text-align: center;
+      background: #25182b;
+      border: 1px solid #ffffff18;
+      color: var(--white);
+      border-radius: 100px;
+      font-size: 11px;
+      box-shadow: 0 8px 35px #0005;
+      transition: .3s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: #050308c9;
+      backdrop-filter: blur(12px);
+    }
+
+    .modal.show {
+      display: flex;
+      animation: reveal .25s ease both;
+    }
+
+    .modal-content {
+      width: min(100%, 420px);
+      position: relative;
+      padding: 34px 24px 27px;
+      border: 1px solid #ff8eb82e;
+      border-radius: 23px;
+      background: linear-gradient(145deg, #211626, #100c16);
+      text-align: center;
+    }
+
+    .modal-close {
+      position: absolute;
+      right: 15px;
+      top: 13px;
+      border: 0;
+      background: none;
+      color: var(--muted);
+      font-size: 23px;
+    }
+
+    .modal-icon {
+      font-size: 30px;
+      margin-bottom: 17px;
+    }
+
+    .modal-content h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 27px;
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
+
+    .modal-content p {
+      color: #d1c3d4;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .modal-content .primary-btn {
+      margin-top: 22px;
+    }
+
+    .progress-track {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 60;
+      width: 100%;
+      height: 2px;
+      background: transparent;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+    }
+
+    @media (min-width: 650px) {
+      .hero {
+        min-height: 90vh;
+      }
+
+      .memory-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .memory-card {
+        min-height: 190px;
+        padding: 21px 16px;
+      }
+
+      .video-layout {
+        grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+        align-items: center;
+        justify-content: center;
+        gap: 38px;
+      }
+
+      .video-caption {
+        text-align: left;
+      }
+
+      .video-caption .video-actions {
+        justify-content: flex-start;
+      }
+
+      .note-controls {
+        flex-direction: row;
+      }
+
+      .note-controls .note-search {
+        flex: 1;
+      }
+
+      .note-results {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section {
+        padding: 90px 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<div id="ambient"></div>
-<div id="particles"></div>
-<div class="grain"></div>
-
-<div id="intro">
-  <div class="intro-inner">
-    <div class="heart">♡</div>
-    <div class="eyebrow">a little world made for two</div>
-    <h1 class="intro-title">just you.<br><span class="gradient">just us.</span></h1>
-    <p class="intro-copy">
-      one little dance, two hearts, and a memory
-      that deserves a special place of its own.
-    </p>
-    <button class="primary" id="enterBtn">OPEN OUR WORLD ♡</button>
-    <div class="intro-foot">MADE WITH LOVE · JUST FOR YOU</div>
-  </div>
-</div>
-
-<nav>
-  <a class="brand" href="#home">our little <span>♡</span></a>
-  <div class="nav-links">
-    <a href="#dance">our dance</a>
-    <a href="#little">little things</a>
-    <a href="#letter">letter</a>
-    <a href="#story">our story</a>
-    <a href="#reasons">notes</a>
-    <a href="#secret">secret</a>
-  </div>
-</nav>
-
-<main>
-<section class="hero" id="home">
-  <div class="hero-content">
-    <div class="eyebrow">a memory we made together</div>
-    <h2>my favorite<br><span class="gradient">person, always.</span></h2>
-    <p class="hero-description">
-      this little corner of the internet is for us.
-      for the silly moments, the happy memories,
-      and all the little reasons that make our story special.
-    </p>
-    <div class="hero-actions">
-      <a class="primary" href="#dance">SEE OUR DANCE ↓</a>
-      <a class="outline" href="#letter">A LETTER FOR YOU ♡</a>
-    </div>
-  </div>
-  <div class="scroll-hint">SCROLL TO EXPLORE · ♡</div>
-</section>
-
-<section class="section" id="dance">
-  <div class="heading">
-    <div class="eyebrow">our little moment</div>
-    <h2>just us, being us.</h2>
-    <p>
-      one little dance that became a memory.
-      press play whenever you want to see it again. ♡
-    </p>
+  <div class="progress-track">
+    <div class="progress-bar" id="progressBar"></div>
   </div>
 
-  <div class="video-card">
-    <div class="video-top">
-      <span><span class="dot">●</span> OUR DANCE TOGETHER</span>
-      <span id="videoStatus">READY</span>
-    </div>
+  <div class="ambient">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+  </div>
 
-    <div class="video-stage">
-      <video id="ourVideo" playsinline preload="metadata" controls>
-        <source src="VID_20261021182422736.mov" type="video/quicktime">
-        your browser could not load this video.
-      </video>
-    </div>
+  <header class="topbar">
+    <a class="brand" href="#home">you<span> & </span>me ♡</a>
 
-    <div id="progress"></div>
+    <nav class="nav">
+      <a href="#our-moment">our moment</a>
+      <a href="#memories">memories</a>
+      <a href="#letter">letter</a>
+      <button class="glow-btn" id="glowToggle">✧ glow</button>
+    </nav>
+  </header>
 
-    <div class="video-bottom">
-      <div class="video-caption">a little piece of us ♡</div>
-      <div class="video-help" id="videoHelp">
-        our dance, our moment, our memory.
+  <main>
+    <section class="hero" id="home">
+      <div class="eyebrow">a little corner of us</div>
+
+      <h1>my favorite<br><em>kind of love.</em></h1>
+
+      <p>
+        not a perfect story, just two people making
+        little memories that mean everything.
+        and somehow, you became my favorite part.
+      </p>
+
+      <a href="#our-moment" class="primary-btn">
+        open our little world <span>♡</span>
+      </a>
+
+      <div class="tiny-note">made with love, just for you.</div>
+      <div class="scroll-cue">SCROLL TO EXPLORE ↓</div>
+    </section>
+
+    <section class="section" id="our-moment">
+      <div class="section-head">
+        <div class="eyebrow">a moment to keep</div>
+        <h2>our little dance ♡</h2>
+        <p>
+          one video, two people, and a memory
+          i would happily watch over and over again.
+        </p>
       </div>
-      <div class="video-controls">
-        <button class="small-btn" id="playBtn">▶ PLAY</button>
-        <button class="small-btn" id="cinemaBtn">GLOW MODE ✧</button>
-        <button class="small-btn" id="heartBtn">SEND HEARTS ♡</button>
+
+      <div class="video-layout">
+        <div class="video-frame">
+          <video
+            id="ourVideo"
+            playsinline
+            webkit-playsinline
+            preload="metadata"
+            controls
+          >
+            <source
+              src="v14044g50000dbc8mtfog65p6111fkgg.mp4"
+              type="video/mp4"
+            >
+            your browser does not support this video.
+          </video>
+        </div>
+
+        <div class="video-caption">
+          <div class="eyebrow">just us being us</div>
+          <h3>that little tiktok dance.</h3>
+          <p>
+            maybe it's just a dance to everyone else.
+            but to me, it's one of those small things
+            that make being with you feel special.
+            i love having memories like this with you.
+          </p>
+
+          <div class="video-actions">
+            <button class="primary-btn" id="playVideo">▶ play our video</button>
+            <button class="soft-btn" id="videoHeart">♡ send love</button>
+          </div>
+
+          <div class="video-error" id="videoError">
+            the video couldn't load. check that the mp4 file is in
+            the same folder as index.html and that its filename
+            matches exactly.
+          </div>
+        </div>
       </div>
+    </section>
+
+    <section class="section" id="memories">
+      <div class="section-head">
+        <div class="eyebrow">the little things</div>
+        <h2>things i love about us.</h2>
+        <p>tap each card. there's a little message waiting for you.</p>
+      </div>
+
+      <div class="memory-grid">
+        <button class="memory-card" data-title="your presence" data-icon="☁️"
+          data-message="you don't always have to do something extraordinary. sometimes, just having you around is already enough to make an ordinary day feel better.">
+          <span class="memory-icon">☁️</span>
+          <h3>your presence</h3>
+          <p>even ordinary days feel different with you.</p>
+          <span class="tap-label">tap to open ↗</span>
+        </button>
+
+        <button class="memory-card" data-title="our laughter" data-icon="♡"
+          data-message="i want more moments where we laugh at the smallest things, tease each other, and forget about everything else for a little while. those moments feel like home.">
+          <span class="memory-icon">♡</span>
+          <h3>our laughter</h3>
+          <p>the silly moments i never want to lose.</p>
+          <span class="tap-label">tap to open ↗</span>
+        </button>
+
+        <button class="memory-card" data-title="our little dance" data-icon="♫"
+          data-message="i love that we have a little video of us together. it's something we can look back on, smile about, and remember as one of our own little moments.">
+          <span class="memory-icon">♫</span>
+          <h3>our little dance</h3>
+          <p>a tiny memory that means a lot to me.</p>
+          <span class="tap-label">tap to open ↗</span>
+        </button>
+
+        <button class="memory-card" data-title="choosing us" data-icon="∞"
+          data-message="i don't expect us to get everything right. i just hope we keep learning each other, listening when something hurts, and choosing to understand each other.">
+          <span class="memory-icon">∞</span>
+          <h3>choosing us</h3>
+          <p>growing together, one day at a time.</p>
+          <span class="tap-label">tap to open ↗</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="section" id="letter">
+      <div class="letter-box">
+        <div class="letter-heart">♡</div>
+        <div class="eyebrow">a little letter for you</div>
+        <h2>hey, babyyy.</h2>
+
+        <p>
+          i may not always find the perfect words to explain
+          how much you mean to me, but i hope you feel it
+          in the little things i do. i want to keep making
+          memories with you, laughing with you, learning
+          about you, and making our relationship a place
+          where we both feel loved and understood.
+          <br><br>
+          thank you for being part of my life.
+          i don't need every moment to be perfect.
+          i just want the moments to be ours.
+        </p>
+
+        <div class="letter-sign">always, your person ♡</div>
+
+        <button class="primary-btn" id="secretToggle" style="margin-top:25px">
+          unlock a little secret ✧
+        </button>
+
+        <div class="secret-panel" id="secretPanel">
+          if i could save one feeling from all our moments,
+          it would be the feeling of being with you
+          and knowing that this is someone i want
+          to keep making memories with. ♡
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="little-notes">
+      <div class="section-head">
+        <div class="eyebrow">for whenever you need it</div>
+        <h2>little notes for you.</h2>
+        <p>
+          a collection of sweet reminders. pick one,
+          find a random note, or search for a feeling.
+        </p>
+      </div>
+
+      <div class="note-display">
+        <div class="note-number" id="noteNumber">NOTE 001</div>
+        <div class="note-text" id="noteText">
+          you make ordinary moments feel a little more special. ♡
+        </div>
+      </div>
+
+      <div class="video-actions" style="margin:16px 0 24px">
+        <button class="primary-btn" id="randomNote">✧ surprise me</button>
+        <button class="soft-btn" id="saveNote">↓ save this note</button>
+        <button class="soft-btn" id="copyNote">copy note</button>
+      </div>
+
+      <div class="note-controls">
+        <input
+          class="note-search"
+          type="search"
+          id="noteSearch"
+          placeholder="search notes, e.g. miss you, love, comfort..."
+          aria-label="search notes"
+        >
+        <button class="soft-btn" id="searchNotes">search notes</button>
+      </div>
+
+      <div class="note-results" id="noteResults"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="big-heart">♡</span>
+    <p>made for you, babyyy.</p>
+    <p>one little website. so many reasons to love you.</p>
+    <p style="margin-top:12px">you & me, in our own little world.</p>
+  </footer>
+
+  <div class="modal" id="messageModal" role="dialog" aria-modal="true"
+    aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="close">×</button>
+      <div class="modal-icon" id="modalIcon">♡</div>
+      <h3 id="modalTitle">a little memory</h3>
+      <p id="modalMessage"></p>
+      <button class="primary-btn" id="modalOkay">keep this in my heart ♡</button>
     </div>
   </div>
-</section>
 
-<section class="section" id="little">
-  <div class="heading">
-    <div class="eyebrow">the little things</div>
-    <h2>small moments, big feelings.</h2>
-    <p>tap a card to open a little message.</p>
-  </div>
+  <div class="toast" id="toast" role="status"></div>
 
-  <div class="card-grid">
-    <article class="memory-card" data-message="i love that we can make memories out of simple things. it doesn't have to be a special occasion to mean something.">
-      <div class="memory-icon">♡</div>
-      <h3>our moments</h3>
-      <p>the memories that make us smile again.</p>
-    </article>
-    <article class="memory-card" data-message="i hope you always feel comfortable being yourself with me. you don't have to be perfect to be appreciated.">
-      <div class="memory-icon">☁</div>
-      <h3>being ourselves</h3>
-      <p>no pretending, just two real people.</p>
-    </article>
-    <article class="memory-card" data-message="i want us to keep listening, learning, and understanding each other even when things get difficult.">
-      <div class="memory-icon">✧</div>
-      <h3>choosing us</h3>
-      <p>patience, honesty, and effort.</p>
-    </article>
-    <article class="memory-card" data-message="i want to keep discovering the things that make you happy, the things you dream about, and all the little details that make you you.">
-      <div class="memory-icon">🌷</div>
-      <h3>learning you</h3>
-      <p>there is always something new to discover.</p>
-    </article>
-    <article class="memory-card" data-message="your peace matters too. i want our love to feel warm, honest, and safe for both of us.">
-      <div class="memory-icon">☾</div>
-      <h3>your peace</h3>
-      <p>love that lets both of us grow.</p>
-    </article>
-    <article class="memory-card" data-message="one day, i hope we look back at all these little moments and smile at how much life we got to share.">
-      <div class="memory-icon">∞</div>
-      <h3>more memories</h3>
-      <p>our story still has more pages to come.</p>
-    </article>
-  </div>
-</section>
+  <script>
+    const $ = (selector) => document.querySelector(selector);
 
-<section class="section" id="letter">
-  <div class="heading">
-    <div class="eyebrow">a little letter</div>
-    <h2>from my heart to yours.</h2>
-    <p>take your time. these words are meant to be read slowly.</p>
-  </div>
+    const video = $("#ourVideo");
+    const playButton = $("#playVideo");
+    const videoError = $("#videoError");
+    const toast = $("#toast");
+    const modal = $("#messageModal");
 
-  <div class="letter">
-    <div class="letter-mark">♡</div>
-    <h2>for you, my love.</h2>
-    <div class="letter-text">
-i don't need every day to be perfect to be happy with you.
+    let currentNote = 0;
+    let toastTimeout;
 
-i want the real moments, the silly conversations, the little updates about your day, and the laughter that comes out of nowhere.
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
 
-i want to keep learning how to love you better. to listen instead of assume, to understand instead of rush, and to make room for both of us to grow.
-
-i cannot promise that everything will always be easy. but i want us to keep choosing each other with care, honesty, and patience.
-
-thank you for being part of my life. thank you for the moments we've already shared and the memories we have yet to make.
-
-if there is one thing i hope you feel whenever you visit this little website, it is this:
-
-you are loved, you are appreciated, and you matter to me. ♡
-    </div>
-    <div class="signature">always, with love ♡</div>
-    <div style="margin-top:25px">
-      <button class="outline" id="letterBtn">A LITTLE HEART FOR YOU ♡</button>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="story">
-  <div class="heading">
-    <div class="eyebrow">our story</div>
-    <h2>little chapters of us.</h2>
-    <p>you can replace these with your own dates and memories anytime.</p>
-  </div>
-
-  <div class="timeline">
-    <div class="timeline-item">
-      <small>CHAPTER 01</small>
-      <h3>the beginning</h3>
-      <p>the start of something that became important to us. a little beginning worth remembering.</p>
-    </div>
-    <div class="timeline-item">
-      <small>CHAPTER 02</small>
-      <h3>our little adventures</h3>
-      <p>the walks, the conversations, the places we went, and the small things that made us laugh.</p>
-    </div>
-    <div class="timeline-item">
-      <small>CHAPTER 03</small>
-      <h3>learning each other</h3>
-      <p>growing through honest conversations, understanding, and making time for each other.</p>
-    </div>
-    <div class="timeline-item">
-      <small>CHAPTER 04</small>
-      <h3>what comes next</h3>
-      <p>new memories, new experiences, and more moments to look back on together.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="reasons">
-  <div class="heading">
-    <div class="eyebrow">a thousand little notes</div>
-    <h2>1,000 little reasons.</h2>
-    <p>browse, search, and find a little message whenever you need one.</p>
-  </div>
-
-  <div class="reason-box">
-    <div class="reason-count" id="reasonCount">NOTE 001 / 1000</div>
-    <div class="reason-text" id="reasonText">i love the way you make ordinary moments feel special.</div>
-
-    <div class="reason-actions">
-      <button class="outline" id="prevReason">← PREVIOUS</button>
-      <button class="primary" id="nextReason">NEXT NOTE ♡</button>
-      <button class="outline" id="randomReason">SURPRISE ME ✧</button>
-      <button class="outline" id="saveReason">SAVE NOTE ↓</button>
-    </div>
-
-    <input class="search" id="reasonSearch" type="search" placeholder="search notes...">
-
-    <div class="reason-list" id="reasonList"></div>
-
-    <div class="pagination">
-      <button class="small-btn" id="prevPage">←</button>
-      <span id="pageLabel">PAGE 1</span>
-      <button class="small-btn" id="nextPage">→</button>
-    </div>
-
-    <p class="small-note">
-      these are generated variations. replace a few with your own inside jokes
-      and personal memories to make the collection even more meaningful. ♡
-    </p>
-  </div>
-</section>
-
-<section class="section" id="secret">
-  <div class="heading">
-    <div class="eyebrow">a hidden little surprise</div>
-    <h2>just between us.</h2>
-    <p>one more message waiting for you.</p>
-  </div>
-
-  <div class="secret-box">
-    <div class="secret-icon" id="secretIcon">🗝️</div>
-    <h2 id="secretTitle">a little note for your heart.</h2>
-    <p id="secretIntro">tap below whenever you're ready.</p>
-    <button class="primary" id="secretBtn">OPEN MY SECRET ♡</button>
-
-    <div class="secret-message" id="secretMessage">
-      if you ever have a day when you forget how much you mean to me, come back here.
-
-      <br><br>
-
-      you do not have to be perfect to deserve love. you can have difficult days, make mistakes, feel unsure, and still deserve kindness.
-
-      <br><br>
-
-      i hope we keep creating a relationship where we can be honest, laugh freely, talk through difficult things, and feel safe enough to be ourselves.
-
-      <br><br>
-
-      i'm grateful for the moments we share, even the little ones that might seem ordinary to everyone else.
-
-      <br><br>
-
-      here's your reminder: you matter to me. ♡
-    </div>
-  </div>
-</section>
-
-<section class="final-section">
-  <div class="final-heart">♡</div>
-  <div class="eyebrow">one last little thing</div>
-  <h2>our moment.<br><span class="gradient">our memory.</span></h2>
-  <p>
-    a website can hold words and pictures, but the real story happens
-    in the time we spend together, the care we show, and the moments
-    we keep creating. here's to more of those. ♡
-  </p>
-  <div style="margin-top:28px">
-    <button class="primary" id="topBtn">BACK TO THE BEGINNING ↑</button>
-  </div>
-</section>
-</main>
-
-<footer>
-  MADE WITH LOVE · JUST FOR US ♡<br>
-  ONE DANCE · A THOUSAND LITTLE NOTES · MORE MEMORIES TO COME
-</footer>
-
-<div id="toast"></div>
-
-<script>
-const $ = id => document.getElementById(id);
-
-function toast(message) {
-  const el = $("toast");
-  el.textContent = message;
-  el.classList.add("show");
-  clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => el.classList.remove("show"), 2400);
-}
-
-$("enterBtn").addEventListener("click", () => {
-  $("intro").classList.add("gone");
-  toast("welcome to our little world ♡");
-  floatHearts(14);
-});
-
-function floatHearts(count = 1) {
-  const symbols = ["♡", "✧", "♥", "·"];
-  for (let i = 0; i < count; i++) {
-    const p = document.createElement("span");
-    p.className = "particle";
-    p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-    p.style.left = Math.random() * 100 + "%";
-    p.style.fontSize = (10 + Math.random() * 18) + "px";
-    p.style.setProperty("--dx", (Math.random() * 120 - 60) + "px");
-    p.style.animationDuration = (6 + Math.random() * 7) + "s";
-    $("particles").appendChild(p);
-    setTimeout(() => p.remove(), 14000);
-  }
-}
-setInterval(() => floatHearts(2), 1500);
-
-document.querySelectorAll(".memory-card").forEach(card => {
-  card.addEventListener("click", () => toast(card.dataset.message));
-});
-
-const video = $("ourVideo");
-
-$("playBtn").addEventListener("click", async () => {
-  if (video.paused) {
-    try {
-      await video.play();
-    } catch (error) {
-      toast("check the video filename and format.");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2300);
     }
-  } else {
-    video.pause();
-  }
-});
 
-video.addEventListener("play", () => {
-  $("playBtn").textContent = "❚❚ PAUSE";
-  $("videoStatus").textContent = "PLAYING";
-});
-video.addEventListener("pause", () => {
-  $("playBtn").textContent = "▶ PLAY";
-  $("videoStatus").textContent = video.ended ? "FINISHED" : "PAUSED";
-});
-video.addEventListener("timeupdate", () => {
-  if (video.duration && Number.isFinite(video.duration)) {
-    $("progress").style.width = (video.currentTime / video.duration * 100) + "%";
-  }
-});
-video.addEventListener("error", () => {
-  $("videoStatus").textContent = "VIDEO NEEDS CHECKING";
-  $("videoHelp").textContent =
-    "if it will not load, convert the .mov to an .mp4 using h.264 video and aac audio.";
-});
+    function makeHearts(amount = 7) {
+      const symbols = ["♡", "♥", "✧", "💕"];
 
-$("cinemaBtn").addEventListener("click", () => {
-  const enabled = video.dataset.glow !== "on";
-  video.dataset.glow = enabled ? "on" : "off";
-  video.style.boxShadow = enabled ? "0 0 38px rgba(255,120,190,.4)" : "";
-  toast(enabled ? "glow mode on ✧" : "glow mode off");
-});
-$("heartBtn").addEventListener("click", () => {
-  floatHearts(35);
-  toast("sending you a little love ♡");
-});
-$("letterBtn").addEventListener("click", () => {
-  floatHearts(15);
-  toast("a little love, just for you ♡");
-});
-$("secretBtn").addEventListener("click", () => {
-  const msg = $("secretMessage");
-  const opened = msg.classList.toggle("show");
-  $("secretBtn").textContent = opened ? "CLOSE MY SECRET ♡" : "OPEN MY SECRET ♡";
-  $("secretIcon").textContent = opened ? "💗" : "🗝️";
-  $("secretTitle").textContent = opened ? "a reminder for your heart." : "a little note for your heart.";
-  $("secretIntro").textContent = opened ? "keep these words for a day you need them." : "tap below whenever you're ready.";
-  if (opened) floatHearts(18);
-});
-$("topBtn").addEventListener("click", () => {
-  window.scrollTo({ top:0, behavior:"smooth" });
-});
+      for (let i = 0; i < amount; i++) {
+        const heart = document.createElement("span");
+        heart.className = "floating-heart";
+        heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (12 + Math.random() * 17) + "px";
+        heart.style.animationDuration = (2.3 + Math.random() * 2) + "s";
+        heart.style.color = Math.random() > .5 ? "#ff9fc6" : "#c3a2ff";
 
-/* 1,000 note collection */
-const starts = [
-  "i love", "i appreciate", "i admire", "i'm grateful for",
-  "i treasure", "i cherish", "i smile because of",
-  "i feel lucky to have", "i'm thankful for", "i will always value"
-];
-const subjects = [
-  "your smile","your laugh","your kindness","your honesty","your patience",
-  "your little stories","your thoughtful words","the way you listen",
-  "your unique personality","the effort you make","your gentle heart",
-  "your determination","your sense of humor","the way you express yourself",
-  "your little updates","the memories we share","our quiet moments",
-  "the time we spend together","your willingness to learn","the trust we build",
-  "your dreams","your courage","your curiosity","your warmth",
-  "your individuality","your perspective","your excitement about little things",
-  "the way you care","your openness","your resilience","our conversations",
-  "our inside jokes","the things we discover","your beautiful imperfections",
-  "your peaceful presence","the way you try again","your sincerity",
-  "your enthusiasm","your creativity","your thoughtfulness",
-  "the way you remember details","your willingness to communicate",
-  "the comfort of talking with you","the laughter we share","the plans we make",
-  "our little adventures","your personal growth",
-  "the lessons we learn together","the way you remain yourself",
-  "the bond we keep building"
-];
-const endings = [
-  "because it makes an ordinary day feel special.",
-  "because it reminds me that real love lives in little things.",
-  "because it gives me another reason to appreciate you.",
-  "because it makes our story feel like our own.",
-  "because it deserves to be noticed, not taken for granted.",
-  "because it brings warmth to the moments we share.",
-  "because it is part of what makes you uniquely you.",
-  "because it reminds me to slow down and be present.",
-  "because it helps us understand each other better.",
-  "because it makes me look forward to more memories.",
-  "because it makes room for honesty and understanding.",
-  "because it adds something meaningful to our days.",
-  "because it reminds me that growth can be beautiful.",
-  "because it makes even small moments worth remembering.",
-  "because it is something I never want to stop appreciating.",
-  "because it helps our connection keep growing.",
-  "because it brings a little more light into my life.",
-  "because it makes me grateful for the time we have.",
-  "because it shows that care can be quiet and genuine.",
-  "because it is a lovely part of the person you are."
-];
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4700);
+      }
+    }
 
-const reasons = [];
-for (let i = 0; i < 1000; i++) {
-  const start = starts[Math.floor(i / 100)];
-  const subject = subjects[i % subjects.length];
-  const ending = endings[(i * 7 + Math.floor(i / 10)) % endings.length];
-  reasons.push(start + " " + subject + ", " + ending);
-}
+    $("#glowToggle").addEventListener("click", () => {
+      document.body.classList.toggle("glow-mode");
+      const enabled = document.body.classList.contains("glow-mode");
+      $("#glowToggle").textContent = enabled ? "✧ glow on" : "✧ glow";
+      showToast(enabled ? "a little extra glow for us ✨" : "back to our soft colors ♡");
+    });
 
-let currentReason = 0;
-let currentPage = 0;
-const pageSize = 10;
-let filtered = [];
+    playButton.addEventListener("click", async () => {
+      if (video.paused) {
+        try {
+          await video.play();
+          playButton.textContent = "Ⅱ pause our video";
+        } catch (error) {
+          videoError.style.display = "block";
+          showToast("tap the video to try playing it ♡");
+        }
+      } else {
+        video.pause();
+      }
+    });
 
-function showReason(index) {
-  currentReason = (index + reasons.length) % reasons.length;
-  $("reasonCount").textContent =
-    "NOTE " + String(currentReason + 1).padStart(3, "0") + " / 1000";
-  $("reasonText").textContent = reasons[currentReason];
-}
+    video.addEventListener("play", () => {
+      playButton.textContent = "Ⅱ pause our video";
+      videoError.style.display = "none";
+    });
 
-function renderReasons() {
-  const q = $("reasonSearch").value.trim().toLowerCase();
-  filtered = reasons
-    .map((text, id) => ({ text, id }))
-    .filter(item => item.text.toLowerCase().includes(q));
+    video.addEventListener("pause", () => {
+      playButton.textContent = "▶ play our video";
+    });
 
-  const lastPage = Math.max(0, Math.ceil(filtered.length / pageSize) - 1);
-  currentPage = Math.max(0, Math.min(currentPage, lastPage));
+    video.addEventListener("ended", () => {
+      playButton.textContent = "↻ watch again";
+      makeHearts(10);
+    });
 
-  const visible = filtered.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
-  const list = $("reasonList");
-  list.replaceChildren();
+    video.addEventListener("error", () => {
+      videoError.style.display = "block";
+    });
 
-  visible.forEach(item => {
-    const row = document.createElement("div");
-    row.className = "reason-row";
+    $("#videoHeart").addEventListener("click", () => {
+      makeHearts(18);
+      showToast("sending you all my love, babyyy ♡");
+    });
 
-    const num = document.createElement("span");
-    num.className = "num";
-    num.textContent = String(item.id + 1).padStart(3, "0");
+    document.querySelectorAll(".memory-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        $("#modalTitle").textContent = card.dataset.title;
+        $("#modalIcon").textContent = card.dataset.icon;
+        $("#modalMessage").textContent = card.dataset.message;
+        modal.classList.add("show");
+      });
+    });
 
-    const content = document.createElement("span");
-    content.className = "reason-content";
-    content.textContent = item.text;
-    content.addEventListener("click", () => showReason(item.id));
+    function closeModal() {
+      modal.classList.remove("show");
+    }
 
-    const select = document.createElement("button");
-    select.textContent = "♡";
-    select.setAttribute("aria-label", "select note");
-    select.addEventListener("click", () => showReason(item.id));
+    $("#modalClose").addEventListener("click", closeModal);
+    $("#modalOkay").addEventListener("click", () => {
+      closeModal();
+      makeHearts(5);
+    });
 
-    row.append(num, content, select);
-    list.appendChild(row);
-  });
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
 
-  $("pageLabel").textContent = filtered.length
-    ? "PAGE " + (currentPage + 1) + " / " + (lastPage + 1)
-    : "NO NOTES FOUND";
-}
-$("prevReason").addEventListener("click", () => showReason(currentReason - 1));
-$("nextReason").addEventListener("click", () => showReason(currentReason + 1));
-$("randomReason").addEventListener("click", () => {
-  showReason(Math.floor(Math.random() * reasons.length));
-  floatHearts(7);
-});
-$("saveReason").addEventListener("click", () => {
-  const blob = new Blob([reasons[currentReason]], { type:"text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "love-note-" + String(currentReason + 1).padStart(3, "0") + ".txt";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-  toast("your note is ready to save ♡");
-});
-$("reasonSearch").addEventListener("input", () => {
-  currentPage = 0;
-  renderReasons();
-});
-$("prevPage").addEventListener("click", () => {
-  currentPage--;
-  renderReasons();
-});
-$("nextPage").addEventListener("click", () => {
-  currentPage++;
-  renderReasons();
-});
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeModal();
+    });
 
-showReason(0);
-renderReasons();
-</script>
+    $("#secretToggle").addEventListener("click", () => {
+      const panel = $("#secretPanel");
+      panel.classList.toggle("show");
+
+      const opened = panel.classList.contains("show");
+      $("#secretToggle").textContent = opened
+        ? "close my little secret ♡"
+        : "unlock a little secret ✧";
+
+      if (opened) {
+        makeHearts(12);
+        panel.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+
+    const noteOpeners = [
+      "you make ordinary moments feel a little more special. ♡",
+      "i hope you know that you matter to me, even on the days you don't feel your best.",
+      "you don't have to be perfect to be loved. you can just be you with me.",
+      "if today feels heavy, take your time, babyyy. you don't have to figure everything out at once.",
+      "i want to keep learning the little things that make you smile.",
+      "even when we're busy, there's still a little place for you in my thoughts.",
+      "i hope we always feel safe enough to be honest with each other.",
+      "i love the little memories we make without even planning them.",
+      "you deserve patience, kindness, and love that feels genuine.",
+      "if i could replay a little moment, i'd choose one where we're laughing together.",
+      "i'm proud of you for getting through days that aren't easy.",
+      "you never need to earn the right to tell me how you feel.",
+      "i hope we keep choosing understanding over assumptions.",
+      "i want to be someone you can talk to without pretending you're okay.",
+      "the little things we do together can mean more than grand gestures.",
+      "i miss the sound of your laugh when we're having a good time.",
+      "i'm glad our paths crossed, and i'm glad we're making our own memories.",
+      "i hope you feel appreciated not just on special days, but on ordinary ones too.",
+      "you can have a bad day and still be someone deeply loved.",
+      "i want our love to be something we care for together, one day at a time.",
+      "i'll always appreciate the time you choose to spend with me.",
+      "i hope we never stop being curious about each other's little worlds.",
+      "even a simple conversation with you can become a favorite part of my day.",
+      "i want to celebrate your wins, big or small.",
+      "you deserve love that listens, not just love that speaks.",
+      "we can learn from mistakes without forgetting to be kind to each other.",
+      "i hope we make more silly videos and laugh about them later.",
+      "you make me want to put more care into the little things.",
+      "you don't have to hide your feelings just to keep the peace.",
+      "i want us to keep building something that feels right for both of us.",
+      "sometimes the sweetest memories are the ones we didn't plan.",
+      "i hope you remember to eat, rest, and take care of yourself today.",
+      "if you're overthinking, let's slow down and talk things through.",
+      "i like having someone special to share the little details of my day with.",
+      "i hope our relationship keeps making room for honesty and reassurance.",
+      "i want us to laugh often and apologize sincerely when we need to.",
+      "you deserve to be heard, even when your feelings are difficult to explain.",
+      "i hope we keep making time for each other amid everything life brings.",
+      "a little message from you can brighten an ordinary moment.",
+      "i want us to feel like teammates, not opponents, when something goes wrong.",
+      "you are allowed to rest without feeling guilty about it.",
+      "i hope you know that your effort doesn't go unnoticed.",
+      "i want to keep discovering new reasons to appreciate you.",
+      "our little dance is one more memory that belongs to us.",
+      "i hope we keep finding joy in the simplest things.",
+      "i'm grateful for every honest conversation that helps us understand each other.",
+      "you can tell me when something hurts; we can work through it gently.",
+      "i want the way i love you to show in my actions, not just my words.",
+      "i hope we never become too busy to ask each other how we're really doing.",
+      "you make the idea of creating more memories feel exciting."
+    ];
+
+    const noteEndings = [
+      " ♡",
+      " — always, your person.",
+      " remember that, babyyy.",
+      " sending you a little hug. ♡",
+      " i'm cheering for you.",
+      " one day at a time.",
+      " with all my love.",
+      " you deserve that, too.",
+      " and i'll keep choosing kindness.",
+      " here's to more little moments."
+    ];
+
+    // 1,000 numbered notes are generated from reusable message variations.
+    // The first 50 are the original notes above.
+    const notes = [...noteOpeners];
+
+    for (let i = notes.length; i < 1000; i++) {
+      const opener = noteOpeners[i % noteOpeners.length];
+      const ending = noteEndings[Math.floor(i / noteOpeners.length) % noteEndings.length];
+      notes.push(opener + ending);
+    }
+
+    function showNote(index) {
+      currentNote = Math.max(0, Math.min(index, notes.length - 1));
+      $("#noteNumber").textContent =
+        "NOTE " + String(currentNote + 1).padStart(3, "0") +
+        " / " + notes.length;
+
+      $("#noteText").textContent = notes[currentNote];
+    }
+
+    $("#randomNote").addEventListener("click", () => {
+      let next = Math.floor(Math.random() * notes.length);
+
+      if (notes.length > 1 && next === currentNote) {
+        next = (next + 1) % notes.length;
+      }
+
+      showNote(next);
+      makeHearts(4);
+    });
+
+    $("#saveNote").addEventListener("click", () => {
+      const content =
+        "a little note for you ♡\n\n" +
+        notes[currentNote] +
+        "\n\nmade with love.";
+
+      const file = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(file);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "little-note-for-you.txt";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+
+      showToast("your little note is ready ♡");
+    });
+
+    $("#copyNote").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(notes[currentNote]);
+        showToast("note copied, babyyy ♡");
+      } catch (error) {
+        showToast("you can select and copy the note manually ♡");
+      }
+    });
+
+    function searchNotes() {
+      const query = $("#noteSearch").value.trim().toLowerCase();
+      const results = $("#noteResults");
+      results.innerHTML = "";
+
+      if (!query) {
+        showToast("type a word to search the notes ♡");
+        return;
+      }
+
+      const matches = [];
+
+      notes.forEach((note, index) => {
+        if (note.toLowerCase().includes(query)) {
+          matches.push({ note, index });
+        }
+      });
+
+      if (matches.length === 0) {
+        results.textContent = "no notes found. try another word, babyyy.";
+        return;
+      }
+
+      matches.slice(0, 30).forEach(({ note, index }) => {
+        const button = document.createElement("button");
+        button.className = "note-result";
+
+        const title = document.createElement("strong");
+        title.textContent = "NOTE " + String(index + 1).padStart(3, "0");
+
+        const text = document.createElement("span");
+        text.textContent = note;
+
+        button.append(title, text);
+
+        button.addEventListener("click", () => {
+          showNote(index);
+          $("#noteText").scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+        });
+
+        results.appendChild(button);
+      });
+
+      showToast(matches.length + " matching note(s) found ♡");
+    }
+
+    $("#searchNotes").addEventListener("click", searchNotes);
+
+    $("#noteSearch").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") searchNotes();
+    });
+
+    window.addEventListener("scroll", () => {
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      const progress = scrollable > 0
+        ? (window.scrollY / scrollable) * 100
+        : 0;
+
+      $("#progressBar").style.width = progress + "%";
+    }, { passive: true });
+
+    showNote(0);
+  </script>
 </body>
 </html>
