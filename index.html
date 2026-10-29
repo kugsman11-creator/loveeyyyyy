@@ -2,1283 +2,851 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#09070d">
-  <title>you & me ♡</title>
-
-  <style>
-    :root {
-      --bg: #09070d;
-      --panel: #15101b;
-      --pink: #ff8eb8;
-      --purple: #b99aff;
-      --white: #fff7fc;
-      --muted: #b9aebb;
-      --line: rgba(255,255,255,.09);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 90px;
-    }
-
-    body {
-      background:
-        radial-gradient(ellipse at 15% 10%, #261329 0%, transparent 38%),
-        radial-gradient(ellipse at 90% 45%, #19112d 0%, transparent 38%),
-        var(--bg);
-      color: var(--white);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    body.glow-mode {
-      --pink: #ffb5d3;
-      --purple: #d2baff;
-      background:
-        radial-gradient(ellipse at 20% 10%, #49203d 0%, transparent 45%),
-        radial-gradient(ellipse at 85% 55%, #30204c 0%, transparent 45%),
-        var(--bg);
-    }
-
-    button, input {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    button:focus-visible, a:focus-visible, input:focus-visible {
-      outline: 2px solid var(--pink);
-      outline-offset: 4px;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .ambient {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .orb {
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      filter: blur(85px);
-      opacity: .17;
-      animation: drift 12s ease-in-out infinite alternate;
-    }
-
-    .orb.one {
-      background: #ff5da2;
-      top: 12%;
-      left: -100px;
-    }
-
-    .orb.two {
-      background: #8965ff;
-      right: -120px;
-      top: 48%;
-      animation-delay: -5s;
-    }
-
-    @keyframes drift {
-      from { transform: translate(0, 0) scale(1); }
-      to { transform: translate(45px, -30px) scale(1.2); }
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px 6%;
-      background: rgba(9,7,13,.78);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .brand {
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: lowercase;
-    }
-
-    .brand span {
-      color: var(--pink);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 17px;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .nav a {
-      transition: color .25s;
-    }
-
-    .nav a:hover {
-      color: var(--pink);
-    }
-
-    .glow-btn {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--white);
-      border-radius: 100px;
-      padding: 9px 12px;
-      font-size: 11px;
-    }
-
-    .hero {
-      min-height: 88svh;
-      padding: 80px 22px 65px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-    }
-
-    .eyebrow {
-      color: var(--pink);
-      text-transform: uppercase;
-      font-size: 10px;
-      letter-spacing: 4px;
-      margin-bottom: 23px;
-    }
-
-    .hero h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(49px, 12vw, 91px);
-      font-weight: 400;
-      line-height: .99;
-      letter-spacing: -3px;
-      max-width: 800px;
-    }
-
-    .hero h1 em {
-      color: var(--pink);
-      font-weight: 400;
-    }
-
-    .hero p {
-      max-width: 320px;
-      margin: 24px auto 30px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.9;
-    }
-
-    .primary-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: 0;
-      border-radius: 100px;
-      padding: 15px 24px;
-      color: #1b0b16;
-      background: linear-gradient(120deg, #ffb4d0, #d8b5ff);
-      font-weight: 800;
-      font-size: 12px;
-      box-shadow: 0 8px 35px #e78bc522;
-      transition: transform .25s, box-shadow .25s;
-    }
-
-    .primary-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px #e78bc544;
-    }
-
-    .tiny-note {
-      font-size: 10px;
-      color: #867789;
-      margin-top: 18px;
-      letter-spacing: 1px;
-    }
-
-    .scroll-cue {
-      position: absolute;
-      bottom: 24px;
-      color: #99869c;
-      font-size: 10px;
-      letter-spacing: 2px;
-      animation: bob 2s ease-in-out infinite;
-    }
-
-    @keyframes bob {
-      50% { transform: translateY(5px); }
-    }
-
-    .section {
-      width: min(100% - 36px, 900px);
-      margin: 0 auto;
-      padding: 70px 0;
-    }
-
-    .section-head {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .section-head .eyebrow {
-      margin-bottom: 13px;
-    }
-
-    .section-head h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(31px, 7vw, 47px);
-      font-weight: 400;
-      line-height: 1.15;
-    }
-
-    .section-head p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.8;
-      margin: 13px auto 0;
-      max-width: 350px;
-    }
-
-    .video-layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      justify-items: center;
-      gap: 24px;
-    }
-
-    .video-frame {
-      position: relative;
-      width: min(100%, 340px);
-      padding: 7px;
-      border-radius: 27px;
-      background: linear-gradient(145deg, #ff9fc6, #8b6cc7, #37233e);
-      box-shadow:
-        0 0 0 1px #ffffff12,
-        0 15px 65px #c25c9b20;
-      transition: box-shadow .35s, transform .35s;
-    }
-
-    .video-frame:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 75px #d76bb833;
-    }
-
-    .video-frame video {
-      display: block;
-      width: 100%;
-      height: auto;
-      max-height: 68svh;
-      aspect-ratio: 9 / 16;
-      object-fit: contain;
-      background: #050407;
-      border-radius: 21px;
-    }
-
-    .video-caption {
-      text-align: center;
-      max-width: 350px;
-    }
-
-    .video-caption h3 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 27px;
-      font-weight: 400;
-      margin-bottom: 10px;
-    }
-
-    .video-caption p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.9;
-    }
-
-    .video-actions {
-      display: flex;
-      justify-content: center;
-      gap: 9px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-
-    .soft-btn {
-      padding: 11px 15px;
-      border: 1px solid var(--line);
-      background: #ffffff08;
-      color: var(--white);
-      border-radius: 100px;
-      font-size: 11px;
-      transition: background .2s;
-    }
-
-    .soft-btn:hover {
-      background: #ffffff13;
-    }
-
-    .video-error {
-      display: none;
-      color: #ffc4da;
-      background: #ff8eb810;
-      border: 1px solid #ff8eb82a;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 14px;
-      font-size: 11px;
-      line-height: 1.7;
-    }
-
-    .memory-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .memory-card {
-      text-align: left;
-      position: relative;
-      min-height: 155px;
-      padding: 20px 15px;
-      border: 1px solid var(--line);
-      border-radius: 19px;
-      color: var(--white);
-      background: linear-gradient(145deg, #ffffff0a, #ffffff03);
-      transition: transform .25s, border-color .25s, background .25s;
-    }
-
-    .memory-card:hover {
-      transform: translateY(-4px);
-      border-color: #ff8eb84a;
-      background: #ff8eb80c;
-    }
-
-    .memory-icon {
-      font-size: 23px;
-      display: block;
-      margin-bottom: 20px;
-    }
-
-    .memory-card h3 {
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-
-    .memory-card p {
-      font-size: 11px;
-      line-height: 1.7;
-      color: var(--muted);
-    }
-
-    .memory-card .tap-label {
-      display: block;
-      margin-top: 13px;
-      color: var(--pink);
-      font-size: 9px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .letter-box {
-      padding: 30px 22px;
-      border: 1px solid #ffb4d01e;
-      border-radius: 24px;
-      background:
-        radial-gradient(ellipse at top right, #c18bff10, transparent 55%),
-        linear-gradient(145deg, #1a111f, #110d17);
-      text-align: center;
-    }
-
-    .letter-box .letter-heart {
-      font-size: 29px;
-      margin-bottom: 18px;
-    }
-
-    .letter-box h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 31px;
-      font-weight: 400;
-      margin-bottom: 17px;
-    }
-
-    .letter-box p {
-      max-width: 500px;
-      margin: 0 auto;
-      color: #d0c2d2;
-      font-size: 13px;
-      line-height: 2;
-    }
-
-    .letter-sign {
-      color: var(--pink);
-      font-size: 12px;
-      margin-top: 24px;
-    }
-
-    .secret-panel {
-      display: none;
-      margin-top: 18px;
-      padding: 22px;
-      border-radius: 18px;
-      border: 1px solid #ff8eb830;
-      background: #ff8eb809;
-      color: #f3d9e8;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 17px;
-      line-height: 1.8;
-      text-align: center;
-      animation: reveal .5s ease both;
-    }
-
-    .secret-panel.show {
-      display: block;
-    }
-
-    @keyframes reveal {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .note-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .note-search {
-      width: 100%;
-      padding: 14px 16px;
-      background: #ffffff08;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      color: var(--white);
-      outline: none;
-    }
-
-    .note-search::placeholder {
-      color: #948497;
-    }
-
-    .note-display {
-      min-height: 190px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 27px 20px;
-      border: 1px solid var(--line);
-      border-radius: 23px;
-      background: linear-gradient(145deg, #ffffff08, #ffffff02);
-    }
-
-    .note-number {
-      font-size: 9px;
-      letter-spacing: 2px;
-      color: var(--pink);
-      margin-bottom: 20px;
-    }
-
-    .note-text {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(20px, 5vw, 27px);
-      line-height: 1.5;
-    }
-
-    .note-controls .video-actions {
-      margin-top: 4px;
-    }
-
-    .note-results {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .note-result {
-      text-align: left;
-      color: var(--muted);
-      background: #ffffff05;
-      border: 1px solid var(--line);
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-size: 11px;
-      line-height: 1.7;
-    }
-
-    .note-result strong {
-      display: block;
-      color: var(--pink);
-      margin-bottom: 4px;
-    }
-
-    .note-result:hover {
-      background: #ff8eb80d;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 40px 20px 55px;
-      border-top: 1px solid var(--line);
-      color: #96879a;
-      font-size: 10px;
-      line-height: 2;
-    }
-
-    .footer .big-heart {
-      display: block;
-      font-size: 22px;
-      margin-bottom: 13px;
-      animation: heartbeat 1.8s infinite;
-    }
-
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      15% { transform: scale(1.12); }
-      30% { transform: scale(1); }
-    }
-
-    .floating-heart {
-      position: fixed;
-      bottom: -35px;
-      z-index: 30;
-      pointer-events: none;
-      animation: floatUp 3s ease-out forwards;
-      filter: drop-shadow(0 0 8px #ff8eb855);
-    }
-
-    @keyframes floatUp {
-      0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(.6); }
-      15% { opacity: .9; }
-      100% { opacity: 0; transform: translateY(-85vh) rotate(35deg) scale(1.3); }
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 22px;
-      z-index: 50;
-      transform: translate(-50%, 20px);
-      opacity: 0;
-      pointer-events: none;
-      padding: 12px 17px;
-      max-width: calc(100% - 32px);
-      text-align: center;
-      background: #25182b;
-      border: 1px solid #ffffff18;
-      color: var(--white);
-      border-radius: 100px;
-      font-size: 11px;
-      box-shadow: 0 8px 35px #0005;
-      transition: .3s;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 40;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 22px;
-      background: #050308c9;
-      backdrop-filter: blur(12px);
-    }
-
-    .modal.show {
-      display: flex;
-      animation: reveal .25s ease both;
-    }
-
-    .modal-content {
-      width: min(100%, 420px);
-      position: relative;
-      padding: 34px 24px 27px;
-      border: 1px solid #ff8eb82e;
-      border-radius: 23px;
-      background: linear-gradient(145deg, #211626, #100c16);
-      text-align: center;
-    }
-
-    .modal-close {
-      position: absolute;
-      right: 15px;
-      top: 13px;
-      border: 0;
-      background: none;
-      color: var(--muted);
-      font-size: 23px;
-    }
-
-    .modal-icon {
-      font-size: 30px;
-      margin-bottom: 17px;
-    }
-
-    .modal-content h3 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 27px;
-      font-weight: 400;
-      margin-bottom: 15px;
-    }
-
-    .modal-content p {
-      color: #d1c3d4;
-      font-size: 13px;
-      line-height: 1.9;
-    }
-
-    .modal-content .primary-btn {
-      margin-top: 22px;
-    }
-
-    .progress-track {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 60;
-      width: 100%;
-      height: 2px;
-      background: transparent;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, var(--pink), var(--purple));
-    }
-
-    @media (min-width: 650px) {
-      .hero {
-        min-height: 90vh;
-      }
-
-      .memory-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-
-      .memory-card {
-        min-height: 190px;
-        padding: 21px 16px;
-      }
-
-      .video-layout {
-        grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
-        align-items: center;
-        justify-content: center;
-        gap: 38px;
-      }
-
-      .video-caption {
-        text-align: left;
-      }
-
-      .video-caption .video-actions {
-        justify-content: flex-start;
-      }
-
-      .note-controls {
-        flex-direction: row;
-      }
-
-      .note-controls .note-search {
-        flex: 1;
-      }
-
-      .note-results {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .section {
-        padding: 90px 0;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#09070d">
+<title>for you, babyyy ♡</title>
+
+<style>
+:root{
+  --bg:#09070d;
+  --panel:#15111c;
+  --pink:#ff9ec8;
+  --rose:#e9a7bf;
+  --violet:#c0a4ff;
+  --text:#fff8fc;
+  --muted:#b8aabb;
+  --line:rgba(255,255,255,.105);
+  --glass:rgba(255,255,255,.045);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow-x:hidden;min-height:100vh;
+}
+button,input{font:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--pink);outline-offset:4px}
+::selection{background:#ff9ec855;color:white}
+.bg-art{position:fixed;inset:0;z-index:-3;overflow:hidden;pointer-events:none}
+.bg-art:before{
+  content:"";position:absolute;width:100vw;height:100vw;max-width:900px;max-height:900px;
+  top:-30%;left:-35%;border-radius:50%;
+  background:radial-gradient(circle,#65304d38 0%,#30203a18 35%,transparent 70%);
+}
+.bg-art:after{
+  content:"";position:absolute;width:100vw;height:100vw;max-width:850px;max-height:850px;
+  right:-45%;top:30%;border-radius:50%;
+  background:radial-gradient(circle,#51408030 0%,transparent 68%);
+}
+.grain{
+  position:fixed;inset:0;z-index:15;pointer-events:none;opacity:.10;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.24'/%3E%3C/svg%3E");
+}
+.progress{position:fixed;top:0;left:0;width:100%;height:2px;z-index:60}
+.progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--pink),var(--violet))}
+.header{
+  position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;
+  padding:15px 5%;gap:12px;background:#09070dd9;border-bottom:1px solid var(--line);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+}
+.logo{font-size:12px;letter-spacing:2px;font-weight:800;white-space:nowrap}
+.logo b{color:var(--pink)}
+.nav{display:flex;align-items:center;gap:18px;font-size:10px;color:var(--muted)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--pink)}
+.icon-btn,.outline-btn{
+  color:var(--text);border:1px solid var(--line);background:#ffffff07;
+  border-radius:100px;padding:9px 12px;font-size:10px;white-space:nowrap;
+}
+.icon-btn:hover,.outline-btn:hover{background:#ffffff12}
+.hero{
+  position:relative;min-height:91svh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:80px 22px 75px;
+}
+.hero-glow{
+  position:absolute;width:300px;height:300px;top:15%;left:50%;transform:translateX(-50%);
+  background:radial-gradient(circle,#c04e9a17,transparent 70%);pointer-events:none;
+}
+.eyebrow{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--pink)}
+.hero .eyebrow{margin-bottom:26px}
+.hero h1{
+  font-family:Georgia,"Times New Roman",serif;font-size:clamp(52px,12vw,100px);
+  line-height:.98;font-weight:400;letter-spacing:-3px;
+}
+.hero h1 em{font-weight:400;color:var(--pink)}
+.hero-copy{max-width:340px;margin:24px auto 28px;color:var(--muted);font-size:12px;line-height:2}
+.primary{
+  border:0;border-radius:100px;padding:15px 23px;
+  color:#1b0c18;background:linear-gradient(115deg,#ffc3dc,#e5c6ff);
+  font-size:11px;font-weight:800;box-shadow:0 8px 36px #ed8bc524;
+  transition:transform .25s,box-shadow .25s;
+}
+.primary:hover{transform:translateY(-3px);box-shadow:0 12px 45px #ed8bc54a}
+.hero-small{margin-top:18px;font-size:9px;letter-spacing:1.5px;color:#897a8d}
+.scroll-hint{position:absolute;bottom:24px;font-size:9px;letter-spacing:3px;color:#99869b;animation:bob 2s infinite}
+@keyframes bob{50%{transform:translateY(5px)}}
+.section{width:min(100% - 36px,1000px);margin:auto;padding:72px 0}
+.section-title{text-align:center;margin-bottom:32px}
+.section-title .eyebrow{margin-bottom:13px}
+.section-title h2{font:400 clamp(32px,7vw,50px)/1.12 Georgia,serif;letter-spacing:-.8px}
+.section-title p{max-width:360px;margin:13px auto 0;font-size:12px;color:var(--muted);line-height:1.9}
+.divider{height:1px;width:65px;margin:18px auto;background:linear-gradient(90deg,transparent,var(--pink),transparent)}
+.panel{
+  border:1px solid var(--line);border-radius:25px;
+  background:linear-gradient(145deg,#ffffff09,#ffffff02);
+  box-shadow:0 18px 60px #00000015;
+}
+.video-layout{display:grid;grid-template-columns:1fr;justify-items:center;gap:25px}
+.video-frame{
+  position:relative;width:min(100%,350px);padding:7px;border-radius:28px;
+  background:linear-gradient(145deg,#ffc2d8,#a58ae7 45%,#51334f);
+  box-shadow:0 0 0 1px #ffffff10,0 20px 80px #d46caa1d;
+}
+.video-frame:before{
+  content:"";position:absolute;inset:-2px;border-radius:30px;
+  background:linear-gradient(135deg,#ffb9d4aa,transparent 35%,#b59bff77);
+  filter:blur(12px);z-index:-1;
+}
+.video-frame video{
+  display:block;width:100%;height:auto;max-height:70svh;aspect-ratio:9/16;
+  object-fit:contain;background:#050407;border-radius:21px;
+}
+.video-info{max-width:390px;text-align:center}
+.video-info h3{font:400 31px Georgia,serif;margin:13px 0}
+.video-info p{font-size:12px;color:var(--muted);line-height:2}
+.actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:18px}
+.error{
+  display:none;margin-top:14px;padding:12px;border-radius:12px;
+  border:1px solid #ff9ec833;color:#ffc6dc;background:#ff9ec80b;font-size:11px;line-height:1.8
+}
+.music-panel{padding:19px;margin-top:28px;display:flex;align-items:center;gap:14px}
+.music-disc{
+  flex:0 0 48px;width:48px;height:48px;border-radius:50%;
+  display:grid;place-items:center;font-size:19px;
+  background:radial-gradient(circle,#3c2948,#18101e);
+  border:1px solid #ff9ec833;box-shadow:0 0 20px #ff9ec812;
+}
+.music-info{flex:1;min-width:0}
+.music-info strong{display:block;font-size:12px;margin-bottom:5px}
+.music-info span{display:block;font-size:10px;color:var(--muted);line-height:1.7}
+.music-toggle{border:1px solid var(--line);background:#ffffff08;color:var(--text);border-radius:50%;width:40px;height:40px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.memory{
+  min-height:170px;padding:19px 15px;text-align:left;color:var(--text);
+  border:1px solid var(--line);border-radius:20px;
+  background:linear-gradient(145deg,#ffffff0a,#ffffff02);
+  transition:transform .25s,border-color .25s,background .25s;
+}
+.memory:hover{transform:translateY(-4px);border-color:#ff9ec84d;background:#ff9ec80a}
+.memory .emoji{display:block;font-size:23px;margin-bottom:20px}
+.memory h3{font-size:13px;margin-bottom:8px}
+.memory p{font-size:11px;color:var(--muted);line-height:1.8}
+.memory .tap{display:block;color:var(--pink);font-size:9px;letter-spacing:1.2px;margin-top:14px;text-transform:uppercase}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.photo{
+  position:relative;overflow:hidden;border-radius:18px;border:1px solid var(--line);
+  background:linear-gradient(145deg,#25192d,#100d16);min-height:155px;
+  aspect-ratio:4/5;
+}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s,filter .5s}
+.photo:hover img{transform:scale(1.045);filter:brightness(1.08)}
+.photo .photo-label{
+  position:absolute;bottom:0;left:0;right:0;padding:28px 12px 13px;
+  background:linear-gradient(transparent,#08060ddc);font-size:10px;letter-spacing:.5px;
+}
+.photo img:not([src]),.photo img[src=""]{display:none}
+.photo-placeholder{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:10px;color:#b5a1bb;font-size:10px;letter-spacing:1px;
+}
+.photo-placeholder span{font-size:26px;color:var(--pink)}
+.timeline{position:relative;margin-left:9px;padding-left:27px}
+.timeline:before{content:"";position:absolute;left:0;top:5px;bottom:8px;width:1px;background:linear-gradient(var(--pink),#a48bff55,transparent)}
+.event{position:relative;padding:0 0 29px}
+.event:last-child{padding-bottom:0}
+.event:before{
+  content:"";position:absolute;left:-32px;top:5px;width:9px;height:9px;border-radius:50%;
+  background:var(--pink);box-shadow:0 0 15px #ff9ec866;
+}
+.event .date{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--pink);margin-bottom:8px}
+.event h3{font:400 23px Georgia,serif;margin-bottom:8px}
+.event p{font-size:12px;line-height:1.9;color:var(--muted);max-width:600px}
+.letter{padding:30px 23px;text-align:center;position:relative;overflow:hidden}
+.letter:before{content:"";position:absolute;top:-100px;right:-90px;width:220px;height:220px;border-radius:50%;background:#bc8bff0c;filter:blur(20px)}
+.letter .big-heart{font-size:30px;margin-bottom:17px}
+.letter h2{font:400 34px Georgia,serif;margin:15px 0}
+.letter p{max-width:570px;margin:auto;color:#d4c5d7;font-size:13px;line-height:2}
+.letter-sign{margin-top:23px;font-size:12px;color:var(--pink)}
+.secret{display:none;margin-top:22px;padding:20px;border:1px solid #ff9ec82e;border-radius:16px;background:#ff9ec808;font:17px/1.8 Georgia,serif;color:#f5d9e9;animation:reveal .4s ease both}
+.secret.show{display:block}
+@keyframes reveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.note-box{padding:25px 19px;text-align:center}
+.note-num{font-size:9px;letter-spacing:2px;color:var(--pink);margin-bottom:20px}
+.note-text{font:clamp(21px,5vw,30px)/1.55 Georgia,serif;max-width:700px;margin:auto}
+.search-row{display:flex;gap:9px;margin-top:18px}
+.search-row input{min-width:0;flex:1;background:#ffffff08;border:1px solid var(--line);border-radius:100px;padding:13px 15px;color:var(--text);font-size:11px}
+.search-row input::placeholder{color:#99889f}
+.search-results{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}
+.result{border:1px solid var(--line);border-radius:13px;padding:13px;text-align:left;color:var(--muted);background:#ffffff05;font-size:11px;line-height:1.8}
+.result strong{display:block;color:var(--pink);margin-bottom:4px}
+.game-box{padding:27px 20px;text-align:center}
+.game-box h3{font:400 27px Georgia,serif;margin-bottom:10px}
+.game-box>p{font-size:12px;color:var(--muted);line-height:1.8}
+.game-question{margin:23px auto 15px;max-width:430px;font:21px/1.5 Georgia,serif}
+.game-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:500px;margin:0 auto}
+.choice{
+  padding:14px 10px;border:1px solid var(--line);border-radius:13px;
+  background:#ffffff07;color:var(--text);font-size:11px;line-height:1.6;
+}
+.choice:hover{border-color:#ff9ec866;background:#ff9ec80c}
+.game-feedback{min-height:45px;margin-top:17px;font-size:12px;line-height:1.8;color:var(--pink)}
+.game-score{margin-top:8px;color:var(--muted);font-size:10px}
+.footer{border-top:1px solid var(--line);padding:42px 20px 55px;text-align:center;color:#95859a;font-size:10px;line-height:2}
+.footer .heart{font-size:23px;color:var(--pink);display:block;margin-bottom:13px;animation:beat 1.8s infinite}
+@keyframes beat{15%{transform:scale(1.12)}30%{transform:scale(1)}}
+.float-heart{position:fixed;z-index:40;bottom:-30px;pointer-events:none;animation:floatup 3.2s ease-out forwards;filter:drop-shadow(0 0 7px #ff9ec855)}
+@keyframes floatup{0%{opacity:0;transform:translateY(0) scale(.7)}15%{opacity:.9}100%{opacity:0;transform:translateY(-85vh) rotate(35deg) scale(1.35)}}
+.toast{
+  position:fixed;z-index:70;bottom:22px;left:50%;transform:translate(-50%,20px);
+  opacity:0;pointer-events:none;max-width:calc(100% - 32px);padding:12px 17px;
+  border:1px solid #ffffff19;border-radius:100px;background:#25182d;color:var(--text);
+  text-align:center;font-size:11px;box-shadow:0 8px 30px #0005;transition:.25s;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal{
+  display:none;position:fixed;inset:0;z-index:65;align-items:center;justify-content:center;
+  padding:20px;background:#050308d9;backdrop-filter:blur(14px);
+}
+.modal.show{display:flex;animation:reveal .25s ease both}
+.modal-card{position:relative;width:min(100%,420px);padding:33px 23px 26px;text-align:center;border:1px solid #ff9ec833;border-radius:23px;background:linear-gradient(145deg,#25182b,#100c16)}
+.modal-close{position:absolute;right:14px;top:11px;background:none;border:0;color:var(--muted);font-size:24px}
+.modal-icon{font-size:30px;margin-bottom:17px}
+.modal-card h3{font:400 28px Georgia,serif;margin-bottom:15px}
+.modal-card p{font-size:13px;line-height:1.9;color:#d7c8da}
+.modal-card .primary{margin-top:22px}
+.reveal-on-scroll{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+.reveal-on-scroll.visible{opacity:1;transform:translateY(0)}
+@media(min-width:700px){
+  .hero{min-height:94vh}
+  .section{padding:95px 0}
+  .video-layout{grid-template-columns:minmax(0,350px) minmax(0,1fr);gap:48px;align-items:center;justify-content:center}
+  .video-info{text-align:left}
+  .video-info .actions{justify-content:flex-start}
+  .cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .memory{min-height:195px;padding:22px 17px}
+  .gallery{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .photo{aspect-ratio:4/5}
+  .letter{padding:45px 38px}
+  .note-box{padding:40px}
+  .search-results{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:430px){
+  .header{padding:13px 4%}
+  .nav{gap:10px}
+  .nav a{font-size:9px}
+  .nav a:nth-child(2){display:none}
+  .icon-btn{padding:8px}
+  .hero h1{letter-spacing:-2px}
+  .section{width:calc(100% - 30px)}
+  .memory{min-height:165px}
+  .search-row{flex-direction:column}
+  .search-row .primary{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
 </head>
 
 <body>
-  <div class="progress-track">
-    <div class="progress-bar" id="progressBar"></div>
+<div class="bg-art"></div>
+<div class="grain"></div>
+<div class="progress"><span id="progress"></span></div>
+
+<header class="header">
+  <a href="#home" class="logo">for you, <b>babyyy ♡</b></a>
+  <nav class="nav">
+    <a href="#our-moment">our moment</a>
+    <a href="#gallery">gallery</a>
+    <a href="#letter">letter</a>
+    <button class="icon-btn" id="glowBtn">✧ glow</button>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="eyebrow">a little world made for you</div>
+  <h1>if home<br>was a <em>person,</em><br>it'd be you.</h1>
+  <p class="hero-copy">
+    a collection of our little moments, the things i adore about you,
+    and all the words i don't always know how to say.
+  </p>
+  <button class="primary" id="enterBtn">enter our little world &nbsp; ♡</button>
+  <div class="hero-small">MADE WITH LOVE · JUST FOR YOU</div>
+  <div class="scroll-hint">SCROLL TO DISCOVER ↓</div>
+</section>
+
+<section class="section reveal-on-scroll" id="our-moment">
+  <div class="section-title">
+    <div class="eyebrow">a memory that belongs to us</div>
+    <h2>our little dance.</h2>
+    <div class="divider"></div>
+    <p>some moments don't need a big explanation. they're special simply because they're ours.</p>
   </div>
 
-  <div class="ambient">
-    <div class="orb one"></div>
-    <div class="orb two"></div>
-  </div>
-
-  <header class="topbar">
-    <a class="brand" href="#home">you<span> & </span>me ♡</a>
-
-    <nav class="nav">
-      <a href="#our-moment">our moment</a>
-      <a href="#memories">memories</a>
-      <a href="#letter">letter</a>
-      <button class="glow-btn" id="glowToggle">✧ glow</button>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero" id="home">
-      <div class="eyebrow">a little corner of us</div>
-
-      <h1>my favorite<br><em>kind of love.</em></h1>
-
+  <div class="video-layout">
+    <div class="video-frame">
+      <video id="ourVideo" playsinline webkit-playsinline preload="metadata" controls>
+        <source src="v14044g50000dbc8mtfog65p6111fkgg.mp4" type="video/mp4">
+        your browser does not support this video.
+      </video>
+    </div>
+    <div class="video-info">
+      <div class="eyebrow">saved in my heart</div>
+      <h3>just you and me. ♡</h3>
       <p>
-        not a perfect story, just two people making
-        little memories that mean everything.
-        and somehow, you became my favorite part.
+        it's our little tiktok dance, and i love that we have this
+        moment to look back on. one day, we'll watch it again and
+        smile at how much life has changed — and how this memory
+        is still ours.
       </p>
-
-      <a href="#our-moment" class="primary-btn">
-        open our little world <span>♡</span>
-      </a>
-
-      <div class="tiny-note">made with love, just for you.</div>
-      <div class="scroll-cue">SCROLL TO EXPLORE ↓</div>
-    </section>
-
-    <section class="section" id="our-moment">
-      <div class="section-head">
-        <div class="eyebrow">a moment to keep</div>
-        <h2>our little dance ♡</h2>
-        <p>
-          one video, two people, and a memory
-          i would happily watch over and over again.
-        </p>
+      <div class="actions">
+        <button class="primary" id="playBtn">▶ play our video</button>
+        <button class="outline-btn" id="videoLove">♡ send love</button>
       </div>
-
-      <div class="video-layout">
-        <div class="video-frame">
-          <video
-            id="ourVideo"
-            playsinline
-            webkit-playsinline
-            preload="metadata"
-            controls
-          >
-            <source
-              src="v14044g50000dbc8mtfog65p6111fkgg.mp4"
-              type="video/mp4"
-            >
-            your browser does not support this video.
-          </video>
-        </div>
-
-        <div class="video-caption">
-          <div class="eyebrow">just us being us</div>
-          <h3>that little tiktok dance.</h3>
-          <p>
-            maybe it's just a dance to everyone else.
-            but to me, it's one of those small things
-            that make being with you feel special.
-            i love having memories like this with you.
-          </p>
-
-          <div class="video-actions">
-            <button class="primary-btn" id="playVideo">▶ play our video</button>
-            <button class="soft-btn" id="videoHeart">♡ send love</button>
-          </div>
-
-          <div class="video-error" id="videoError">
-            the video couldn't load. check that the mp4 file is in
-            the same folder as index.html and that its filename
-            matches exactly.
-          </div>
-        </div>
+      <div class="error" id="videoError">
+        couldn't load the video. check the mp4 filename and make sure
+        it is in the same folder as index.html.
       </div>
-    </section>
-
-    <section class="section" id="memories">
-      <div class="section-head">
-        <div class="eyebrow">the little things</div>
-        <h2>things i love about us.</h2>
-        <p>tap each card. there's a little message waiting for you.</p>
-      </div>
-
-      <div class="memory-grid">
-        <button class="memory-card" data-title="your presence" data-icon="☁️"
-          data-message="you don't always have to do something extraordinary. sometimes, just having you around is already enough to make an ordinary day feel better.">
-          <span class="memory-icon">☁️</span>
-          <h3>your presence</h3>
-          <p>even ordinary days feel different with you.</p>
-          <span class="tap-label">tap to open ↗</span>
-        </button>
-
-        <button class="memory-card" data-title="our laughter" data-icon="♡"
-          data-message="i want more moments where we laugh at the smallest things, tease each other, and forget about everything else for a little while. those moments feel like home.">
-          <span class="memory-icon">♡</span>
-          <h3>our laughter</h3>
-          <p>the silly moments i never want to lose.</p>
-          <span class="tap-label">tap to open ↗</span>
-        </button>
-
-        <button class="memory-card" data-title="our little dance" data-icon="♫"
-          data-message="i love that we have a little video of us together. it's something we can look back on, smile about, and remember as one of our own little moments.">
-          <span class="memory-icon">♫</span>
-          <h3>our little dance</h3>
-          <p>a tiny memory that means a lot to me.</p>
-          <span class="tap-label">tap to open ↗</span>
-        </button>
-
-        <button class="memory-card" data-title="choosing us" data-icon="∞"
-          data-message="i don't expect us to get everything right. i just hope we keep learning each other, listening when something hurts, and choosing to understand each other.">
-          <span class="memory-icon">∞</span>
-          <h3>choosing us</h3>
-          <p>growing together, one day at a time.</p>
-          <span class="tap-label">tap to open ↗</span>
-        </button>
-      </div>
-    </section>
-
-    <section class="section" id="letter">
-      <div class="letter-box">
-        <div class="letter-heart">♡</div>
-        <div class="eyebrow">a little letter for you</div>
-        <h2>hey, babyyy.</h2>
-
-        <p>
-          i may not always find the perfect words to explain
-          how much you mean to me, but i hope you feel it
-          in the little things i do. i want to keep making
-          memories with you, laughing with you, learning
-          about you, and making our relationship a place
-          where we both feel loved and understood.
-          <br><br>
-          thank you for being part of my life.
-          i don't need every moment to be perfect.
-          i just want the moments to be ours.
-        </p>
-
-        <div class="letter-sign">always, your person ♡</div>
-
-        <button class="primary-btn" id="secretToggle" style="margin-top:25px">
-          unlock a little secret ✧
-        </button>
-
-        <div class="secret-panel" id="secretPanel">
-          if i could save one feeling from all our moments,
-          it would be the feeling of being with you
-          and knowing that this is someone i want
-          to keep making memories with. ♡
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="little-notes">
-      <div class="section-head">
-        <div class="eyebrow">for whenever you need it</div>
-        <h2>little notes for you.</h2>
-        <p>
-          a collection of sweet reminders. pick one,
-          find a random note, or search for a feeling.
-        </p>
-      </div>
-
-      <div class="note-display">
-        <div class="note-number" id="noteNumber">NOTE 001</div>
-        <div class="note-text" id="noteText">
-          you make ordinary moments feel a little more special. ♡
-        </div>
-      </div>
-
-      <div class="video-actions" style="margin:16px 0 24px">
-        <button class="primary-btn" id="randomNote">✧ surprise me</button>
-        <button class="soft-btn" id="saveNote">↓ save this note</button>
-        <button class="soft-btn" id="copyNote">copy note</button>
-      </div>
-
-      <div class="note-controls">
-        <input
-          class="note-search"
-          type="search"
-          id="noteSearch"
-          placeholder="search notes, e.g. miss you, love, comfort..."
-          aria-label="search notes"
-        >
-        <button class="soft-btn" id="searchNotes">search notes</button>
-      </div>
-
-      <div class="note-results" id="noteResults"></div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <span class="big-heart">♡</span>
-    <p>made for you, babyyy.</p>
-    <p>one little website. so many reasons to love you.</p>
-    <p style="margin-top:12px">you & me, in our own little world.</p>
-  </footer>
-
-  <div class="modal" id="messageModal" role="dialog" aria-modal="true"
-    aria-labelledby="modalTitle">
-    <div class="modal-content">
-      <button class="modal-close" id="modalClose" aria-label="close">×</button>
-      <div class="modal-icon" id="modalIcon">♡</div>
-      <h3 id="modalTitle">a little memory</h3>
-      <p id="modalMessage"></p>
-      <button class="primary-btn" id="modalOkay">keep this in my heart ♡</button>
     </div>
   </div>
 
-  <div class="toast" id="toast" role="status"></div>
+  <div class="music-panel panel">
+    <div class="music-disc">♫</div>
+    <div class="music-info">
+      <strong>our little soundtrack</strong>
+      <span>adie — paraluman</span>
+      <span id="musicStatus">tap play to listen, if the mp3 is in your folder.</span>
+    </div>
+    <button class="music-toggle" id="musicBtn" aria-label="play music">▶</button>
+    <audio id="music" preload="none">
+      <source src="Adie - Paraluman (Lyrics).mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</section>
 
-  <script>
-    const $ = (selector) => document.querySelector(selector);
+<section class="section reveal-on-scroll" id="memories">
+  <div class="section-title">
+    <div class="eyebrow">little things, big feelings</div>
+    <h2>my favorite things about us.</h2>
+    <div class="divider"></div>
+    <p>tap a card. every little detail deserves its own moment.</p>
+  </div>
 
-    const video = $("#ourVideo");
-    const playButton = $("#playVideo");
-    const videoError = $("#videoError");
-    const toast = $("#toast");
-    const modal = $("#messageModal");
+  <div class="cards">
+    <button class="memory" data-icon="☁️" data-title="your presence"
+      data-message="you don't have to do anything extraordinary to make a day better. sometimes, just having you around is enough.">
+      <span class="emoji">☁️</span><h3>your presence</h3>
+      <p>you make ordinary days feel softer.</p><span class="tap">open memory ↗</span>
+    </button>
+    <button class="memory" data-icon="♡" data-title="your little ways"
+      data-message="it's the little things about you that stay in my mind. the way you talk, the way you laugh, and the little details only someone close to you might notice.">
+      <span class="emoji">♡</span><h3>your little ways</h3>
+      <p>the details that make you, you.</p><span class="tap">open memory ↗</span>
+    </button>
+    <button class="memory" data-icon="♫" data-title="our silly moments"
+      data-message="i hope we keep making silly videos, laughing at random things, and creating memories that won't make sense to anyone else but us.">
+      <span class="emoji">♫</span><h3>our silly moments</h3>
+      <p>little memories worth keeping.</p><span class="tap">open memory ↗</span>
+    </button>
+    <button class="memory" data-icon="∞" data-title="choosing each other"
+      data-message="i don't need us to be perfect. i want us to be honest, gentle with each other's feelings, and willing to understand each other when things get difficult.">
+      <span class="emoji">∞</span><h3>choosing us</h3>
+      <p>growing together, day by day.</p><span class="tap">open memory ↗</span>
+    </button>
+  </div>
+</section>
 
-    let currentNote = 0;
-    let toastTimeout;
+<section class="section reveal-on-scroll" id="gallery">
+  <div class="section-title">
+    <div class="eyebrow">our scrapbook</div>
+    <h2>little pieces of us.</h2>
+    <div class="divider"></div>
+    <p>our photos, our moments, our story. replace these placeholders with your favorite pictures.</p>
+  </div>
 
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add("show");
+  <div class="gallery">
+    <div class="photo">
+      <div class="photo-placeholder"><span>♡</span>OUR FIRST PHOTO</div>
+      <img src="photo1.jpg" alt="our first photo" onerror="this.style.display='none'">
+      <div class="photo-label">a memory to keep ♡</div>
+    </div>
+    <div class="photo">
+      <div class="photo-placeholder"><span>✧</span>MY FAVORITE</div>
+      <img src="photo2.jpg" alt="my favorite memory" onerror="this.style.display='none'">
+      <div class="photo-label">my favorite view</div>
+    </div>
+    <div class="photo">
+      <div class="photo-placeholder"><span>♡</span>JUST US</div>
+      <img src="photo3.jpg" alt="just us" onerror="this.style.display='none'">
+      <div class="photo-label">just the two of us</div>
+    </div>
+    <div class="photo">
+      <div class="photo-placeholder"><span>☁️</span>OUR LITTLE DAY</div>
+      <img src="photo4.jpg" alt="our little day" onerror="this.style.display='none'">
+      <div class="photo-label">a day worth remembering</div>
+    </div>
+    <div class="photo">
+      <div class="photo-placeholder"><span>✧</span>YOUR SMILE</div>
+      <img src="photo5.jpg" alt="your smile" onerror="this.style.display='none'">
+      <div class="photo-label">my favorite smile</div>
+    </div>
+    <div class="photo">
+      <div class="photo-placeholder"><span>♡</span>MORE MEMORIES</div>
+      <img src="photo6.jpg" alt="more memories" onerror="this.style.display='none'">
+      <div class="photo-label">more to come</div>
+    </div>
+  </div>
+</section>
 
-      clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2300);
+<section class="section reveal-on-scroll" id="timeline">
+  <div class="section-title">
+    <div class="eyebrow">chapters of us</div>
+    <h2>our little timeline.</h2>
+    <div class="divider"></div>
+    <p>not every important moment needs a perfect picture. some are beautiful just as memories.</p>
+  </div>
+
+  <div class="panel" style="padding:27px 22px">
+    <div class="timeline">
+      <div class="event">
+        <div class="date">september 4, 2026</div>
+        <h3>the beginning of us.</h3>
+        <p>the day i asked you to be mine. one small question that became the beginning of a chapter i want to keep taking care of. ♡</p>
+      </div>
+      <div class="event">
+        <div class="date">our sunday routine</div>
+        <h3>church, walks, and fresh air.</h3>
+        <p>going to church together, walking nearby, and finding a place to tambay and breathe. simple moments, but they mean something to me.</p>
+      </div>
+      <div class="event">
+        <div class="date">our friday memory</div>
+        <h3>walking around colon.</h3>
+        <p>laag-laag, walking around, and spending time together without needing a big plan. i hope we get to make more little memories like this.</p>
+      </div>
+      <div class="event">
+        <div class="date">still being written</div>
+        <h3>everything still ahead.</h3>
+        <p>more conversations, more laughter, more places to see, and more things to learn about each other. this story is still ours to write.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal-on-scroll" id="letter">
+  <div class="section-title">
+    <div class="eyebrow">a letter you can keep</div>
+    <h2>for you, babyyy.</h2>
+  </div>
+  <div class="letter panel">
+    <div class="big-heart">♡</div>
+    <div class="eyebrow">read this whenever you need it</div>
+    <h2>hey, my love.</h2>
+    <p>
+      i know i won't always say everything perfectly, but i hope my
+      actions keep showing you how much you mean to me. i want us to
+      keep learning each other, listening when something hurts, and
+      making room for honesty even when a conversation feels difficult.
+      <br><br>
+      i love the ordinary moments with you just as much as the special
+      ones. the walks, the random conversations, the laughter, and even
+      the little things we might forget to take pictures of.
+      <br><br>
+      i don't expect us to have everything figured out. i just want
+      us to keep growing, to treat each other with care, and to remember
+      that we're on the same team.
+      <br><br>
+      thank you for being part of my life. i hope this little website
+      makes you smile whenever you open it.
+    </p>
+    <div class="letter-sign">always, your person. ♡</div>
+    <button class="primary" id="secretBtn" style="margin-top:25px">open a hidden message ✧</button>
+    <div class="secret" id="secret">
+      if i could keep one thing forever, it would be the little feeling
+      of being with you and realizing that even a simple moment can
+      become something i never want to forget. i hope we keep making
+      moments like that, babyyy. ♡
+    </div>
+  </div>
+</section>
+
+<section class="section reveal-on-scroll" id="notes">
+  <div class="section-title">
+    <div class="eyebrow">a little reminder, anytime</div>
+    <h2>open when you need love.</h2>
+    <div class="divider"></div>
+    <p>choose a note for the moment you're having. there's no wrong time to need a little reassurance.</p>
+  </div>
+  <div class="note-box panel">
+    <div class="note-num" id="noteNum">NOTE 001 / 050</div>
+    <div class="note-text" id="noteText">you make ordinary moments feel a little more special. ♡</div>
+    <div class="actions">
+      <button class="primary" id="randomNote">surprise me ♡</button>
+      <button class="outline-btn" id="copyNote">copy note</button>
+      <button class="outline-btn" id="saveNote">save note ↓</button>
+    </div>
+    <div class="search-row">
+      <input id="noteSearch" type="search" placeholder="search notes: love, miss you, comfort...">
+      <button class="primary" id="searchBtn">search</button>
+    </div>
+    <div class="search-results" id="results"></div>
+  </div>
+</section>
+
+<section class="section reveal-on-scroll" id="game">
+  <div class="section-title">
+    <div class="eyebrow">just for fun</div>
+    <h2>how well do you know us?</h2>
+    <div class="divider"></div>
+    <p>a tiny love quiz. choose your answers and see your little score.</p>
+  </div>
+  <div class="game-box panel">
+    <h3>our little quiz ♡</h3>
+    <p>there are no wrong feelings here. it's just a cute way to revisit our memories.</p>
+    <div class="game-question" id="question">what day did our relationship begin?</div>
+    <div class="game-choices" id="choices"></div>
+    <div class="game-feedback" id="feedback" aria-live="polite"></div>
+    <div class="game-score" id="score">question 1 of 5 · score 0</div>
+    <button class="outline-btn" id="restartGame" style="margin-top:18px">start again ↻</button>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <span class="heart">♡</span>
+  <p>made with love, just for you.</p>
+  <p>one little website. a thousand little reasons to smile.</p>
+  <p style="margin-top:12px">you & me · our own little world.</p>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-card">
+    <button class="modal-close" id="closeModal" aria-label="close">×</button>
+    <div class="modal-icon" id="modalIcon">♡</div>
+    <h3 id="modalTitle">a little memory</h3>
+    <p id="modalMessage"></p>
+    <button class="primary" id="okayBtn">keep this in my heart ♡</button>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $ = selector => document.querySelector(selector);
+let toastTimer;
+
+function toast(message){
+  const el = $("#toast");
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2400);
+}
+
+function hearts(count = 8){
+  const symbols = ["♡","♥","✧","💕"];
+  for(let i=0;i<count;i++){
+    const item = document.createElement("span");
+    item.className = "float-heart";
+    item.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+    item.style.left = Math.random()*100 + "vw";
+    item.style.fontSize = (13+Math.random()*16) + "px";
+    item.style.color = Math.random()>.5 ? "#ff9ec8" : "#c0a4ff";
+    item.style.animationDuration = (2.5+Math.random()*2) + "s";
+    document.body.appendChild(item);
+    setTimeout(()=>item.remove(),4800);
+  }
+}
+
+$("#enterBtn").addEventListener("click",()=>{
+  hearts(14);
+  $("#our-moment").scrollIntoView({behavior:"smooth"});
+  toast("welcome to our little world, babyyy ♡");
+});
+
+$("#glowBtn").addEventListener("click",()=>{
+  const enabled = document.body.classList.toggle("glow-mode");
+  if(enabled){
+    document.documentElement.style.setProperty("--pink","#ffc1dc");
+    document.documentElement.style.setProperty("--violet","#d5c2ff");
+    $("#glowBtn").textContent="✧ glow on";
+    toast("extra glow, just for you ✨");
+  }else{
+    document.documentElement.style.setProperty("--pink","#ff9ec8");
+    document.documentElement.style.setProperty("--violet","#c0a4ff");
+    $("#glowBtn").textContent="✧ glow";
+    toast("back to our soft colors ♡");
+  }
+});
+
+const video = $("#ourVideo");
+$("#playBtn").addEventListener("click",async()=>{
+  if(video.paused){
+    try{await video.play();}
+    catch(e){$("#videoError").style.display="block";toast("tap the video play icon to try again ♡");}
+  }else video.pause();
+});
+video.addEventListener("play",()=>{
+  $("#playBtn").textContent="Ⅱ pause our video";
+  $("#videoError").style.display="none";
+});
+video.addEventListener("pause",()=>$("#playBtn").textContent="▶ play our video");
+video.addEventListener("ended",()=>{
+  $("#playBtn").textContent="↻ watch again";
+  hearts(12);
+});
+video.addEventListener("error",()=>$("#videoError").style.display="block");
+$("#videoLove").addEventListener("click",()=>{
+  hearts(20);toast("all my love, babyyy ♡");
+});
+
+const music = $("#music");
+$("#musicBtn").addEventListener("click",async()=>{
+  if(music.paused){
+    try{
+      await music.play();
+      $("#musicBtn").textContent="Ⅱ";
+      $("#musicStatus").textContent="playing your little soundtrack ♡";
+    }catch(e){
+      $("#musicStatus").textContent="mp3 not found — add the song file beside index.html.";
+      toast("check that the mp3 file is in the project folder ♡");
     }
+  }else{
+    music.pause();
+  }
+});
+music.addEventListener("pause",()=>{
+  $("#musicBtn").textContent="▶";
+  if(!music.ended) $("#musicStatus").textContent="paused for now.";
+});
+music.addEventListener("ended",()=>{
+  $("#musicBtn").textContent="▶";
+  $("#musicStatus").textContent="a song for our little world ♡";
+});
 
-    function makeHearts(amount = 7) {
-      const symbols = ["♡", "♥", "✧", "💕"];
+const modal = $("#modal");
+document.querySelectorAll(".memory").forEach(card=>{
+  card.addEventListener("click",()=>{
+    $("#modalIcon").textContent=card.dataset.icon;
+    $("#modalTitle").textContent=card.dataset.title;
+    $("#modalMessage").textContent=card.dataset.message;
+    modal.classList.add("show");
+  });
+});
+function closeModal(){modal.classList.remove("show")}
+$("#closeModal").addEventListener("click",closeModal);
+$("#okayBtn").addEventListener("click",()=>{closeModal();hearts(6)});
+modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
 
-      for (let i = 0; i < amount; i++) {
-        const heart = document.createElement("span");
-        heart.className = "floating-heart";
-        heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (12 + Math.random() * 17) + "px";
-        heart.style.animationDuration = (2.3 + Math.random() * 2) + "s";
-        heart.style.color = Math.random() > .5 ? "#ff9fc6" : "#c3a2ff";
+$("#secretBtn").addEventListener("click",()=>{
+  const secret=$("#secret");
+  secret.classList.toggle("show");
+  $("#secretBtn").textContent=secret.classList.contains("show")
+    ?"close my hidden message ♡":"open a hidden message ✧";
+  if(secret.classList.contains("show")){
+    hearts(12);
+    secret.scrollIntoView({behavior:"smooth",block:"center"});
+  }
+});
 
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 4700);
-      }
-    }
+const notes=[
+"you make ordinary moments feel a little more special. ♡",
+"you don't have to be perfect to be loved. you can just be you with me.",
+"i hope today is gentle with you, babyyy. take things one step at a time.",
+"even on busy days, there's still a little place for you in my thoughts.",
+"i want to keep learning the little things that make you smile.",
+"you deserve patience, kindness, and love that feels genuine.",
+"i hope we keep choosing understanding over assumptions.",
+"i love the little memories we make without even planning them.",
+"you can have a bad day and still be deeply loved.",
+"i want our relationship to feel safe enough for honest conversations.",
+"i'm proud of you for getting through days that aren't easy.",
+"you never have to hide your feelings just to keep the peace.",
+"i hope we keep making silly videos and laughing about them later.",
+"you deserve to be heard, even when your feelings are hard to explain.",
+"i want to celebrate your wins, big or small.",
+"i hope you remember to eat, rest, and take care of yourself today.",
+"if you're overthinking, let's slow down and talk things through.",
+"you deserve love that listens, not just love that speaks.",
+"i want us to feel like teammates when something goes wrong.",
+"you make the idea of creating more memories feel exciting.",
+"i miss the sound of your laugh when we're having a good time.",
+"i'm grateful for every honest conversation that helps us understand each other.",
+"you can tell me when something hurts. we can work through it gently.",
+"i want my actions to show you what my words sometimes cannot.",
+"i hope we never get too busy to ask how we're really doing.",
+"even a simple conversation with you can become a favorite part of my day.",
+"i hope you feel appreciated on ordinary days, not just special ones.",
+"i want us to keep growing without forgetting to be kind to each other.",
+"our little dance is one more memory that belongs to us.",
+"i hope we always make room for laughter, honesty, and reassurance.",
+"i like having someone special to share the little details of my day with.",
+"you are allowed to rest without feeling guilty about it.",
+"i want to keep discovering new reasons to appreciate you.",
+"you don't have to figure everything out today.",
+"i hope we can talk about difficult things without forgetting our love.",
+"i want us to keep making time for each other.",
+"you are more than the things you worry about.",
+"i hope our love feels like a place where we can both breathe.",
+"thank you for the time, effort, and little moments you share with me.",
+"i want to keep building something honest and beautiful with you.",
+"i hope we always remember why we started choosing each other.",
+"i'm glad our paths crossed, babyyy. ♡",
+"you can always start again after a difficult day.",
+"i hope we make more memories that only we fully understand.",
+"i want to learn how to love you better as we grow.",
+"you matter to me even when we don't have the perfect words.",
+"we don't need a perfect day to make a meaningful memory.",
+"i hope you feel loved in the little things i do.",
+"i want to keep listening, learning, and understanding you.",
+"no matter how ordinary today feels, i'm glad you're part of my story."
+];
+let noteIndex=0;
 
-    $("#glowToggle").addEventListener("click", () => {
-      document.body.classList.toggle("glow-mode");
-      const enabled = document.body.classList.contains("glow-mode");
-      $("#glowToggle").textContent = enabled ? "✧ glow on" : "✧ glow";
-      showToast(enabled ? "a little extra glow for us ✨" : "back to our soft colors ♡");
+function showNote(index){
+  noteIndex=Math.max(0,Math.min(index,notes.length-1));
+  $("#noteNum").textContent="NOTE "+String(noteIndex+1).padStart(3,"0")+" / "+String(notes.length).padStart(3,"0");
+  $("#noteText").textContent=notes[noteIndex];
+}
+$("#randomNote").addEventListener("click",()=>{
+  let next=Math.floor(Math.random()*notes.length);
+  if(notes.length>1&&next===noteIndex)next=(next+1)%notes.length;
+  showNote(next);hearts(5);
+});
+$("#copyNote").addEventListener("click",async()=>{
+  try{
+    await navigator.clipboard.writeText(notes[noteIndex]);
+    toast("note copied, babyyy ♡");
+  }catch(e){toast("select and copy the note manually ♡")}
+});
+$("#saveNote").addEventListener("click",()=>{
+  const blob=new Blob(["a little note for you ♡\n\n"+notes[noteIndex]+"\n\nmade with love."],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="little-note-for-you.txt";
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  toast("your little note is ready ♡");
+});
+function searchNotes(){
+  const q=$("#noteSearch").value.trim().toLowerCase();
+  const output=$("#results");
+  output.replaceChildren();
+  if(!q){toast("type a word to search the notes ♡");return}
+  const matches=notes.map((note,index)=>({note,index})).filter(x=>x.note.toLowerCase().includes(q));
+  if(!matches.length){
+    const p=document.createElement("p");
+    p.textContent="no notes found. try another word, babyyy.";
+    p.style.cssText="color:var(--muted);font-size:11px;padding:12px";
+    output.appendChild(p);return;
+  }
+  matches.forEach(({note,index})=>{
+    const b=document.createElement("button");
+    b.className="result";
+    const strong=document.createElement("strong");
+    strong.textContent="NOTE "+String(index+1).padStart(3,"0");
+    const span=document.createElement("span");
+    span.textContent=note;
+    b.append(strong,span);
+    b.addEventListener("click",()=>{
+      showNote(index);
+      $("#noteText").scrollIntoView({behavior:"smooth",block:"center"});
     });
+    output.appendChild(b);
+  });
+  toast(matches.length+" note(s) found ♡");
+}
+$("#searchBtn").addEventListener("click",searchNotes);
+$("#noteSearch").addEventListener("keydown",e=>{if(e.key==="Enter")searchNotes()});
+showNote(0);
 
-    playButton.addEventListener("click", async () => {
-      if (video.paused) {
-        try {
-          await video.play();
-          playButton.textContent = "Ⅱ pause our video";
-        } catch (error) {
-          videoError.style.display = "block";
-          showToast("tap the video to try playing it ♡");
+/* little quiz */
+const questions=[
+  {q:"what day did our relationship begin?",a:["september 4, 2026","january 1, 2026","december 25, 2025","february 14, 2026"],correct:0,reply:"that's the day our chapter officially began. ♡"},
+  {q:"what do we do together on sundays?",a:["go shopping all day","church, then a little walk","stay at the beach","watch a concert"],correct:1,reply:"church together, then a walk and some fresh air. ♡"},
+  {q:"where did we have our friday laag memory?",a:["colon","bohol","manila","davao"],correct:0,reply:"our little walk around colon. simple, but memorable. ♡"},
+  {q:"what little video do we have together?",a:["a cooking tutorial","our tiktok dance","a basketball game","a travel vlog"],correct:1,reply:"our little dance deserves a place in our memories. ♡"},
+  {q:"what matters most when things get difficult?",a:["pretending nothing happened","winning every argument","listening and understanding each other","never talking about it"],correct:2,reply:"we're on the same team. understanding matters. ♡"}
+];
+let gameIndex=0,gameScore=0,gameDone=false;
+function renderQuestion(){
+  const q=questions[gameIndex];
+  $("#question").textContent=q.q;
+  $("#choices").replaceChildren();
+  $("#feedback").textContent="";
+  $("#score").textContent="question "+(gameIndex+1)+" of "+questions.length+" · score "+gameScore;
+  q.a.forEach((answer,index)=>{
+    const b=document.createElement("button");
+    b.className="choice";b.textContent=answer;
+    b.addEventListener("click",()=>{
+      if(gameDone)return;
+      gameDone=true;
+      const correct=index===q.correct;
+      if(correct)gameScore++;
+      $("#feedback").textContent=correct?q.reply:"that's okay, babyyy. the best part is making memories together. ♡";
+      $("#score").textContent="question "+(gameIndex+1)+" of "+questions.length+" · score "+gameScore;
+      [...$("#choices").children].forEach(button=>button.disabled=true);
+      const next=document.createElement("button");
+      next.className="primary";
+      next.style.marginTop="15px";
+      next.textContent=gameIndex===questions.length-1?"see our result ♡":"next question →";
+      next.addEventListener("click",()=>{
+        if(gameIndex<questions.length-1){gameIndex++;gameDone=false;renderQuestion()}
+        else{
+          $("#question").textContent="you got "+gameScore+" out of "+questions.length+" ♡";
+          $("#choices").replaceChildren();
+          $("#feedback").textContent=gameScore===questions.length
+            ?"perfect score! you know our little story. here's to making more memories. ♡"
+            :"every score is just for fun. what matters is the memories we're still making together. ♡";
+          $("#score").textContent="our little quiz is complete";
+          gameDone=true;hearts(10);
         }
-      } else {
-        video.pause();
-      }
-    });
-
-    video.addEventListener("play", () => {
-      playButton.textContent = "Ⅱ pause our video";
-      videoError.style.display = "none";
-    });
-
-    video.addEventListener("pause", () => {
-      playButton.textContent = "▶ play our video";
-    });
-
-    video.addEventListener("ended", () => {
-      playButton.textContent = "↻ watch again";
-      makeHearts(10);
-    });
-
-    video.addEventListener("error", () => {
-      videoError.style.display = "block";
-    });
-
-    $("#videoHeart").addEventListener("click", () => {
-      makeHearts(18);
-      showToast("sending you all my love, babyyy ♡");
-    });
-
-    document.querySelectorAll(".memory-card").forEach((card) => {
-      card.addEventListener("click", () => {
-        $("#modalTitle").textContent = card.dataset.title;
-        $("#modalIcon").textContent = card.dataset.icon;
-        $("#modalMessage").textContent = card.dataset.message;
-        modal.classList.add("show");
       });
+      $("#choices").appendChild(next);
     });
+    $("#choices").appendChild(b);
+  });
+}
+$("#restartGame").addEventListener("click",()=>{
+  gameIndex=0;gameScore=0;gameDone=false;renderQuestion();
+});
+renderQuestion();
 
-    function closeModal() {
-      modal.classList.remove("show");
-    }
-
-    $("#modalClose").addEventListener("click", closeModal);
-    $("#modalOkay").addEventListener("click", () => {
-      closeModal();
-      makeHearts(5);
-    });
-
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) closeModal();
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeModal();
-    });
-
-    $("#secretToggle").addEventListener("click", () => {
-      const panel = $("#secretPanel");
-      panel.classList.toggle("show");
-
-      const opened = panel.classList.contains("show");
-      $("#secretToggle").textContent = opened
-        ? "close my little secret ♡"
-        : "unlock a little secret ✧";
-
-      if (opened) {
-        makeHearts(12);
-        panel.scrollIntoView({ behavior: "smooth", block: "center" });
+/* smooth reveal animations */
+if("IntersectionObserver" in window){
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
       }
     });
+  },{threshold:.08});
+  document.querySelectorAll(".reveal-on-scroll").forEach(el=>observer.observe(el));
+}else{
+  document.querySelectorAll(".reveal-on-scroll").forEach(el=>el.classList.add("visible"));
+}
 
-    const noteOpeners = [
-      "you make ordinary moments feel a little more special. ♡",
-      "i hope you know that you matter to me, even on the days you don't feel your best.",
-      "you don't have to be perfect to be loved. you can just be you with me.",
-      "if today feels heavy, take your time, babyyy. you don't have to figure everything out at once.",
-      "i want to keep learning the little things that make you smile.",
-      "even when we're busy, there's still a little place for you in my thoughts.",
-      "i hope we always feel safe enough to be honest with each other.",
-      "i love the little memories we make without even planning them.",
-      "you deserve patience, kindness, and love that feels genuine.",
-      "if i could replay a little moment, i'd choose one where we're laughing together.",
-      "i'm proud of you for getting through days that aren't easy.",
-      "you never need to earn the right to tell me how you feel.",
-      "i hope we keep choosing understanding over assumptions.",
-      "i want to be someone you can talk to without pretending you're okay.",
-      "the little things we do together can mean more than grand gestures.",
-      "i miss the sound of your laugh when we're having a good time.",
-      "i'm glad our paths crossed, and i'm glad we're making our own memories.",
-      "i hope you feel appreciated not just on special days, but on ordinary ones too.",
-      "you can have a bad day and still be someone deeply loved.",
-      "i want our love to be something we care for together, one day at a time.",
-      "i'll always appreciate the time you choose to spend with me.",
-      "i hope we never stop being curious about each other's little worlds.",
-      "even a simple conversation with you can become a favorite part of my day.",
-      "i want to celebrate your wins, big or small.",
-      "you deserve love that listens, not just love that speaks.",
-      "we can learn from mistakes without forgetting to be kind to each other.",
-      "i hope we make more silly videos and laugh about them later.",
-      "you make me want to put more care into the little things.",
-      "you don't have to hide your feelings just to keep the peace.",
-      "i want us to keep building something that feels right for both of us.",
-      "sometimes the sweetest memories are the ones we didn't plan.",
-      "i hope you remember to eat, rest, and take care of yourself today.",
-      "if you're overthinking, let's slow down and talk things through.",
-      "i like having someone special to share the little details of my day with.",
-      "i hope our relationship keeps making room for honesty and reassurance.",
-      "i want us to laugh often and apologize sincerely when we need to.",
-      "you deserve to be heard, even when your feelings are difficult to explain.",
-      "i hope we keep making time for each other amid everything life brings.",
-      "a little message from you can brighten an ordinary moment.",
-      "i want us to feel like teammates, not opponents, when something goes wrong.",
-      "you are allowed to rest without feeling guilty about it.",
-      "i hope you know that your effort doesn't go unnoticed.",
-      "i want to keep discovering new reasons to appreciate you.",
-      "our little dance is one more memory that belongs to us.",
-      "i hope we keep finding joy in the simplest things.",
-      "i'm grateful for every honest conversation that helps us understand each other.",
-      "you can tell me when something hurts; we can work through it gently.",
-      "i want the way i love you to show in my actions, not just my words.",
-      "i hope we never become too busy to ask each other how we're really doing.",
-      "you make the idea of creating more memories feel exciting."
-    ];
-
-    const noteEndings = [
-      " ♡",
-      " — always, your person.",
-      " remember that, babyyy.",
-      " sending you a little hug. ♡",
-      " i'm cheering for you.",
-      " one day at a time.",
-      " with all my love.",
-      " you deserve that, too.",
-      " and i'll keep choosing kindness.",
-      " here's to more little moments."
-    ];
-
-    // 1,000 numbered notes are generated from reusable message variations.
-    // The first 50 are the original notes above.
-    const notes = [...noteOpeners];
-
-    for (let i = notes.length; i < 1000; i++) {
-      const opener = noteOpeners[i % noteOpeners.length];
-      const ending = noteEndings[Math.floor(i / noteOpeners.length) % noteEndings.length];
-      notes.push(opener + ending);
-    }
-
-    function showNote(index) {
-      currentNote = Math.max(0, Math.min(index, notes.length - 1));
-      $("#noteNumber").textContent =
-        "NOTE " + String(currentNote + 1).padStart(3, "0") +
-        " / " + notes.length;
-
-      $("#noteText").textContent = notes[currentNote];
-    }
-
-    $("#randomNote").addEventListener("click", () => {
-      let next = Math.floor(Math.random() * notes.length);
-
-      if (notes.length > 1 && next === currentNote) {
-        next = (next + 1) % notes.length;
-      }
-
-      showNote(next);
-      makeHearts(4);
-    });
-
-    $("#saveNote").addEventListener("click", () => {
-      const content =
-        "a little note for you ♡\n\n" +
-        notes[currentNote] +
-        "\n\nmade with love.";
-
-      const file = new Blob([content], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(file);
-      const link = document.createElement("a");
-
-      link.href = url;
-      link.download = "little-note-for-you.txt";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
-
-      showToast("your little note is ready ♡");
-    });
-
-    $("#copyNote").addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(notes[currentNote]);
-        showToast("note copied, babyyy ♡");
-      } catch (error) {
-        showToast("you can select and copy the note manually ♡");
-      }
-    });
-
-    function searchNotes() {
-      const query = $("#noteSearch").value.trim().toLowerCase();
-      const results = $("#noteResults");
-      results.innerHTML = "";
-
-      if (!query) {
-        showToast("type a word to search the notes ♡");
-        return;
-      }
-
-      const matches = [];
-
-      notes.forEach((note, index) => {
-        if (note.toLowerCase().includes(query)) {
-          matches.push({ note, index });
-        }
-      });
-
-      if (matches.length === 0) {
-        results.textContent = "no notes found. try another word, babyyy.";
-        return;
-      }
-
-      matches.slice(0, 30).forEach(({ note, index }) => {
-        const button = document.createElement("button");
-        button.className = "note-result";
-
-        const title = document.createElement("strong");
-        title.textContent = "NOTE " + String(index + 1).padStart(3, "0");
-
-        const text = document.createElement("span");
-        text.textContent = note;
-
-        button.append(title, text);
-
-        button.addEventListener("click", () => {
-          showNote(index);
-          $("#noteText").scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-        });
-
-        results.appendChild(button);
-      });
-
-      showToast(matches.length + " matching note(s) found ♡");
-    }
-
-    $("#searchNotes").addEventListener("click", searchNotes);
-
-    $("#noteSearch").addEventListener("keydown", (event) => {
-      if (event.key === "Enter") searchNotes();
-    });
-
-    window.addEventListener("scroll", () => {
-      const scrollable =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-      const progress = scrollable > 0
-        ? (window.scrollY / scrollable) * 100
-        : 0;
-
-      $("#progressBar").style.width = progress + "%";
-    }, { passive: true });
-
-    showNote(0);
-  </script>
+/* reading progress */
+window.addEventListener("scroll",()=>{
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  $("#progress").style.width=(max>0?window.scrollY/max*100:0)+"%";
+},{passive:true});
+</script>
 </body>
 </html>
